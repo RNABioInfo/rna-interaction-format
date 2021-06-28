@@ -1,0 +1,75 @@
+{
+    "ID": 000001,
+    "class": "RNA-RNA",// interaction class
+    "type": "basepairing", // basepairing, hydrophobic, H-bonds, electrostatic 
+
+    // at least one element?
+    "evidence": [{
+            "type": "Direct Duplex Detection",
+            "complementarity": [0.8, "gcs (RNAnue)"],
+            "hybridisation": [-12.6, "ddG (RNAnue)"],
+            "p-value":[1.415e-6,"RNAnue"],
+            "reads": 43
+        },
+        {
+            "type": "prediction",
+            "hybridisation": [-23.71,"IntaRNA"],
+            "p-value": [5.015e-10,"CopraRNA"]
+        },
+        {
+            "type":"prediction",
+            "hybridisation": [-17.21, "ddG (RNAcofold)"]
+        }
+    ],
+
+    //optional
+    "organism": "Escherichia coli K-12 MG1655",
+    "refSeqID": "NC_000913.3",
+ 
+    "partners": [ 
+        {
+            // mandatory
+            "name": "dsrA",
+            "type": "small_regulatory_ncRNA", // <-- sequence ontology?
+            "sites": [ // within transcript
+                ["chr1:+:25-32","chr1:+:10-17"]
+            ],
+
+            // optional
+            "other": {
+                "symbol": "dsrA", // for example by HGNC
+                "coordinates": [2025223,2025313],
+                "description": "DsrA small regulatory RNA; riboregulator of RpoS and H-NS production",
+                "sequence": "AACGCATCGGATTTCCCGGTGTAACGAATTTTCAAGTGCTTCTTGCATTAGCAAGTTTGATCCCGACTCCTGCGAGTCGGGATTT", // 
+                "structure": "...(((((((.....)))))))..(((((((...(((((.....)))))...)))))))((((((((((....)))))))))).."
+            },
+
+            // custom data 
+            "custom": { 
+                "user-defined": "values"
+            }
+        },
+        {
+            // mandatory
+            "name": "rpoS",
+            "type": "mRNA",
+            "sites": [ 
+                ["chr1:-:70-83","chr1:-:19-32"]
+            ],
+            
+            // optional
+            "other": {
+                "symbol": "rpoS",
+                "coordinates": [],
+                "description": [2866559, 2867551],
+                "sequence": "TGAGTCAGAATACGCTGAAAGTTCATGATTTAAATGAAGATGCGGAATTTGATGAGAACGGAGTTGAGGTTTTTGACGAAAAGGCCTTAGTAGAACAGGAACCCAGTGATAACGATTTGGCCGAAGAGGAACTGTTATCGCAGGGAGCCACACAGCGTGTGTTGGACGCGACTCAGCTTTACCTTGGTGAGATTGGTTATTCACCACTGTTAACGGCCGAAGAAGAAGTTTATTTTGCGCGTCGCGCACTGCGTGGAGATGTCGCCTCTCGCCGCCGGATGATCGAGAGTAACTTGCGTCTGGTGGTAAAAATTGCCCGCCGTTATGGCAATCGTGGTCTGGCGTTGCTGGACCTTATCGAAGAGGGCAACCTGGGGCTGATCCGCGCGGTAGAGAAGTTTGACCCGGAACGTGGTTTCCGCTTCTCAACATACGCAACCTGGTGGATTCGCCAGACGATTGAACGGGCGATTATGAACCAAACCCGTACTATTCGTTTGCCGATTCACATCGTAAAGGAGCTGAACGTTTACCTGCGAACCGCACGTGAGTTGTCCCATAAGCTGGACCATGAACCAAGTGCGGAAGAGATCGCAGAGCAACTGGATAAGCCAGTTGATGACGTCAGCCGTATGCTTCGTCTTAACGAGCGCATACCTCGGTAGACACCCCGCTGGGTGGTGATTCCGAAAAAGCGTTGCTGGACATCCTGGCCGATGAAAAAGAGAACGGTCCGGAAGATACCACGCAAGATGACGATATGAAGCAGAGCATCGTCAAATGGCTGTTCGAGCTGAACGCCAAACAGCGTGAAGTGCTGGCACGTCGATTCGGTTTGCTGGGGTACGAAGCGGCAACACTGGAAGATGTAGGTCGTGAAATTGGCCTCACCCGTGAACGTGTTCGCCAGATTCAGGTTGAAGGCCTGCGCCGTTTGCGCGAAATCCTGCAAACGCAGGGGCTGAATATCGAAGCGCTGTTCCGCGAGTAA", // 
+                "structure": "(((((((((((.........)))).))))))).........(((((((..((((.((((((..(((((((((((.....))))))))))).......((..(((.(((((((((......((.....))...))))))))).)))..)).....(((((((((.((((((....((((((..((((((..(((((((.....))))..)))....))).)))..)))))).......))))))....((((((((((....(((((((..(((((((((((..((((.....))))))))))))))).....(((((((((.....)))..(((.((((((((...))))))))....)))...))))))...))))).)))))))))))).(((((((..((((((...)).))))...))))))))))))))))...((((((....))))))((((....(((((...............))))).....))))...))).))).))))........(((((.((((...((((((.((((((.((.(((((((........))))....))))).))))))......))))))..(((((((....)))))))..))))))))).(((((((((((....))))).)))))).((((....((((((....)).))))...))))...(((((((((((...(((.(((((.............))))).))).....))).)))......((((((..(((......((((((((((((.((((.....))))(((...((((.((((...((((((((((..((((((((((((..........)))))).)))))).)))))((((((......))))))(((........)))...))))).)))).))))..)))....)))))))).))))..((((((....)))))))))..))))))..))))))))))))......"
+            },
+
+            // <!-- custom data 
+            "custom": { 
+                "user-defined": "values"
+            }
+        }
+    ]
+}
