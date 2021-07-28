@@ -1,0 +1,67 @@
+{
+    "ID": 1,
+    "class": "RNA-RNA",
+    "type": "basepairing",
+
+    "evidence": [{
+            "type": "Direct Duplex Detection",
+            "complementarity": [0.8, "gcs (RNAnue)"],
+            "hybridisation": [-12.6, "ddG (RNAnue)"],
+            "p-value":[1.415e-6,"RNAnue"],
+            "reads": 43
+        },
+        {
+            "type": "prediction",
+            "hybridisation": [-23.71,"IntaRNA"],
+            "p-value": [5.015e-10,"CopraRNA"]
+        },
+        {
+            "type":"prediction",
+            "hybridisation": [-17.21, "ddG (RNAcofold)"]
+        }
+    ],
+
+    "organism": "Escherichia coli K-12 MG1655",
+    "refSeqID": "NC_000913.3",
+ 
+    "partners": [ 
+        {
+            "name": "dsrA",
+            "type": "small_regulatory_ncRNA",
+            "sites": [
+                ["chr1:+:25-32","chr1:+:10-17"]
+            ],
+
+            "other": {
+                "symbol": "dsrA",
+                "coordinates": [2025223,2025313],
+                "description": "DsrA small regulatory RNA; riboregulator of RpoS and H-NS production",
+                "sequence": "AACGCATCGGATTTCCCGGTGTAACGAATTTTCAAGTGCTTCTTGCATTAGCAAGTTTGATCCCGACTCCTGCGAGTCGGGATTT",
+                "structure": "...(((((((.....)))))))..(((((((...(((((.....)))))...)))))))((((((((((....)))))))))).."
+            },
+
+            "custom": {
+                "user-defined": "values"
+            }
+        },
+        {
+            "name": "rpoS",
+            "type": "mRNA",
+            "sites": [ 
+                ["chr1:-:70-83","chr1:-:19-32"]
+            ],
+            
+            "other": {
+                "symbol": "rpoS",
+                "coordinates": [2866559, 2867551],
+                "description": "RNA polymerase, sigma S (sigma 38) factor",
+                "sequence": "TGAGTCAGAATACGCTGAAAGTTCATGATTTAAATGAAGATGCGGAATTTGATGAGAACGGAGTTGAGGTTTTTGACGAAAAGGCCTTAGTAGAACAGGAACCCAGTGATAACGATTTGGCCGAAGAGGAACTGTTATCGCAGGGAGCCACACAGCGTGTGTTGGACGCGACTCAGCTTTACCTTGGTGAGATTGGTTATTCACCACTGTTAACGGCCGAAGAAGAAGTTTATTTTGCGCGTCGCGCACTGCGTGGAGATGTCGCCTCTCGCCGCCGGATGATCGAGAGTAACTTGCGTCTGGTGGTAAAAATTGCCCGCCGTTATGGCAATCGTGGTCTGGCGTTGCTGGACCTTATCGAAGAGGGCAACCTGGGGCTGATCCGCGCGGTAGAGAAGTTTGACCCGGAACGTGGTTTCCGCTTCTCAACATACGCAACCTGGTGGATTCGCCAGACGATTGAACGGGCGATTATGAACCAAACCCGTACTATTCGTTTGCCGATTCACATCGTAAAGGAGCTGAACGTTTACCTGCGAACCGCACGTGAGTTGTCCCATAAGCTGGACCATGAACCAAGTGCGGAAGAGATCGCAGAGCAACTGGATAAGCCAGTTGATGACGTCAGCCGTATGCTTCGTCTTAACGAGCGCATACCTCGGTAGACACCCCGCTGGGTGGTGATTCCGAAAAAGCGTTGCTGGACATCCTGGCCGATGAAAAAGAGAACGGTCCGGAAGATACCACGCAAGATGACGATATGAAGCAGAGCATCGTCAAATGGCTGTTCGAGCTGAACGCCAAACAGCGTGAAGTGCTGGCACGTCGATTCGGTTTGCTGGGGTACGAAGCGGCAACACTGGAAGATGTAGGTCGTGAAATTGGCCTCACCCGTGAACGTGTTCGCCAGATTCAGGTTGAAGGCCTGCGCCGTTTGCGCGAAATCCTGCAAACGCAGGGGCTGAATATCGAAGCGCTGTTCCGCGAGTAA",
+                "structure": "(((((((((((.........)))).))))))).........(((((((..((((.((((((..(((((((((((.....))))))))))).......((..(((.(((((((((......((.....))...))))))))).)))..)).....(((((((((.((((((....((((((..((((((..(((((((.....))))..)))....))).)))..)))))).......))))))....((((((((((....(((((((..(((((((((((..((((.....))))))))))))))).....(((((((((.....)))..(((.((((((((...))))))))....)))...))))))...))))).)))))))))))).(((((((..((((((...)).))))...))))))))))))))))...((((((....))))))((((....(((((...............))))).....))))...))).))).))))........(((((.((((...((((((.((((((.((.(((((((........))))....))))).))))))......))))))..(((((((....)))))))..))))))))).(((((((((((....))))).)))))).((((....((((((....)).))))...))))...(((((((((((...(((.(((((.............))))).))).....))).)))......((((((..(((......((((((((((((.((((.....))))(((...((((.((((...((((((((((..((((((((((((..........)))))).)))))).)))))((((((......))))))(((........)))...))))).)))).))))..)))....)))))))).))))..((((((....)))))))))..))))))..))))))))))))......"
+            },
+
+            "custom": {
+                "user-defined": "values"
+            }
+        }
+    ]
+}
