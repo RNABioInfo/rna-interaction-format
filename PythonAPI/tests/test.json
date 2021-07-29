@@ -1,4 +1,4 @@
-{
+[{
     "ID": 1,
     "class": "RNA-RNA",
     "type": "basepairing",
@@ -64,4 +64,4 @@
             }
         }
     ]
-}
+}]

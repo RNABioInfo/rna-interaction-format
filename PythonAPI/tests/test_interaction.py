@@ -7,6 +7,7 @@ from PythonAPI.rna_interaction import (
     Site,
 )
 import os
+import json
 
 
 TESTDIR = os.path.dirname(os.path.abspath(__file__))
@@ -23,3 +24,14 @@ def test_file_load(path: str):
             assert type(partner) == Partner
             for site in partner.sites:
                 assert type(site) == Site
+
+
+@pytest.mark.parametrize("path", [os.path.join(TESTDIR, "test.json")])
+def test_json_export(path: str):
+    file = InteractionFile.load(path)
+    file.export_json("./testfile.json")
+    with open(path) as handle, open("./testfile.json") as handle2:
+        json1 = json.load(handle)
+        json2 = json.load(handle2)
+    assert json1 == json2
+    p = 0
