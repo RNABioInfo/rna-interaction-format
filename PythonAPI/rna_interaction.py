@@ -23,7 +23,7 @@ class InteractionFile:
 
     def export_json(self, path: Union[str, os.PathLike]):
         with open(path, "w") as handle:
-            json.dump(self.interactions, handle, cls=CustomEncoder, indent=2)
+            json.dump(self, handle, cls=CustomEncoder, indent=2)
 
     def __iter__(self):
         for interaction in self.interactions:
@@ -33,7 +33,7 @@ class InteractionFile:
         return str(self.__dict__)
 
     def json_repr(self):
-        json_repr = {k: v for k, v in self.__dict__.items() if v is not None}
+        json_repr = self.interactions
         return json_repr
 
 

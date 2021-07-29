@@ -8,9 +8,11 @@ from PythonAPI.rna_interaction import (
 )
 import os
 import json
-
+from tempfile import TemporaryDirectory, NamedTemporaryFile
 
 TESTDIR = os.path.dirname(os.path.abspath(__file__))
+TMP_DIR = TemporaryDirectory()
+TMP_TEST_DIR = TMP_DIR.name
 
 
 @pytest.mark.parametrize("path", [os.path.join(TESTDIR, "test.json")])
@@ -22,16 +24,23 @@ def test_file_load(path: str):
             assert type(evidence) == Evidence
         for partner in interaction.partners:
             assert type(partner) == Partner
-            for site in partner.sites:
+            for site in partner.sites[0]:  # TODO: Also indexing here ?
                 assert type(site) == Site
 
 
-@pytest.mark.parametrize("path", [os.path.join(TESTDIR, "test.json")])
-def test_json_export(path: str):
+@pytest.mark.parametrize(
+    "path,testfile",
+    [
+        (
+            os.path.join(TESTDIR, "test.json"),
+            os.path.join(TMP_TEST_DIR, "testfile.json"),
+        )
+    ],
+)
+def test_json_export(path: str, testfile):
     file = InteractionFile.load(path)
-    file.export_json("./testfile.json")
-    with open(path) as handle, open("./testfile.json") as handle2:
+    file.export_json(testfile)
+    with open(path) as handle, open(testfile) as handle2:
         json1 = json.load(handle)
         json2 = json.load(handle2)
     assert json1 == json2
-    p = 0
