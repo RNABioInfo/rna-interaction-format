@@ -28,9 +28,9 @@
         },
         {
             "type": "prediction",
-            "data": {
-                "method" : "CopraRNA",
-                "command": "CopraRNA2.pl -srnaseq sRNAs.fa -ntup 200 -ntdown 100 -region 5utr -enrich 200 -topcount 200",
+            "method" : "CopraRNA",
+            "command": "CopraRNA2.pl -srnaseq sRNAs.fa -ntup 200 -ntdown 100 -region 5utr -enrich 200 -topcount 200",
+            "data": {    
                 "energy": {
                     "measure": "ddG",
                     "value": -23.71
@@ -43,9 +43,9 @@
         },
         {
             "type":"prediction",
+            "method": "RNAcofold",
+            "command": "RNAcofold --shapeMethod Z --maxBPspan 10 --dangles 4",
             "data": {
-                "method": "RNAcofold",
-                "command": "RNAcofold --shapeMethod Z --maxBPspan 10 --dangles 4",
                 "energy": {
                     "measure": "ddG",
                     "value" : -17.21
@@ -54,8 +54,8 @@
         },
         {
             "type":"knockout experiments",
+            "method": "qPCR",
             "data": {
-                "method": "qPCR",
                 "fold_change": {
                     "measure": "ddCt",
                     "value": 3,
