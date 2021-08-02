@@ -1,65 +1,108 @@
 [{
     "ID": 1,
     "class": "RNA-RNA",
-    "type": "basepairing",
-
+    "type": "basepairing", 
+    
     "evidence": [{
-            "type": "Direct Duplex Detection",
-            "complementarity": [0.8, "gcs (RNAnue)"],
-            "hybridisation": [-12.6, "ddG (RNAnue)"],
-            "p-value":[1.415e-6,"RNAnue"],
-            "reads": 43
+            "type": "Direct Duplex Detection", 
+            "method": "RANnue", 
+            "command": "RNAnue -minfraglen 18 -minlen 36 -sitelenratio 0.3",
+            "data": {
+                "complementarity": {
+                    "measure": "gcs",
+                    "value": 0.8
+                },
+                "energy": {
+                    "measure": "ges (ddG)",
+                    "value": -12.6
+                },
+                "significance": {
+                    "measure": "p-value",
+                    "value": 1.415e-6
+                },
+                "reads": {
+                    "measure": "counts",
+                    "value": 43
+                }
+            }
         },
         {
             "type": "prediction",
-            "hybridisation": [-23.71,"IntaRNA"],
-            "p-value": [5.015e-10,"CopraRNA"]
+            "method" : "CopraRNA",
+            "command": "CopraRNA2.pl -srnaseq sRNAs.fa -ntup 200 -ntdown 100 -region 5utr -enrich 200 -topcount 200",            "data": {
+                "energy": {
+                    "measure": "ddG",
+                    "value": -23.71
+                },
+                "significance":{
+                    "measure": "p-value",
+                    "value": 5.015e-10
+                }
+            }
         },
         {
             "type":"prediction",
-            "hybridisation": [-17.21, "ddG (RNAcofold)"]
+            "method": "RNAcofold",
+            "command": "RNAcofold --shapeMethod Z --maxBPspan 10 --dangles 4",
+            "data": {
+                "energy": {
+                    "measure": "ddG",
+                    "value" : -17.21
+                }
+            }
+        },
+        {
+            "type":"knockout experiments",
+            "method": "qPCR",
+            "data": {
+                "fold_change": {
+                    "measure": "ddCt",
+                    "value": 3
+                }
+            }
         }
     ],
 
-    "organism": "Escherichia coli K-12 MG1655",
-    "refSeqID": "NC_000913.3",
- 
     "partners": [ 
         {
             "name": "dsrA",
-            "type": "small_regulatory_ncRNA",
-            "sites": [
-                ["chr1:+:25-32","chr1:+:10-17"]
+            "symbol": "dsrA", 
+            "type": "small_regulatory_ncRNA", 
+            "genomic_coordinates": "chr1:+:2025223-2025313",
+            "organism": "Escherichia coli K-12 MG1655",
+            "accession": "NC_000913",
+            "local_sites": [ 
+                ["25-32","10-17"]
             ],
 
-            "other": {
-                "symbol": "dsrA",
-                "coordinates": [2025223,2025313],
+            "other": {                
                 "description": "DsrA small regulatory RNA; riboregulator of RpoS and H-NS production",
-                "sequence": "AACGCATCGGATTTCCCGGTGTAACGAATTTTCAAGTGCTTCTTGCATTAGCAAGTTTGATCCCGACTCCTGCGAGTCGGGATTT",
+                "sequence": "AACGCATCGGATTTCCCGGTGTAACGAATTTTCAAGTGCTTCTTGCATTAGCAAGTTTGATCCCGACTCCTGCGAGTCGGGATTT", 
                 "structure": "...(((((((.....)))))))..(((((((...(((((.....)))))...)))))))((((((((((....)))))))))).."
             },
 
-            "custom": {
+            "custom": { 
                 "user-defined": "values"
             }
         },
         {
             "name": "rpoS",
+            "symbol": "rpoS",
             "type": "mRNA",
-            "sites": [ 
-                ["chr1:-:70-83","chr1:-:19-32"]
+            "genomic_coordinates": "chr1:-:2866559-2867551",
+            "organism": "Escherichia coli K-12 MG1655",
+            "accession": "NC_000913",
+            "local_sites": [ 
+                ["70-83","19-32"]
             ],
             
             "other": {
-                "symbol": "rpoS",
-                "coordinates": [2866559, 2867551],
                 "description": "RNA polymerase, sigma S (sigma 38) factor",
                 "sequence": "TGAGTCAGAATACGCTGAAAGTTCATGATTTAAATGAAGATGCGGAATTTGATGAGAACGGAGTTGAGGTTTTTGACGAAAAGGCCTTAGTAGAACAGGAACCCAGTGATAACGATTTGGCCGAAGAGGAACTGTTATCGCAGGGAGCCACACAGCGTGTGTTGGACGCGACTCAGCTTTACCTTGGTGAGATTGGTTATTCACCACTGTTAACGGCCGAAGAAGAAGTTTATTTTGCGCGTCGCGCACTGCGTGGAGATGTCGCCTCTCGCCGCCGGATGATCGAGAGTAACTTGCGTCTGGTGGTAAAAATTGCCCGCCGTTATGGCAATCGTGGTCTGGCGTTGCTGGACCTTATCGAAGAGGGCAACCTGGGGCTGATCCGCGCGGTAGAGAAGTTTGACCCGGAACGTGGTTTCCGCTTCTCAACATACGCAACCTGGTGGATTCGCCAGACGATTGAACGGGCGATTATGAACCAAACCCGTACTATTCGTTTGCCGATTCACATCGTAAAGGAGCTGAACGTTTACCTGCGAACCGCACGTGAGTTGTCCCATAAGCTGGACCATGAACCAAGTGCGGAAGAGATCGCAGAGCAACTGGATAAGCCAGTTGATGACGTCAGCCGTATGCTTCGTCTTAACGAGCGCATACCTCGGTAGACACCCCGCTGGGTGGTGATTCCGAAAAAGCGTTGCTGGACATCCTGGCCGATGAAAAAGAGAACGGTCCGGAAGATACCACGCAAGATGACGATATGAAGCAGAGCATCGTCAAATGGCTGTTCGAGCTGAACGCCAAACAGCGTGAAGTGCTGGCACGTCGATTCGGTTTGCTGGGGTACGAAGCGGCAACACTGGAAGATGTAGGTCGTGAAATTGGCCTCACCCGTGAACGTGTTCGCCAGATTCAGGTTGAAGGCCTGCGCCGTTTGCGCGAAATCCTGCAAACGCAGGGGCTGAATATCGAAGCGCTGTTCCGCGAGTAA",
                 "structure": "(((((((((((.........)))).))))))).........(((((((..((((.((((((..(((((((((((.....))))))))))).......((..(((.(((((((((......((.....))...))))))))).)))..)).....(((((((((.((((((....((((((..((((((..(((((((.....))))..)))....))).)))..)))))).......))))))....((((((((((....(((((((..(((((((((((..((((.....))))))))))))))).....(((((((((.....)))..(((.((((((((...))))))))....)))...))))))...))))).)))))))))))).(((((((..((((((...)).))))...))))))))))))))))...((((((....))))))((((....(((((...............))))).....))))...))).))).))))........(((((.((((...((((((.((((((.((.(((((((........))))....))))).))))))......))))))..(((((((....)))))))..))))))))).(((((((((((....))))).)))))).((((....((((((....)).))))...))))...(((((((((((...(((.(((((.............))))).))).....))).)))......((((((..(((......((((((((((((.((((.....))))(((...((((.((((...((((((((((..((((((((((((..........)))))).)))))).)))))((((((......))))))(((........)))...))))).)))).))))..)))....)))))))).))))..((((((....)))))))))..))))))..))))))))))))......"
             },
 
-            "custom": {
+            "custom": { 
                 "user-defined": "values"
             }
         }

@@ -4,7 +4,8 @@ from PythonAPI.rna_interaction import (
     RNAInteraction,
     Evidence,
     Partner,
-    Site,
+    GenomicCoordinates,
+    LocalSite
 )
 import os
 import json
@@ -24,8 +25,9 @@ def test_file_load(path: str):
             assert type(evidence) == Evidence
         for partner in interaction.partners:
             assert type(partner) == Partner
-            for site in partner.sites[0]:  # TODO: Also indexing here ?
-                assert type(site) == Site
+            assert type(partner.genomic_coordinates) == GenomicCoordinates
+            for site in partner.local_sites[0]:  # TODO: Also indexing here ?
+                assert type(site) == LocalSite
 
 
 @pytest.mark.parametrize(
