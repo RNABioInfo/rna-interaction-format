@@ -1,9 +1,9 @@
 from __future__ import annotations
-
+import ijson
 import json
 import os
 from dataclasses import dataclass
-from typing import List, Union, Dict
+from typing import List, Union, Dict, Generator
 from collections import defaultdict, OrderedDict
 from Bio import Seq
 
@@ -13,17 +13,32 @@ class InteractionFile:
         self.interactions = interactions
 
     @classmethod
-    def load(cls, file: Union[str, os.PathLike]):
+    def parse(cls, file: Union[str, os.PathLike]) -> Generator[RNAInteraction]:
+        with open(file, "rb") as handle:
+            parser = ijson.parse(handle)
+            for element in ijson.items(parser, "item"):
+                yield RNAInteraction.from_dict(element)
+
+    @classmethod
+    def load(cls, file: Union[str, os.PathLike]) -> InteractionFile:
         interaction = []
         with open(file) as handle:
             json_repr = json.load(handle)
-        for entry in json_repr:
-            interaction.append(RNAInteraction.from_dict(entry))
+        if type(json_repr) == list:
+            for entry in json_repr:
+                interaction.append(RNAInteraction.from_dict(entry))
+        else:
+            interaction.append(RNAInteraction.from_dict(json_repr))
         return InteractionFile(interaction)
 
     def export_json(self, path: Union[str, os.PathLike]):
         with open(path, "w") as handle:
-            json.dump(self, handle, cls=CustomEncoder, indent=2)
+            if len(self.interactions) > 1:
+                json.dump(self, handle, cls=CustomEncoder, indent=2)
+            else:
+                json.dump(
+                    self.interactions[0], handle, cls=CustomEncoder, indent=2
+                )
 
     def __iter__(self):
         for interaction in self.interactions:
@@ -74,7 +89,7 @@ class RNAInteraction:
         return json_repr
 
     @classmethod
-    def from_dict(cls, dict_repr: Dict):
+    def from_dict(cls, dict_repr: Dict) -> RNAInteraction:
         interaction_id = dict_repr["ID"]
         classname = dict_repr["class"]
         interaction_type = dict_repr["type"]
@@ -125,7 +140,7 @@ class Evidence:
         return json_repr
 
     @classmethod
-    def from_dict(cls, dict_repr: Dict):
+    def from_dict(cls, dict_repr: Dict) -> Evidence:
         evidence_type = dict_repr["type"]
         method = dict_repr["method"]
         command = dict_repr["command"] if "command" in dict_repr else None
@@ -193,7 +208,7 @@ class Partner:
         return json_repr
 
     @classmethod
-    def from_dict(cls, dict_repr: Dict):
+    def from_dict(cls, dict_repr: Dict) -> Partner:
         name = dict_repr.pop("name")
         symbol = dict_repr.pop("symbol")
         partner_type = dict_repr.pop("type")
@@ -230,15 +245,13 @@ class LocalSite:
         return str(self)
 
     @classmethod
-    def from_string(cls, str_repr: str):
+    def from_string(cls, str_repr: str) -> LocalSite:
         start, end = (int(x) for x in str_repr.split("-"))
         return LocalSite(start, end)
 
 
 @dataclass
 class GenomicCoordinates(LocalSite):
-    start: int
-    end: int
     chromosome: str
     strand: str
 
@@ -249,10 +262,12 @@ class GenomicCoordinates(LocalSite):
         return str(self.__dict__)
 
     @classmethod
-    def from_string(cls, str_repr: str):
+    def from_string(cls, str_repr: str) -> GenomicCoordinates:
         chromosome, strand, coordinates = str_repr.split(":")
         start, end = (int(x) for x in coordinates.split("-"))
-        return GenomicCoordinates(start, end, chromosome, strand)
+        return GenomicCoordinates(
+            start=start, end=end, chromosome=chromosome, strand=strand
+        )
 
 
 class CustomEncoder(json.JSONEncoder):

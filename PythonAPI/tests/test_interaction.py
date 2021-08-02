@@ -5,7 +5,7 @@ from PythonAPI.rna_interaction import (
     Evidence,
     Partner,
     GenomicCoordinates,
-    LocalSite
+    LocalSite,
 )
 import os
 import json
@@ -16,7 +16,13 @@ TMP_DIR = TemporaryDirectory()
 TMP_TEST_DIR = TMP_DIR.name
 
 
-@pytest.mark.parametrize("path", [os.path.join(TESTDIR, "test.json")])
+@pytest.mark.parametrize(
+    "path",
+    [
+        os.path.join(TESTDIR, "test.json"),
+        os.path.join(TESTDIR, "multi_test.json"),
+    ],
+)
 def test_file_load(path: str):
     file = InteractionFile.load(path)
     for interaction in file:
@@ -35,8 +41,12 @@ def test_file_load(path: str):
     [
         (
             os.path.join(TESTDIR, "test.json"),
-            os.path.join(TMP_TEST_DIR, "testfile.json"),
-        )
+            os.path.join(TMP_TEST_DIR, "single_tmp.json"),
+        ),
+        (
+            os.path.join(TESTDIR, "multi_test.json"),
+            os.path.join(TMP_TEST_DIR, "multi_tmp.json"),
+        ),
     ],
 )
 def test_json_export(path: str, testfile):
@@ -46,3 +56,14 @@ def test_json_export(path: str, testfile):
         json1 = json.load(handle)
         json2 = json.load(handle2)
     assert json1 == json2
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        os.path.join(TESTDIR, "multi_test.json"),
+    ],
+)
+def test_file_parsing(path: str):
+    for element in InteractionFile.parse(path):
+        assert type(element) == RNAInteraction
