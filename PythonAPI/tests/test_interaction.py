@@ -62,8 +62,12 @@ def test_json_export(path: str, testfile):
     "path",
     [
         os.path.join(TESTDIR, "multi_test.json"),
+        os.path.join(TESTDIR, "test.json"),
     ],
 )
 def test_file_parsing(path: str):
+    i = 0
     for element in InteractionFile.parse(path):
         assert type(element) == RNAInteraction
+        i += 1
+    assert i != 0, "Parsing File yielded zero Interactions"
