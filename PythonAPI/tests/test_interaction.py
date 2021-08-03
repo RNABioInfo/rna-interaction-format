@@ -1,5 +1,5 @@
 import pytest
-from PythonAPI.rna_interaction import (
+from PythonAPI.RNAInteractions import (
     InteractionFile,
     RNAInteraction,
     Evidence,
