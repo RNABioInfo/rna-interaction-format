@@ -56,7 +56,7 @@ class RNAInteraction:
     def __init__(
         self,
         interaction_id: int,
-        classname: str,
+        interaction_class: str,
         interaction_type: str,
         evidence: List[Evidence],
         organism: str = None,
@@ -64,7 +64,7 @@ class RNAInteraction:
         partners: List[Partner] = None,
     ):
         self.interaction_id = interaction_id
-        self.classname = classname
+        self.interaction_class = interaction_class
         self.interaction_type = interaction_type
         self.evidence = evidence
         self.organism = organism
@@ -82,7 +82,7 @@ class RNAInteraction:
         for key, value in self.__dict__.items():
             if value is not None:
                 key = "ID" if key == "interaction_id" else key
-                key = "class" if key == "classname" else key
+                key = "class" if key == "interaction_class" else key
                 key = "type" if key == "interaction_type" else key
                 key = "refSeqID" if key == "refseqid" else key
                 json_repr[key] = value
@@ -91,7 +91,7 @@ class RNAInteraction:
     @classmethod
     def from_dict(cls, dict_repr: Dict) -> RNAInteraction:
         interaction_id = dict_repr["ID"]
-        classname = dict_repr["class"]
+        interaction_class = dict_repr["class"]
         interaction_type = dict_repr["type"]
         evidence = [Evidence.from_dict(x) for x in dict_repr["evidence"]]
         dict_repr = defaultdict(lambda: None, dict_repr)
@@ -103,7 +103,7 @@ class RNAInteraction:
             partners = [Partner.from_dict(x) for x in partners]
         return RNAInteraction(
             interaction_id,
-            classname,
+            interaction_class,
             interaction_type,
             evidence,
             organism,
