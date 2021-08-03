@@ -14,10 +14,16 @@ class InteractionFile:
 
     @classmethod
     def parse(cls, file: Union[str, os.PathLike]) -> Generator[RNAInteraction]:
+        i = 0
         with open(file, "rb") as handle:
             parser = ijson.parse(handle)
             for element in ijson.items(parser, "item"):
+                i += 1
                 yield RNAInteraction.from_dict(element)
+            if i == 0:
+                handle.seek(0)
+                json_repr = json.load(handle)
+                yield RNAInteraction.from_dict(json_repr)
 
     @classmethod
     def load(cls, file: Union[str, os.PathLike]) -> InteractionFile:
