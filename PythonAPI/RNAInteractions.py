@@ -35,7 +35,7 @@ class InteractionFile:
                 interaction.append(RNAInteraction.from_dict(entry))
         else:
             interaction.append(RNAInteraction.from_dict(json_repr))
-        return InteractionFile(interaction)
+        return cls(interaction)
 
     def export_json(self, path: Union[str, os.PathLike]):
         with open(path, "w") as handle:
@@ -155,7 +155,7 @@ class Evidence:
             key: EvidenceData(value["measure"], value["value"])
             for key, value in data.items()
         }
-        return Evidence(
+        return cls(
             evidence_type=evidence_type,
             method=method,
             command=command,
@@ -227,7 +227,7 @@ class Partner:
         local_sites = [
             [LocalSite.from_string(x) for x in dict_repr.pop("local_sites")[0]]
         ]
-        return Partner(
+        return cls(
             name=name,
             symbol=symbol,
             partner_type=partner_type,
@@ -253,7 +253,7 @@ class LocalSite:
     @classmethod
     def from_string(cls, str_repr: str) -> LocalSite:
         start, end = (int(x) for x in str_repr.split("-"))
-        return LocalSite(start, end)
+        return cls(start, end)
 
 
 @dataclass
@@ -271,7 +271,7 @@ class GenomicCoordinates(LocalSite):
     def from_string(cls, str_repr: str) -> GenomicCoordinates:
         chromosome, strand, coordinates = str_repr.split(":")
         start, end = (int(x) for x in coordinates.split("-"))
-        return GenomicCoordinates(
+        return cls(
             start=start, end=end, chromosome=chromosome, strand=strand
         )
 
