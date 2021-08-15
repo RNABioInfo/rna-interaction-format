@@ -28,7 +28,7 @@ An *interaction object* should contain at least one *evidence object*. Therefore
 | name | value | mandatory | description |
 | ---  | ----  | --------  | :---------  |
 | type | string | yes | Type of evidence (e.g., prediction, pull-down assay, overexpression) |
-| method | string | yes | Tools or techniques used in |
+| method | string | yes | Tools or techniques used |
 | command | string | no | command line call or other information used with the method |
 | data | nested | yes | contains measurement |
 
