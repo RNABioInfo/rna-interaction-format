@@ -41,7 +41,9 @@ class InteractionFile:
     def export_json(self, path: Union[str, os.PathLike]):
         with open(path, "w") as handle:
             if len(self.interactions) > 1:
-                json.dump(self.interactions, handle, cls=CustomEncoder, indent=2)
+                json.dump(
+                    self.interactions, handle, cls=CustomEncoder, indent=2
+                )
             else:
                 json.dump(
                     self.interactions[0], handle, cls=CustomEncoder, indent=2
@@ -65,7 +67,7 @@ class RNAInteraction:
         organism_name: str = None,
         refseqid: str = None,
         partners: List[Partner] = None,
-        validated: bool = False
+        validated: bool = False,
     ):
         self.interaction_id = interaction_id
         self.interaction_class = interaction_class
@@ -76,7 +78,9 @@ class RNAInteraction:
         self.partners = partners
         if not validated:
             # TODO: Might produce cryptic error for user
-            self.__json_validate(json.loads(json.dumps(self, cls=CustomEncoder)))
+            self.__json_validate(
+                json.loads(json.dumps(self, cls=CustomEncoder))
+            )
 
     def __str__(self):
         return str(self.__dict__)
@@ -118,14 +122,18 @@ class RNAInteraction:
             organism_name,
             refseqid,
             partners,
-            validated=True
+            validated=True,
         )
 
         return rna_interaction
 
     @staticmethod
     def __json_validate(json_repr):
-        with open(os.path.join(os.path.dirname(__file__), "rna-interaction-schema_v1.json")) as handle:
+        with open(
+            os.path.join(
+                os.path.dirname(__file__), "rna-interaction-schema_v1.json"
+            )
+        ) as handle:
             schema = json.load(handle)
         jsonschema.validate(instance=json_repr, schema=schema)
 
@@ -280,9 +288,7 @@ class GenomicCoordinates(LocalSite):
     def from_string(cls, str_repr: str) -> GenomicCoordinates:
         chromosome, strand, coordinates = str_repr.split(":")
         start, end = (int(x) for x in coordinates.split("-"))
-        return cls(
-            start=start, end=end, chromosome=chromosome, strand=strand
-        )
+        return cls(start=start, end=end, chromosome=chromosome, strand=strand)
 
 
 class CustomEncoder(json.JSONEncoder):

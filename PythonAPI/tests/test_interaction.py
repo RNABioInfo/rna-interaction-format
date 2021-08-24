@@ -83,19 +83,23 @@ def evidence():
 def evidence_list():
     return [Evidence("prediction", "CopraRNA", "CopraRNA -h")]
 
+
 @pytest.fixture()
 def none_fixture():
     return None
 
+
 @pytest.mark.parametrize(
     "interaction_id,interaction_class,interaction_type,evidence",
-    [
-        (1, "RNA-RNA", "basepairing", "evidence_list")
-    ]
+    [(1, "RNA-RNA", "basepairing", "evidence_list")],
 )
-def test_rna_interaction_init(interaction_id, interaction_class, interaction_type, evidence, request):
+def test_rna_interaction_init(
+    interaction_id, interaction_class, interaction_type, evidence, request
+):
     evidence = request.getfixturevalue(evidence)
-    rna_interaction = RNAInteraction(interaction_id, interaction_class, interaction_type, evidence)
+    rna_interaction = RNAInteraction(
+        interaction_id, interaction_class, interaction_type, evidence
+    )
 
 
 @pytest.mark.parametrize(
@@ -104,9 +108,13 @@ def test_rna_interaction_init(interaction_id, interaction_class, interaction_typ
         (1, "Foo", "basepairing", "evidence_list"),
         ("foo", "RNA-RNA", "basepairing", "evidence_list"),
         (1, "RNA-RNA", "foo", "none_fixture"),
-    ]
+    ],
 )
-def test_wrong_schema_rna_interaction(interaction_id, interaction_class, interaction_type, evidence, request):
+def test_wrong_schema_rna_interaction(
+    interaction_id, interaction_class, interaction_type, evidence, request
+):
     with pytest.raises(jsonschema.ValidationError):
         evidence = request.getfixturevalue(evidence)
-        rna_interaction = RNAInteraction(interaction_id, interaction_class, interaction_type, evidence)
+        RNAInteraction(
+            interaction_id, interaction_class, interaction_type, evidence
+        )
