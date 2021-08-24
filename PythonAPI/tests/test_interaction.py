@@ -32,7 +32,7 @@ def test_file_load(path: str):
         for partner in interaction.partners:
             assert type(partner) == Partner
             assert type(partner.genomic_coordinates) == GenomicCoordinates
-            for site in partner.local_sites[0]:  # TODO: Also indexing here ?
+            for site in partner.local_sites:
                 assert type(site) == LocalSite
 
 

@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import List, Union, Dict, Generator
 from collections import defaultdict, OrderedDict
 from Bio import Seq
-from jsonschema import validate
+import jsonschema
 
 
 class InteractionFile:
@@ -69,6 +69,7 @@ class RNAInteraction:
         organism_name: str = None,
         refseqid: str = None,
         partners: List[Partner] = None,
+        validated: bool = False
     ):
         self.interaction_id = interaction_id
         self.interaction_class = interaction_class
@@ -77,6 +78,8 @@ class RNAInteraction:
         self.organism_name = organism_name
         self.refseqid = refseqid
         self.partners = partners
+        if not validated:
+            self.__json_validate(self.json_repr())
 
     def __str__(self):
         return str(self.__dict__)
@@ -97,7 +100,7 @@ class RNAInteraction:
 
     @classmethod
     def from_dict(cls, dict_repr: Dict) -> RNAInteraction:
-        #cls.__json_validate(dict_repr)
+        cls.__json_validate(dict_repr)
         interaction_id = dict_repr["ID"]
         interaction_class = dict_repr["class"]
         interaction_type = dict_repr["type"]
@@ -109,7 +112,8 @@ class RNAInteraction:
         partners = dict_repr["partners"]
         if partners is not None:
             partners = [Partner.from_dict(x) for x in partners]
-        return RNAInteraction(
+
+        rna_interaction = RNAInteraction(
             interaction_id,
             interaction_class,
             interaction_type,
@@ -117,15 +121,20 @@ class RNAInteraction:
             organism_name,
             refseqid,
             partners,
+            validated=True
         )
+
+        return rna_interaction
 
     @staticmethod
     def __json_validate(json_repr):
-        with open("rna-interaction-schema_v1.json") as handle:
-            schema = json.load(handle)
-        validate(instance=json_repr, schema=schema)
-        p = 0
-
+        try:
+            with open(os.path.join(os.path.dirname(__file__), "rna-interaction-schema_v1.json")) as handle:
+                schema = json.load(handle)
+            jsonschema.validate(instance=json_repr, schema=schema)
+            return True
+        except jsonschema.ValidationError:
+            return False
 
 
 class Evidence:
@@ -191,7 +200,7 @@ class Partner:
         genomic_coordinates: GenomicCoordinates,
         organism_name: str,
         organism_acc: str,
-        local_sites: List[List[LocalSite]],
+        local_sites: List[LocalSite],
         description: str = None,
         sequence: Seq.Seq = None,
         structure: str = None,
@@ -233,9 +242,8 @@ class Partner:
         )
         organism_name = dict_repr.pop("organism_name")
         organism_acc = dict_repr.pop("organism_acc")
-        # TODO: ask whether list in list is necessary
         local_sites = [
-            [LocalSite(x[0], x[1]) for x in dict_repr.pop("local_sites")]
+            LocalSite(x[0], x[1]) for x in dict_repr.pop("local_sites")
         ]
         return cls(
             name=name,
@@ -258,7 +266,7 @@ class LocalSite:
         return f"{self.start}-{self.end}"
 
     def json_repr(self):
-        return str(self)
+        return [self.start, self.end]
 
     @classmethod
     def from_string(cls, str_repr: str) -> LocalSite:
@@ -276,6 +284,9 @@ class GenomicCoordinates(LocalSite):
 
     def __repr__(self):
         return str(self.__dict__)
+
+    def json_repr(self):
+        return str(self)
 
     @classmethod
     def from_string(cls, str_repr: str) -> GenomicCoordinates:
