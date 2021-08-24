@@ -17,14 +17,25 @@ TMP_DIR = TemporaryDirectory()
 TMP_TEST_DIR = TMP_DIR.name
 
 
+@pytest.fixture()
+def test_json():
+    return os.path.join(TESTDIR, "test.json")
+
+
+@pytest.fixture()
+def multi_test_json():
+    return os.path.join(TESTDIR, "multi_test.json")
+
+
 @pytest.mark.parametrize(
     "path",
     [
-        os.path.join(TESTDIR, "test.json"),
-        os.path.join(TESTDIR, "multi_test.json"),
+        "test_json",
+        "multi_test_json",
     ],
 )
-def test_file_load(path: str):
+def test_file_load(path, request):
+    path = request.getfixturevalue(path)
     file = InteractionFile.load(path)
     for interaction in file:
         assert type(interaction) == RNAInteraction
@@ -41,16 +52,17 @@ def test_file_load(path: str):
     "path,testfile",
     [
         (
-            os.path.join(TESTDIR, "test.json"),
+            "test_json",
             os.path.join(TMP_TEST_DIR, "single_tmp.json"),
         ),
         (
-            os.path.join(TESTDIR, "multi_test.json"),
+            "multi_test_json",
             os.path.join(TMP_TEST_DIR, "multi_tmp.json"),
         ),
     ],
 )
-def test_json_export(path: str, testfile):
+def test_json_export(path: str, testfile, request):
+    path = request.getfixturevalue(path)
     file = InteractionFile.load(path)
     file.export_json(testfile)
     with open(path) as handle, open(testfile) as handle2:
@@ -62,11 +74,12 @@ def test_json_export(path: str, testfile):
 @pytest.mark.parametrize(
     "path",
     [
-        os.path.join(TESTDIR, "multi_test.json"),
-        os.path.join(TESTDIR, "test.json"),
+        "multi_test_json",
+        "test_json",
     ],
 )
-def test_file_parsing(path: str):
+def test_file_parsing(path, request):
+    path = request.getfixturevalue(path)
     i = 0
     for element in InteractionFile.parse(path):
         assert type(element) == RNAInteraction
@@ -118,3 +131,14 @@ def test_wrong_schema_rna_interaction(
         RNAInteraction(
             interaction_id, interaction_class, interaction_type, evidence
         )
+
+
+def test_printing_interaction(test_json, capsys):
+    interaction_file = InteractionFile.load(test_json)
+    interaction = interaction_file.interactions[0]
+    print(interaction)
+    stdout = capsys.readouterr().out
+    printed_json = json.loads(stdout)
+    with open(test_json) as handle:
+        expected_json = json.load(handle)
+    assert printed_json == expected_json

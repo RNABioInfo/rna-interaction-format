@@ -83,7 +83,7 @@ class RNAInteraction:
             )
 
     def __str__(self):
-        return str(self.__dict__)
+        return json.dumps(self, cls=CustomEncoder, indent=1)
 
     def __repr__(self):
         return str(self.__dict__)
