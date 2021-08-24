@@ -41,7 +41,7 @@ class InteractionFile:
     def export_json(self, path: Union[str, os.PathLike]):
         with open(path, "w") as handle:
             if len(self.interactions) > 1:
-                json.dump(self, handle, cls=CustomEncoder, indent=2)
+                json.dump(self.interactions, handle, cls=CustomEncoder, indent=2)
             else:
                 json.dump(
                     self.interactions[0], handle, cls=CustomEncoder, indent=2
@@ -53,10 +53,6 @@ class InteractionFile:
 
     def __repr__(self):
         return str(self.__dict__)
-
-    def json_repr(self):
-        json_repr = self.interactions
-        return json_repr
 
 
 class RNAInteraction:
@@ -79,7 +75,8 @@ class RNAInteraction:
         self.refseqid = refseqid
         self.partners = partners
         if not validated:
-            self.__json_validate(self.json_repr())
+            # TODO: Might produce cryptic error for user
+            self.__json_validate(json.loads(json.dumps(self, cls=CustomEncoder)))
 
     def __str__(self):
         return str(self.__dict__)
@@ -128,13 +125,9 @@ class RNAInteraction:
 
     @staticmethod
     def __json_validate(json_repr):
-        try:
-            with open(os.path.join(os.path.dirname(__file__), "rna-interaction-schema_v1.json")) as handle:
-                schema = json.load(handle)
-            jsonschema.validate(instance=json_repr, schema=schema)
-            return True
-        except jsonschema.ValidationError:
-            return False
+        with open(os.path.join(os.path.dirname(__file__), "rna-interaction-schema_v1.json")) as handle:
+            schema = json.load(handle)
+        jsonschema.validate(instance=json_repr, schema=schema)
 
 
 class Evidence:
@@ -267,11 +260,6 @@ class LocalSite:
 
     def json_repr(self):
         return [self.start, self.end]
-
-    @classmethod
-    def from_string(cls, str_repr: str) -> LocalSite:
-        start, end = (int(x) for x in str_repr.split("-"))
-        return cls(start, end)
 
 
 @dataclass
