@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import List, Union, Dict, Generator
 from collections import defaultdict, OrderedDict
 from Bio import Seq
+from jsonschema import validate
 
 
 class InteractionFile:
@@ -65,7 +66,7 @@ class RNAInteraction:
         interaction_class: str,
         interaction_type: str,
         evidence: List[Evidence],
-        organism: str = None,
+        organism_name: str = None,
         refseqid: str = None,
         partners: List[Partner] = None,
     ):
@@ -73,7 +74,7 @@ class RNAInteraction:
         self.interaction_class = interaction_class
         self.interaction_type = interaction_type
         self.evidence = evidence
-        self.organism = organism
+        self.organism_name = organism_name
         self.refseqid = refseqid
         self.partners = partners
 
@@ -96,12 +97,13 @@ class RNAInteraction:
 
     @classmethod
     def from_dict(cls, dict_repr: Dict) -> RNAInteraction:
+        #cls.__json_validate(dict_repr)
         interaction_id = dict_repr["ID"]
         interaction_class = dict_repr["class"]
         interaction_type = dict_repr["type"]
         evidence = [Evidence.from_dict(x) for x in dict_repr["evidence"]]
         dict_repr = defaultdict(lambda: None, dict_repr)
-        organism = dict_repr["organism"]
+        organism_name = dict_repr["organism_name"]
         refseqid = dict_repr["refSeqID"]
 
         partners = dict_repr["partners"]
@@ -112,10 +114,18 @@ class RNAInteraction:
             interaction_class,
             interaction_type,
             evidence,
-            organism,
+            organism_name,
             refseqid,
             partners,
         )
+
+    @staticmethod
+    def __json_validate(json_repr):
+        with open("rna-interaction-schema_v1.json") as handle:
+            schema = json.load(handle)
+        validate(instance=json_repr, schema=schema)
+        p = 0
+
 
 
 class Evidence:
@@ -152,7 +162,7 @@ class Evidence:
         command = dict_repr["command"] if "command" in dict_repr else None
         data = dict_repr["data"] if "data" in dict_repr else None
         data = {
-            key: EvidenceData(value["measure"], value["value"])
+            key: EvidenceData(value["unit"], value["value"])
             for key, value in data.items()
         }
         return cls(
@@ -165,7 +175,7 @@ class Evidence:
 
 @dataclass
 class EvidenceData:
-    measure: str
+    unit: str
     value: Union[float, int]
 
     def json_repr(self):
@@ -179,8 +189,8 @@ class Partner:
         symbol: str,
         partner_type: str,
         genomic_coordinates: GenomicCoordinates,
-        organism: str,
-        accession: str,
+        organism_name: str,
+        organism_acc: str,
         local_sites: List[List[LocalSite]],
         description: str = None,
         sequence: Seq.Seq = None,
@@ -191,8 +201,8 @@ class Partner:
         self.symbol = symbol
         self.partner_type = partner_type
         self.genomic_coordinates = genomic_coordinates
-        self.organism = organism
-        self.accession = accession
+        self.organism_name = organism_name
+        self.organism_acc = organism_acc
         self.local_sites = local_sites
         self.description = description
         self.sequence = sequence
@@ -221,19 +231,19 @@ class Partner:
         genomic_coordinates = GenomicCoordinates.from_string(
             dict_repr.pop("genomic_coordinates")
         )
-        organism = dict_repr.pop("organism")
-        accession = dict_repr.pop("accession")
+        organism_name = dict_repr.pop("organism_name")
+        organism_acc = dict_repr.pop("organism_acc")
         # TODO: ask whether list in list is necessary
         local_sites = [
-            [LocalSite.from_string(x) for x in dict_repr.pop("local_sites")[0]]
+            [LocalSite(x[0], x[1]) for x in dict_repr.pop("local_sites")]
         ]
         return cls(
             name=name,
             symbol=symbol,
             partner_type=partner_type,
             genomic_coordinates=genomic_coordinates,
-            organism=organism,
-            accession=accession,
+            organism_name=organism_name,
+            organism_acc=organism_acc,
             local_sites=local_sites,
             **dict_repr,
         )
