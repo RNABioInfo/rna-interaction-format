@@ -4,7 +4,7 @@
 	"title": "RNA-RNA/Protein Interaction Format",
 	"description": "",
 	"type": "object",
-	"required": ["ID", "class", "type", "evidence"],
+	"required": ["ID", "class", "type", "evidence","partners"],
 	"properties": {
 		"ID": {
 			"type": "integer",
@@ -19,6 +19,8 @@
 		"evidence": {
 			"description": "evidence that supports the interaction",
 			"type": "array",
+			"minItems": 1,
+			"uniqueItems": true,
 			"items": {
 				"type": "object",
 				"properties": {
@@ -38,10 +40,8 @@
 						"type": "object"
 					}
 				},
-				"required": ["type", "method"]
-			},
-			"minItems": 1,
-			"uniqueItems": true
+				"required": ["type", "method","data"]
+			}
 		},
 		"partners": {
 			"type": "array",
