@@ -8,7 +8,7 @@ Main functions are provided via the `InteractionFile` class.
 Using this it is possible to load a whole file of Interactions like:
 
 ```python
-from RNAInteractions import InteractionFile
+from RNAInteraction.RNAInteractions import InteractionFile
 
 interaction_file = InteractionFile.load("/path/to/file")
 ```
@@ -27,7 +27,7 @@ This can be used  for example to filter the file and construct an `InteractionFi
 only from a subset as shown below.
 
 ```python
-from RNAInteractions import InteractionFile
+from RNAInteraction.RNAInteractions import InteractionFile
 
 filtered_interactions = []
 for interaction in InteractionFile.parse("/path/to/file"):
@@ -43,7 +43,7 @@ InteractionFile objects can be exported to the RNAinteraction Format using the
 ``export_json()`` function as follows:
 
 ```python
-from RNAInteractions import InteractionFile
+from RNAInteraction.RNAInteractions import InteractionFile
 
 interaction_file = InteractionFile.load("/path/to/file")
 interaction_file.export_json("/new/file/path")
