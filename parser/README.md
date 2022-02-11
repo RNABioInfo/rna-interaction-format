@@ -10,9 +10,9 @@
 * CMake >= 3.10 installed
 * rapidjson: https://github.com/Tencent/rapidjson/
 
-**Rapid test:**
+#Rapid test:
 
-#Compilation:
+**Compilation**
 
 ```shell
 mkdir release-build && cd release-build
@@ -20,19 +20,19 @@ cmake..
 make
 ```
 
-# Execution
+**Execution**
 
 ```shell
 ./RNA_INT_SPEC [options] 
 ```
 
-# Mandatory options
+**Mandatory options**
 
 **-d** : Path to the .json file to parse
 
 **-s** : Path to a .json schema file
 
-# Output
+**Output**
 
 If the .json file is not a valid json document, an error message is printed in the console, with some tips on frequent mistakes.
 
