@@ -67,8 +67,7 @@
 					},
 					"genomic_coordinates": {
 						"description": "",
-						"type": "string",
-						"pattern": "^[a-zA-Z0-9]*:(\\+|-):[0-9]+-[0-9]+"
+						"type": "string"
 					},
 					"organism_name": {
 						"description": "",
@@ -79,37 +78,7 @@
 						"type": "string"
 					},
 					"local_sites": {
-						"type": "array",
-						"items": {
-							"anyOf":[
-								{
-									"properties": {
-										"sequence_type": { "const": "rna"}
-									},
-									"type": "array",
-									"items": {
-										"type": "integer",
-										"minItems": 2,
-										"maxItems": 2
-									}	
-								},
-								{
-									"properties": {
-										"sequence_type": { "const": "protein"}
-									},
-									"type": "array",
-									"items": {
-										"type": "array",
-										"items": {
-											"type": "integer",
-											"minItems": 2,
-											"maxItems": 2
-										}
-									}
-
-								}
-							]							
-						}
+						"type": "array"
 					},
 					"other": {
 						"type": "object"
@@ -118,30 +87,7 @@
 						"type": "object"
 					}
 				}
-			},
-			"anyOf": [
-				{
-					"properties": {
-						"class": { "const": "RNA-RNA"}
-					},
-					"minItems": 2,
-					"maxItems": 2
-				},
-				{
-					"properties": {
-						"class": { "const": "RNA-Protein"}
-					},
-					"minItems": 2,
-					"maxItems": 2
-				},
-				{
-					"properties": {
-						"class": { "const": "RNA-RNA-Protein"}
-					},
-					"minItems": 3,
-					"maxItems": 3
-				}
-			]
+			}
 		}
 
 	}
