@@ -80,9 +80,13 @@
 						"local_sites": {
 							"type": "array",
 							"items": {
+								"maxItems": 3,
 								"type": "array",
-								"minItems": 2,
-								"maxItems": 2
+								"items": {
+									"type": "array",
+									"minItems": 2,
+									"maxItems": 2
+								}
 							}
 						},
 						"other": {

@@ -86,7 +86,8 @@
     "type": "basepairing", 
     
     "evidence": [{
-            "type": "Direct Duplex Detection", 
+            "type": "Data-driven", 
+            "method": "Direct Duplex Detection",
             "command": "RNAnue -minfraglen 18 -minlen 36 -sitelenratio 0.3",
             "data": {
                 "complementarity": {
