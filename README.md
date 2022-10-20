@@ -38,15 +38,10 @@ e.g.,
 
 ```json
 {
-    "type": "Direct Duplex Detection", 
-    "method": "RANnue", 
-    "command": "RNAnue -minfraglen 18 -minlen 36 -sitelenratio 0.3",
-    "data": {
-        "complementarity": {
-            "unit": "gcs",
-            "value": 0.8
-        }
-    }
+    "type": "Prediction", 
+    "method": "<method>", 
+    "command": "<command> <parameters>",
+    "data": {}
 }
 ```
 
@@ -122,6 +117,74 @@ In addition, the **custom** name/value pair allows to specify user-defined name/
     ]
 }
 ```
+
+## C/C++
+
+
+## JavaScript 
+
+### Getting Started
+
+The RIF module can be included in node.js using the `require` function by referencing to the `rif.js` file. 
+
+```javascript
+const rif = require('./rif.js');
+var r = new rif();
+```
+
+For the basic functionality of reading and writing RIF files, the functions `readRif(RIFfile)` and `writeRif(RIFfile)` are provided. In addition, `validate(data)` validates the data against the current schema. This is also called when importing RIFfiles using `readRif`.
+
+```javascript
+r.readRif('./examples/RNA-RNA.json'); // import a RIF file 
+r.writeRif('./RNA-RNA.json'); // write the RIF file 
+r.validate();
+```
+
+For the retrieval of specific interactions, `get` allows different queries of the data.   
+
+```javascript
+r.get({"ID": 1}); // single query
+r.get([{"class": "RNA-RNA", "type": "basepairing"}]); // single query, multiple properties
+r.get([{"class": "RNA-RNA"}]); // single query, returns multiple values 
+r.get([{"ID": 1}, {"ID": 2}]); // multiple queries
+```
+
+Other data manipulation is done with `add` and `rm` which add an interaction to the data and removes it, respectively.
+
+```javascript
+r.add({"class": "RNA-RNA", 
+    "type": "basepairing"})
+```
+
+In addition, specific properties can be modified using the `mod` routine which accepts the id of the interaction and the key/value pair. 
+
+```javascript
+r.mod(1,{"type": 123})
+```
+
+Finally, the import and export to BED format is provided
+
+```javascript
+r.writeBED("./examples/RNA-RNA.bed12");
+r.readBED("RNA-RNA.bed12");
+```
+
+##Python
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
