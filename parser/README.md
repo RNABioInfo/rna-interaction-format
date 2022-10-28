@@ -2,15 +2,13 @@
 
 **C++ Parser and Validator**
 
-# Installation and test
+Quick test: file validation
 
 **Source compilation prerequisites:**
 
 * Your GCC compiler must support C++17
 * CMake >= 3.10 installed
 * rapidjson: https://github.com/Tencent/rapidjson/
-
-# Quick test: file validation
 
 **Compilation**
 
