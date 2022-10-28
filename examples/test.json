@@ -1,0 +1,247 @@
+[
+    {
+        "ID": 12,
+        "class": "RNA-RNA-Protein",
+        "type": "basepairing",
+        "evidence": [
+            {
+                "type": "experimental",
+                "method": "gel shift assay",
+                "data": {
+                    "URI": "https://journals.asm.org/doi/full/10.1128/JB.183.6.1997-2005.2001",
+                    "note": "Hfq and DsrA interact in vivo"
+                }
+            },
+            {
+                "type": "experimental",
+                "method": "protein binding assay",
+                "data": {
+                    "URI": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1370368/"
+                }
+            }
+        ],
+        "partners": [
+            {
+                "name": "Hfq",
+                "symbol": "Hfq",
+                "type": "polypeptide",
+                "sequence_type": "protein",
+                "genomic_coordinates": "NC_000913.3:+:4400288-4400596",
+                "organism_name": "Escherichia coli K-12 MG1655",
+                "organism_acc": "NC_000913.3",
+                "local_sites": [
+                    [],
+                    [
+                        [
+                            60,
+                            78
+                        ],
+                        [
+                            45,
+                            55
+                        ]
+                    ],
+                    [
+                        [
+                            10,
+                            40
+                        ]
+                    ]
+                ],
+                "other": {
+                    "description": "RNA chaperone that binds small regulatory RNA (sRNAs) and mRNAs to facilitate mRNA translational regulation in response to envelope stress, environmental stress and changes in metabolite concentrations.",
+                    "sequence": "MAKGQSLQDPFLNALRRERVPVSIYLVNGIKLQGQIESFDQFVILLKNTVSQMVYKHAISTVVPSRPVSHHSNNAGGGTSSNYHHGSSAQNTSAQQDSEETE",
+                    "structure": "https://www.ebi.ac.uk/pdbe/entry/pdb/5I21"
+                }
+            },
+            {
+                "name": "dsrA",
+                "symbol": "dsrA",
+                "type": "small_regulatory_ncRNA",
+                "sequence_type": "rna",
+                "genomic_coordinates": "NC_000913.3:-:2025223-2025313",
+                "organism_name": "Escherichia coli K-12 MG1655",
+                "organism_acc": "NC_000913.3",
+                "local_sites": [
+                    [
+                        [
+                            12,
+                            30
+                        ],
+                        [
+                            80,
+                            90
+                        ]
+                    ],
+                    [],
+                    [
+                        [
+                            50,
+                            70
+                        ]
+                    ]
+                ],
+                "other": {
+                    "description": "DsrA small regulatory RNA; riboregulator of RpoS and H-NS production",
+                    "sequence": "AACGCATCGGATTTCCCGGTGTAACGAATTTTCAAGTGCTTCTTGCATTAGCAAGTTTGATCCCGACTCCTGCGAGTCGGGATTT",
+                    "structure": "...(((((((.....)))))))..(((((((...(((((.....)))))...)))))))((((((((((....)))))))))).."
+                },
+                "custom": {}
+            },
+            {
+                "name": "rpoS",
+                "symbol": "rpoS",
+                "type": "mRNA",
+                "sequence_type": "rna",
+                "genomic_coordinates": "chr1:-:2866559-2867551",
+                "organism_name": "Escherichia coli K-12 MG1655",
+                "organism_acc": "NC_000913.3",
+                "local_sites": [
+                    [
+                        [
+                            200,
+                            230
+                        ]
+                    ],
+                    [
+                        [
+                            587,
+                            607
+                        ]
+                    ],
+                    []
+                ],
+                "other": {
+                    "description": "RNA polymerase, sigma S (sigma 38) factor",
+                    "sequence": "TGAGTCAGAATACGCTGAAAGTTCATGATTTAAATGAAGATGCGGAATTTGATGAGAACGGAGTTGAGGTTTTTGACGAAAAGGCCTTAGTAGAACAGGAACCCAGTGATAACGATTTGGCCGAAGAGGAACTGTTATCGCAGGGAGCCACACAGCGTGTGTTGGACGCGACTCAGCTTTACCTTGGTGAGATTGGTTATTCACCACTGTTAACGGCCGAAGAAGAAGTTTATTTTGCGCGTCGCGCACTGCGTGGAGATGTCGCCTCTCGCCGCCGGATGATCGAGAGTAACTTGCGTCTGGTGGTAAAAATTGCCCGCCGTTATGGCAATCGTGGTCTGGCGTTGCTGGACCTTATCGAAGAGGGCAACCTGGGGCTGATCCGCGCGGTAGAGAAGTTTGACCCGGAACGTGGTTTCCGCTTCTCAACATACGCAACCTGGTGGATTCGCCAGACGATTGAACGGGCGATTATGAACCAAACCCGTACTATTCGTTTGCCGATTCACATCGTAAAGGAGCTGAACGTTTACCTGCGAACCGCACGTGAGTTGTCCCATAAGCTGGACCATGAACCAAGTGCGGAAGAGATCGCAGAGCAACTGGATAAGCCAGTTGATGACGTCAGCCGTATGCTTCGTCTTAACGAGCGCATACCTCGGTAGACACCCCGCTGGGTGGTGATTCCGAAAAAGCGTTGCTGGACATCCTGGCCGATGAAAAAGAGAACGGTCCGGAAGATACCACGCAAGATGACGATATGAAGCAGAGCATCGTCAAATGGCTGTTCGAGCTGAACGCCAAACAGCGTGAAGTGCTGGCACGTCGATTCGGTTTGCTGGGGTACGAAGCGGCAACACTGGAAGATGTAGGTCGTGAAATTGGCCTCACCCGTGAACGTGTTCGCCAGATTCAGGTTGAAGGCCTGCGCCGTTTGCGCGAAATCCTGCAAACGCAGGGGCTGAATATCGAAGCGCTGTTCCGCGAGTAA",
+                    "structure": "(((((((((((.........)))).))))))).........(((((((..((((.((((((..(((((((((((.....))))))))))).......((..(((.(((((((((......((.....))...))))))))).)))..)).....(((((((((.((((((....((((((..((((((..(((((((.....))))..)))....))).)))..)))))).......))))))....((((((((((....(((((((..(((((((((((..((((.....))))))))))))))).....(((((((((.....)))..(((.((((((((...))))))))....)))...))))))...))))).)))))))))))).(((((((..((((((...)).))))...))))))))))))))))...((((((....))))))((((....(((((...............))))).....))))...))).))).))))........(((((.((((...((((((.((((((.((.(((((((........))))....))))).))))))......))))))..(((((((....)))))))..))))))))).(((((((((((....))))).)))))).((((....((((((....)).))))...))))...(((((((((((...(((.(((((.............))))).))).....))).)))......((((((..(((......((((((((((((.((((.....))))(((...((((.((((...((((((((((..((((((((((((..........)))))).)))))).)))))((((((......))))))(((........)))...))))).)))).))))..)))....)))))))).))))..((((((....)))))))))..))))))..))))))))))))......"
+                },
+                "custom": {}
+            }
+        ]
+    },
+    {
+        "ID": 2,
+        "class": "RNA-RNA",
+        "type": "basepairing",
+        "evidence": [
+            {
+                "type": "Data-driven",
+                "method": "Direct Duplex Detection",
+                "command": "RNAnue -minfraglen 18 -minlen 36 -sitelenratio 0.3",
+                "data": {
+                    "complementarity": {
+                        "unit": "gcs",
+                        "value": 0.8
+                    },
+                    "energy": {
+                        "unit": "ges (ddG)",
+                        "value": -12.6
+                    },
+                    "significance": {
+                        "unit": "p-value",
+                        "value": 0.000001415
+                    },
+                    "reads": {
+                        "unit": "counts",
+                        "value": 43
+                    }
+                }
+            },
+            {
+                "type": "prediction",
+                "method": "CopraRNA",
+                "command": "CopraRNA2.pl -srnaseq sRNAs.fa -ntup 200 -ntdown 100 -region 5utr -enrich 200 -topcount 200",
+                "data": {
+                    "energy": {
+                        "unit": "ddG",
+                        "value": -21.69
+                    },
+                    "significance": {
+                        "unit": "p-value",
+                        "value": 2.411e-7
+                    }
+                }
+            },
+            {
+                "type": "prediction",
+                "method": "RNAcofold",
+                "command": "RNAcofold --shapeMethod Z --maxBPspan 10 --dangles 4",
+                "data": {
+                    "energy": {
+                        "unit": "ddG",
+                        "value": -17.21
+                    }
+                }
+            },
+            {
+                "type": "knockout experiments",
+                "method": "qPCR",
+                "data": {
+                    "fold_change": {
+                        "unit": "ddCt",
+                        "value": 3
+                    }
+                }
+            }
+        ],
+        "partners": [
+            {
+                "name": "micF",
+                "symbol": "micF",
+                "type": "small_regulatory_ncRNA",
+                "sequence_type": "rna",
+                "genomic_coordinates": "NC_000913.3:+:2313084-2313176",
+                "organism_name": "Escherichia coli K-12 MG1655",
+                "organism_acc": "NC_000913.3",
+                "local_sites": [
+                    [],
+                    [
+                        [
+                            25,
+                            32
+                        ],
+                        [
+                            55,
+                            64
+                        ]
+                    ]
+                ],
+                "other": {
+                    "description": "The micF RNA is a non-coding RNA stress response gene found in Escherichia coli and related bacteria that post-transcriptionally controls expression of the outer membrane porin gene ompF",
+                    "sequence": "AACGCATCGGATTTCCCGGTGTAACGAATTTTCAAGTGCTTCTTGCATTAGCAAGTTTGATCCCGACTCCTGCGAGTCGGGATTT",
+                    "structure": "...(((((((.....)))))))..(((((((...(((((.....)))))...)))))))((((((((((....)))))))))).."
+                },
+                "custom": {}
+            },
+            {
+                "name": "lrp",
+                "symbol": "lrp",
+                "type": "mRNA",
+                "sequence_type": "rna",
+                "genomic_coordinates": "NC_000913.3:+:932595-933089",
+                "organism_name": "Escherichia coli K-12 MG1655",
+                "organisms_acc": "NC_000913.3",
+                "local_sites": [
+                    [
+                        [
+                            100,
+                            107
+                        ],
+                        [
+                            158,
+                            167
+                        ]
+                    ],
+                    []
+                ],
+                "other": {
+                    "description": "leucine-responsive global transcriptional regulator",
+                    "sequence": "TGGTAGATAGCAAGAAGCGCCCTGGCAAAGATCTCGACCGTATCGATCGTAACATTCTTAATGAGTTGCAAAAGGATGGGCGTATTTCTAACGTCGAGCTTTCTAAACGTGTGGGACTTTCCCCAACGCCGTGCCTTGAGCGTGTGCGTCGGCTGGAAAGACAAGGGTTTATTCAGGGCTATACGGCGCTGCTTAACCCCCATTATCTGGATGCATCACTTCTGGTATTCGTTGAGATTACTCTGAATCGTGGCGCACCGGATGTGTTTGAACAATTCAATACCGCTGTACAAAAACTTGAAGAAATTCAGGAGTGTCATTTAGTATCCGGTGATTTCGACTACCTGTTGAAAACACGCGTGCCGGATATGTCAGCCTACCGTAAGTTGCTGGGGGAAACCCTGCTGCGTCTGCCTGGCGTCAATGACACACGGACATACGTTGTTATGGAAGAAGTCAAGCAGAGTAATCGTCTGGTTATTAAGACGCGCTAA",
+                    "structure": ".(((((((((((.......((((((((((((.((((((.((...((((((..(((((((..((.....)).))))))).))).)))....))))))))...)))..(((.(((((.((((((((.(((((((((.....))))).)))).))..))))))....(((((....(((.(((....))).)))...))))).....((((((.(((.(((((((.((((.((.....)).))))..)))..)))).)))))))))(((.(((((...)))))...)))((.(((....((((((....))))))..)))))....((((((((((.(((((((.....))))))).))......)))))))).....))))))))...))))))))).......))))..)))))))..(((((((((((...(((((.(((.(((((.(((......)))))))).)))...)))))))))))..)))))....."
+                },
+                "custom": {}
+            }
+        ]
+    }
+]

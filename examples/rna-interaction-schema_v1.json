@@ -1,148 +1,105 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
-	"$id": "https://raw.githubusercontent.com/Ibvt/rna-interaction-specification/rna-interaction-schema_v1.json",
+	"$id": "https://raw.githubusercontent.com/Ibvt/rna-interaction-specification/rna-interaction-schema_v1tmp.json",
 	"title": "RNA-RNA/Protein Interaction Format",
 	"description": "",
-	"type": "object",
-	"required": ["ID", "class", "type", "evidence"],
-	"properties": {
-		"ID": {
-			"type": "integer",
-			"minimum": 0
-		},
-		"class": {
-			"enum": ["RNA-RNA", "RNA-Protein", "RNA-RNA-Protein"]
-		},
-		"type": {
-			"type": "string"
-		},
-		"evidence": {
-			"description": "evidence that supports the interaction",
-			"type": "array",
-			"items": {
-				"type": "object",
-				"properties": {
-					"type": {
-						"description": "type of evidence (e.g., prediction, experimental)",
-						"type": "string"
-					},
-					"method": {
-						"description": "Tools or laboratory techniques used",
-						"type": "string"
-					},
-					"command": {
-						"description": "",
-						"type": "string"
-					},
-					"data": {
-						"type": "object"
-					}
-				},
-				"required": ["type", "method"]
+	"type": "array",
+	"minItems": 1,
+	"uniqueItems": true,
+	"items": {
+		"type": "object",
+		"properties": {
+			"ID": {
+				"type": "integer",
+				"minimum": 0,
+				"description": "The unique identifier for an interaction"
 			},
-			"minItems": 1,
-			"uniqueItems": true
-		},
-		"partners": {
-			"type": "array",
-			"items": {
-				"type": "object",
-				"properties": {
-					"name": {
-						"description": "",
-						"type": "string"
-					},
-					"symbol": {
-						"description": "",
-						"type": "string"
-					},
-					"type": {
-						"description": "",
-						"type": "string"
-					},
-					"sequence": {
-						"description": "",
-						"enum": ["dna","rna","protein"]
-
-					},
-					"genomic_coordinates": {
-						"description": "",
-						"type": "string",
-						"pattern": "^[a-zA-Z0-9]*:(\\+|-):[0-9]+-[0-9]+"
-					},
-					"organism_name": {
-						"description": "",
-						"type": "string"
-					},
-					"organism_name": {
-						"description": "",
-						"type": "string"
-					},
-					"local_sites": {
-						"type": "array",
-						"items": {
-							"anyOf":[
-								{
-									"properties": {
-										"sequence_type": { "const": "rna"}
-									},
-									"type": "array",
-									"items": {
-										"type": "integer",
-										"minItems": 2,
-										"maxItems": 2
-									}	
-								},
-								{
-									"properties": {
-										"sequence_type": { "const": "protein"}
-									},
-									"type": "array",
-									"items": {
-										"type": "array",
-										"items": {
-											"type": "integer",
-											"minItems": 2,
-											"maxItems": 2
-										}
-									}
-
-								}
-							]							
+			"class": {
+				"enum": ["RNA-RNA", "RNA-Protein", "RNA-RNA-Protein"]
+			},
+			"type": {
+				"type": "string"
+			},
+			"evidence": {
+				"description": "evidence that supports the interaction",
+				"type": "array",
+				"minItems": 1,
+				"uniqueItems": true,
+				"items": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"description": "Type of evidence (e.g., prediction, experimental)",
+							"type": "string"
+						},
+						"method": {
+							"description": "Tools or laboratory techniques used",
+							"type": "string"
+						},
+						"command": {
+							"description": "",
+							"type": "string"
+						},
+						"data": {
+							"type": "object"
 						}
 					},
-					"other": {
-						"type": "object"
-					},
-					"custom": {
-						"type": "object"
-					}
+					"required": ["type", "method","data"]
 				}
-			},
-			"anyOf": [
-				{
-					"properties": {
-						"class": { "const": "RNA-RNA"}
-					},
-					"minItems": 2,
-					"maxItems": 2
-				},
-				{
-					"properties": {
-						"class": { "const": "RNA-Protein"}
-					},
-					"minItems": 2,
-					"maxItems": 2
-				},
-				{
-					"properties": {
-						"class": { "const": "RNA-RNA-Protein"}
-					},
-					"minItems": 3,
-					"maxItems": 3
-				}
-			]
-		}
 
+			},
+			"partners": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"properties": {
+						"name": {
+							"description": "",
+							"type": "string"
+						},
+						"symbol": {
+							"description": "",
+							"type": "string"
+						},
+						"type": {
+							"description": "",
+							"type": "string"
+						},
+						"sequence_type": {
+							"description": "",
+							"enum": ["dna","rna","protein"]
+						},
+						"genomic_coordinates": {
+							"description": "",
+							"type": "string"
+						},
+						"organism_name": {
+							"description": "",
+							"type": "string"
+						},
+						"local_sites": {
+							"type": "array",
+							"items": {
+								"maxItems": 3,
+								"type": "array",
+								"items": {
+									"type": "array",
+									"minItems": 2,
+									"maxItems": 2
+								}
+							}
+						},
+						"other": {
+							"type": "object"
+						},
+						"custom": {
+							"type": "object"
+						}
+					},
+					"required": ["name", "type", "local_sites"]
+				}
+			}
+		},
+		"required": ["ID", "class", "type", "evidence","partners"]
 	}
 }

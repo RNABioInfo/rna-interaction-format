@@ -1,7 +1,8 @@
-{
+[{
     "ID": 1,
     "class": "RNA-RNA",
     "type": "basepairing", 
+    
     "evidence": [{
             "type": "Direct Duplex Detection", 
             "method": "RANnue", 
@@ -22,7 +23,7 @@
             "organism_name": "Escherichia coli K-12 MG1655",
             "organism_acc": "NC_000913",
             "local_sites": [ 
-                [25,32],[10,17]
+                [],[[25,32],[10,17]]
             ]
         },
         {
@@ -33,8 +34,8 @@
             "organism_name": "Escherichia coli K-12 MG1655",
             "organisms_acc": "NC_000913",
             "local_sites": [ 
-                [70,83],[19,32]
+                [[70,83],[19,32]],[]
             ]
         }
     ]
-}
+}]
