@@ -9,14 +9,14 @@
 #include "include/rapidjson/stringbuffer.h"
 #include "include/rapidjson/prettywriter.h"
 
-std::vector<int> get_pair(std::string p);
+int find_interaction(rapidjson::Document *doc, int ref);
 
-int find_partner(rapidjson::Document *doc, std::string name);
+std::vector<int> subset_interaction(rapidjson::Document *doc, std::string q);
 
-void add_partner(rapidjson::Document *doc, rapidjson::Document *n);
+rapidjson::Document get_interaction(rapidjson::Document *doc, std::string q);
 
-void remove_partner(rapidjson::Document *doc, std::string name);
+void add_interaction(rapidjson::Document *doc, rapidjson::Value v);
 
-void update_partner(rapidjson::Document *doc, std::string name, std::string field, std::string nv);
+void remove_interaction(rapidjson::Document *doc, int ref);
 
 #endif /* UPDATE_H_ */

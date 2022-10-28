@@ -20,4 +20,8 @@ int json_check(rapidjson::Document *doc);
 
 int schema_validator(rapidjson::Document *doc, rapidjson::Document *s);
 
+std::vector<std::string> extract_gc(std::string gc);
+
+void export_bed(rapidjson::Document *doc, std::string add, std::string name);
+
 #endif /* PARSE_H_ */

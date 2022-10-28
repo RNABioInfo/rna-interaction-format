@@ -63,6 +63,11 @@ int main(int argc, char** argv) {
 		rapidjson::Document s;
 		s.Parse(sch.c_str());
 		schema_validator(&d, &s);
+		rapidjson::Document f=get_interaction(&d,"partner=Hfq,Bbh,micF; type=basepairing");
+		cout << f.Size() << endl;
+		f[0]["ID"]=12;
+		schema_validator(&f, &s);
+		write_json(&f,"/homes/brauerei2/guillaume/Documents/RNA/json/rna-interaction-specification/examples/" , "test");
 	}
 	cout << endl << "The End !" << endl;
 	return 0;
