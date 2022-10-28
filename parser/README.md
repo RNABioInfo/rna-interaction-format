@@ -10,7 +10,7 @@
 * CMake >= 3.10 installed
 * rapidjson: https://github.com/Tencent/rapidjson/
 
-#Rapid test:
+# Quick test: file validation
 
 **Compilation**
 
