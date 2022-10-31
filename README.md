@@ -181,7 +181,84 @@ NC_000913.3 2866558 2867550 rpoS-dsrA   0   -   2866558 2866558 (255,0,0)   1   
 
 
 ### C/C++
-*coming soon...*
+
+The implementation uses the RapidJSON library (https://rapidjson.org/). RapidJSON parses a json string into a 'Document', which makes it easy to manipulate.
+
+Header:
+
+~~~~~~~~~~cpp
+#include "parser/parse.h" //parser; import/export
+#include "parser/update.h" // updating documents
+using namespace rapidjson;
+~~~~~~~~~~
+
+Read a .json file:
+
+~~~~~~~~~~cpp
+std::string json=(read\_jfile(path\_to\_your\_json));
+Document doc;
+doc.Parse(json);
+~~~~~~~~~~
+
+Validator:
+
+~~~~~~~~~~cpp
+json\_check(*doc); // the object 'doc' is a valid json document.
+
+Document schema;
+schema.Parse(read\_jfile(path\_to\_your\_schema));
+schema\_validator(*doc, *schema); // the object 'doc' is valid for the given schema.
+~~~~~~~~~~
+
+Write a document into a .json file:
+
+~~~~~~~~~~cpp
+write\_json(&doc, path\_to\_directory, file\_name);
+~~~~~~~~~~
+
+Export a document to a .bed file:
+
+~~~~~~~~~~cpp
+export\_bed(&doc, path\_to\_directory, file\_name);
+~~~~~~~~~~
+
+Basic file manipulations are handled by RapidJSON (see RapidJSON documentation:  https://rapidjson.org/):
+
+~~~~~~~~~~cpp
+(doc[i]).HasMember("ID"); //checks that the i-th interaction of 'doc' has a member "ID".
+int id=(document[i]["ID"]).GetInt(); // retrieves the ID of the i-th interaction.
+doc[i]["ID"]=12; // sets the ID of the i-th interaction to 1.
+std::string nm=(doc[i]["partners"][j]["name"]).GetString(); // retrieves the name of the j-th partner of the i-th interaction.
+doc[i]["partners"][j]["name"]="Bbh"; // sets the name of the j-th partner of the i-th interaction to "Bbh".
+~~~~~~~~~~
+
+Since an interaction is called by its position in 'doc', 'find_interaction' allows to retrieve the position of an interaction from its ID. To avoid problems, IDs within a single document are assumed to be unique:
+
+~~~~~~~~~~cpp
+int i=find_interaction(3);
+std::string cl=(document[i]["class"]).GetString(); // retrieves the class of the interaction with "ID": 3.
+~~~~~~~~~~
+
+A specific interaction can be removed:
+~~~~~~~~~~cpp
+int i=find_interaction(3);
+remove_interaction(&doc, i); // removes from 'doc' the interaction with "ID": 3.
+~~~~~~~~~~
+
+Or added:
+~~~~~~~~~~cpp
+Document otherdoc;
+add_interaction(&doc, &((otherdoc[i])).GetValue()); // add to 'doc' the i-th interaction of 'otherdoc'
+~~~~~~~~~~
+
+
+Specific interactions can be retrieved using 'get_interaction', via a string query:
+
+~~~~~~~~~~cpp
+Document sub1=(&doc, "class=RNA-RNA") // New rapidjson document containing all interaction of 'doc' with "class": "RNA-RNA".
+Document sub2=(&doc, "class=RNA-RNA, RNA-Protein") // New rapidjson document containing all interaction of 'doc' with "class": "RNA-RNA" or "class": "RNA-Protein".
+Document sub1=(&doc, "class=RNA-RNA; partner=dsrA") // New rapidjson document containing all interaction of 'doc' with "class": "RNA-RNA" and "dsrA" as one of the partner.
+~~~~~~~~~~
 
 
 ### JavaScript 
