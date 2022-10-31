@@ -180,8 +180,6 @@ NC_000913.3 2866558 2867550 rpoS-dsrA   0   -   2866558 2866558 (255,0,0)   1   
 ## Implementation
 
 
-
-<<<<<<< HEAD
 ### C/C++
 *coming soon...*
 
