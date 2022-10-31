@@ -191,27 +191,67 @@ class RIF {
 		//console.log(this.content)
 		var bed = [];
 		var file = fs.createWriteStream(filePath);
-		
+
+
+
+
+
 		for(var i=0;i<this.content.length;i++) {
-			var name = "";
-			
+			var name = "";			
 			var object = this.content[i];
 			for(var j=0;j<object.partners.length;j++) {
-				var line = ["","","","","0","","","","(0,0,0)","","",""];
-				var coord = object.partners[j].genomic_coordinates.split(":");
-				var chrom = coord[2].split("-");
+				console.log("iterate")
+				
+				for(var k=0;k<object.partners.length;k++) {
+					if(j != k) {
+						var line = ["","","","","0","","","","(0,0,0)","","",""];
+						var coord = object.partners[j].genomic_coordinates.split(":");
+						var chrom = coord[2].split("-");
 
-				line[0] = coord[0]; // chrom
-				line[1] = chrom[0]-1; // chromStart
-				line[2] = chrom[1]-1; // chromEnd
-				line[5] = coord[1]; // strand
-				line[6] = line[7] = line[1] // thickStart & thickEnd equal chromStart
-				//line[9] = object.partners[j].local_sites.length; // blockCount
+						// 
+						line[0] = coord[0]; // chrom
+						line[1] = chrom[0]-1; // chromStart
+						line[2] = chrom[1]-1; // chromEnd
+						line[3] = object.partners[j].symbol + "-" + object.partners[k].symbol// name
+						line[5] = coord[1]; // strand
+						line[6] = line[7] = line[1] // thickStart & thickEnd equal chromStart
 
-				name += j==0 ? object.partners[j].name : "-" + object.partners[j].name;
+						// determine RGB codes
+						if(object.partners.length == 2) {
+							line[8] = "(0,255,0)"; // green
+							if(line[8].split("-").includes("polypetide")) {
+								line[8] = "(0,0,255)"; // blue
+							} 
+						} else {
+							if(object.partners.length > 2) {
+								line[8] = "(255,0,0)"; // red
+							}
+						}
+						
+						var sites = object.partners[j].local_sites[object.partners[k].symbol];
+						line[9] = sites.length; // blockCount
+						for(var l=0;l<sites.length;l++) {
+							var size = (sites[l][1]+1)-sites[l][0];
+							line[10] += line[10].length == 0 ? size : "," + size; // blockSizes
+							line[11] += line[11].length == 0 ? sites[l][0] : ","+ sites[l][0];
+						}
+						file.write(line.join("\t") + "\n");
+					}
+				}
+			}
+		}
+		file.close();
 
-				var sites = object.partners[j].local_sites;
-				for(var k=0;k<sites.length;k++) {
+	}
+
+
+
+
+
+//var sites = object.partners[j].local_sites;
+
+
+/*
 					if(sites[k].length != 0) {
 						for(var l=0;l<sites[k].length;l++) {
 							var size = sites[k][l][1]+1-sites[k][l][0];
@@ -220,94 +260,27 @@ class RIF {
 							line[11] += line[11].length == 0 ? sites[k][l][0] : "," + sites[k][l][0]; // blockStarts
 						}
 					}
-				}
-				bed.push(line);
-			}
+				}*/
+				//bed.push(line);
+			//}
 
 			// write name back to bed entry
+			/*
 			for(var j=0;j<bed.length;j++) {
 				bed[j][3] = name; // name
-			}
-			console.log(bed); 
+			}*/
+			//console.log(bed); 
 			// write to file
 			
+			/*
 			bed.forEach(function(v) { 
 				file.write(v.join('\t') + '\n'); 
-			});
+			});*/
 			
-			bed = [];
-		}
-		file.end();
-	}
+			//bed = [];
+		//}
+		//file.end();
 
-	// import BED file
-	importBED(filePath) {
-		console.log("importBED")
-
-		var cols = "";
-		var name = "";
-		var int = []; // buffer interaction partners
-		lr.eachLine(filePath, (line,last) => {
-			cols = line.split("\t");
-			if(name == "" || name == cols[3]) {
-				int.push(cols);
-			} else {
-				console.log(int)
-				
-				var partners = [];
-				// do something
-				for(var i=0;i<int.length;i++) {
-					var el = int[i];
-
-
-
-					var p = {
-						"name": el[3].split("-")[i],
-						"type": "region",
-						"local_sites": []
-					}
-
-
-					// convert blockStarts and blockSizes to local_sites
-					for(var j=0;j<int.length;j++) {
-						 if(i != j) {
-						 	// determine intersecting sites
-						 	var sitesA = int[i][10].split(",");
-						 	var sitesB = int[j][10].split(",");
-						 	var intersection = sitesA.filter(
-						 		value=>sitesB.includes(value));
-
-						 	console.log(intersection);
-						 	for(var k=0;)
-
-
-						 	p["local_sites"]
-						 } else {
-						 	p["local_sites"].push([]);
-						 }
-					}
-
-
-
-					console.log(p)
-
-					console.log("add")
-					this.add({});
-
-					console.log(this.content)
-
-				}
-
-				int = [];
-				int.push(cols)
-			}
-			name = cols[3];
-			if(last) {
-				console.log(int)
-			}
-		});
-
-	}
 }
 
 

@@ -50,6 +50,7 @@
 			},
 			"partners": {
 				"type": "array",
+				"minItems": 2,
 				"items": {
 					"type": "object",
 					"properties": {
@@ -71,32 +72,51 @@
 						},
 						"genomic_coordinates": {
 							"description": "",
-							"type": "string"
+							"type": "string",
+							"pattern": "^[A-Za-z0-9_.]*:[+|-]:[0-9_]*-[0-9_]*$"
 						},
 						"organism_name": {
 							"description": "",
 							"type": "string"
 						},
 						"local_sites": {
-							"type": "array",
-							"items": {
-								"maxItems": 3,
-								"type": "array",
-								"items": {
+							"type": "object",
+							"patternProperties": {
+								"^.*$": {
 									"type": "array",
-									"minItems": 2,
-									"maxItems": 2
+									"items": {
+										"type": "array",
+										"minItems": 2,
+										"maxItems": 2,
+										"items": {
+											"type": "number"
+										}
+									}
 								}
 							}
 						},
 						"other": {
-							"type": "object"
+							"type": "object",
+							"properties": {
+								"description": {
+									"description": "",
+									"type": "string"
+								},
+								"sequence": {
+									"type": "string",
+									"pattern": "^([ATGC]*|[ARNDCQEGHILKMFPSTWYV]*)$"
+								},
+								"structure": {
+									"type": "string"
+								}
+							},
+							"additionalProperties": {"type": "string"}
 						},
 						"custom": {
 							"type": "object"
 						}
 					},
-					"required": ["name", "type", "local_sites"]
+					"required": ["name", "symbol", "type", "local_sites"]
 				}
 			}
 		},

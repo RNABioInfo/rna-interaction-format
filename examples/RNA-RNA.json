@@ -30,10 +30,10 @@
             "genomic_coordinates": "NC_000913.3:+:4400288-4400596",
             "organism_name": "Escherichia coli K-12 MG1655",
             "organism_acc": "NC_000913.3",
-            "local_sites": [
-                [],[[60,78],[45,55]],[[10,40]]
-            ],
-
+            "local_sites": {
+                "dsrA": [[60,78],[45,55]],
+                "rpoS": [[10,40]]
+            },
             "other": {
                 "description": "RNA chaperone that binds small regulatory RNA (sRNAs) and mRNAs to facilitate mRNA translational regulation in response to envelope stress, environmental stress and changes in metabolite concentrations.",
                 "sequence": "MAKGQSLQDPFLNALRRERVPVSIYLVNGIKLQGQIESFDQFVILLKNTVSQMVYKHAISTVVPSRPVSHHSNNAGGGTSSNYHHGSSAQNTSAQQDSEETE",
@@ -48,9 +48,10 @@
             "genomic_coordinates": "NC_000913.3:-:2025223-2025313",
             "organism_name": "Escherichia coli K-12 MG1655",
             "organism_acc": "NC_000913.3",
-            "local_sites": [ 
-                [[12,30],[80,90]],[],[[50,70]]
-            ],
+            "local_sites": {
+                "Hfq": [[12,30],[80,90]],
+                "rpoS": [[50,70]]
+            },
             "other": {                
                 "description": "DsrA small regulatory RNA; riboregulator of RpoS and H-NS production",
                 "sequence": "AACGCATCGGATTTCCCGGTGTAACGAATTTTCAAGTGCTTCTTGCATTAGCAAGTTTGATCCCGACTCCTGCGAGTCGGGATTT", 
@@ -64,12 +65,13 @@
             "symbol": "rpoS",
             "type": "mRNA",
             "sequence_type": "rna",
-            "genomic_coordinates": "chr1:-:2866559-2867551",
+            "genomic_coordinates": "NC_000913.3:-:2866559-2867551",
             "organism_name": "Escherichia coli K-12 MG1655",
             "organism_acc": "NC_000913.3",
-            "local_sites": [ 
-                [[200,230]],[[587,607]],[]
-            ],
+            "local_sites": { 
+                "Hfq": [[200,230]],
+                "dsrA": [[587,607]]
+            },
             "other": {
                 "description": "RNA polymerase, sigma S (sigma 38) factor",
                 "sequence": "TGAGTCAGAATACGCTGAAAGTTCATGATTTAAATGAAGATGCGGAATTTGATGAGAACGGAGTTGAGGTTTTTGACGAAAAGGCCTTAGTAGAACAGGAACCCAGTGATAACGATTTGGCCGAAGAGGAACTGTTATCGCAGGGAGCCACACAGCGTGTGTTGGACGCGACTCAGCTTTACCTTGGTGAGATTGGTTATTCACCACTGTTAACGGCCGAAGAAGAAGTTTATTTTGCGCGTCGCGCACTGCGTGGAGATGTCGCCTCTCGCCGCCGGATGATCGAGAGTAACTTGCGTCTGGTGGTAAAAATTGCCCGCCGTTATGGCAATCGTGGTCTGGCGTTGCTGGACCTTATCGAAGAGGGCAACCTGGGGCTGATCCGCGCGGTAGAGAAGTTTGACCCGGAACGTGGTTTCCGCTTCTCAACATACGCAACCTGGTGGATTCGCCAGACGATTGAACGGGCGATTATGAACCAAACCCGTACTATTCGTTTGCCGATTCACATCGTAAAGGAGCTGAACGTTTACCTGCGAACCGCACGTGAGTTGTCCCATAAGCTGGACCATGAACCAAGTGCGGAAGAGATCGCAGAGCAACTGGATAAGCCAGTTGATGACGTCAGCCGTATGCTTCGTCTTAACGAGCGCATACCTCGGTAGACACCCCGCTGGGTGGTGATTCCGAAAAAGCGTTGCTGGACATCCTGGCCGATGAAAAAGAGAACGGTCCGGAAGATACCACGCAAGATGACGATATGAAGCAGAGCATCGTCAAATGGCTGTTCGAGCTGAACGCCAAACAGCGTGAAGTGCTGGCACGTCGATTCGGTTTGCTGGGGTACGAAGCGGCAACACTGGAAGATGTAGGTCGTGAAATTGGCCTCACCCGTGAACGTGTTCGCCAGATTCAGGTTGAAGGCCTGCGCCGTTTGCGCGAAATCCTGCAAACGCAGGGGCTGAATATCGAAGCGCTGTTCCGCGAGTAA", 
@@ -155,9 +157,9 @@
             "genomic_coordinates": "NC_000913.3:+:2313084-2313176",
             "organism_name": "Escherichia coli K-12 MG1655",
             "organism_acc": "NC_000913.3",
-            "local_sites": [ 
-                [],[[25,32],[55,64]]
-            ],
+            "local_sites": {
+                "lrp": [[25,32],[55,64]]
+            },
             "other": {                
                 "description": "The micF RNA is a non-coding RNA stress response gene found in Escherichia coli and related bacteria that post-transcriptionally controls expression of the outer membrane porin gene ompF",
                 "sequence": "AACGCATCGGATTTCCCGGTGTAACGAATTTTCAAGTGCTTCTTGCATTAGCAAGTTTGATCCCGACTCCTGCGAGTCGGGATTT", 
@@ -174,10 +176,9 @@
             "genomic_coordinates": "NC_000913.3:+:932595-933089",
             "organism_name": "Escherichia coli K-12 MG1655",
             "organisms_acc": "NC_000913.3",
-            "local_sites": [ 
-                [[100,107],[158,167]],[]
-            ],
-            
+            "local_sites": {
+                "micF": [[100,107],[158,167]]
+            },
             "other": {
                 "description": "leucine-responsive global transcriptional regulator",
                 "sequence": "TGGTAGATAGCAAGAAGCGCCCTGGCAAAGATCTCGACCGTATCGATCGTAACATTCTTAATGAGTTGCAAAAGGATGGGCGTATTTCTAACGTCGAGCTTTCTAAACGTGTGGGACTTTCCCCAACGCCGTGCCTTGAGCGTGTGCGTCGGCTGGAAAGACAAGGGTTTATTCAGGGCTATACGGCGCTGCTTAACCCCCATTATCTGGATGCATCACTTCTGGTATTCGTTGAGATTACTCTGAATCGTGGCGCACCGGATGTGTTTGAACAATTCAATACCGCTGTACAAAAACTTGAAGAAATTCAGGAGTGTCATTTAGTATCCGGTGATTTCGACTACCTGTTGAAAACACGCGTGCCGGATATGTCAGCCTACCGTAAGTTGCTGGGGGAAACCCTGCTGCGTCTGCCTGGCGTCAATGACACACGGACATACGTTGTTATGGAAGAAGTCAAGCAGAGTAATCGTCTGGTTATTAAGACGCGCTAA", 
