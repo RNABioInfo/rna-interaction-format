@@ -195,7 +195,7 @@ using namespace rapidjson;
 Read a .json file:
 
 ~~~~~~~~~~cpp
-std::string json=(read\_jfile(path\_to\_your\_json));
+std::string json=(read_jfile(path_to_your_json));
 Document doc;
 doc.Parse(json);
 ~~~~~~~~~~
@@ -203,23 +203,23 @@ doc.Parse(json);
 Validator:
 
 ~~~~~~~~~~cpp
-json\_check(*doc); // the object 'doc' is a valid json document.
+json_check(*doc); // the object 'doc' is a valid json document.
 
 Document schema;
-schema.Parse(read\_jfile(path\_to\_your\_schema));
-schema\_validator(*doc, *schema); // the object 'doc' is valid for the given schema.
+schema.Parse(read_jfile(path_to_your_schema));
+schema_validator(*doc, *schema); // the object 'doc' is valid for the given schema.
 ~~~~~~~~~~
 
 Write a document into a .json file:
 
 ~~~~~~~~~~cpp
-write\_json(&doc, path\_to\_directory, file\_name);
+write_json(&doc, path_to_directory, file_name);
 ~~~~~~~~~~
 
 Export a document to a .bed file:
 
 ~~~~~~~~~~cpp
-export\_bed(&doc, path\_to\_directory, file\_name);
+export_bed(&doc, path_to_directory, file_name);
 ~~~~~~~~~~
 
 Basic file manipulations are handled by RapidJSON (see RapidJSON documentation:  https://rapidjson.org/):
@@ -255,9 +255,9 @@ add_interaction(&doc, &((otherdoc[i])).GetValue()); // add to 'doc' the i-th int
 Specific interactions can be retrieved using 'get_interaction', via a string query:
 
 ~~~~~~~~~~cpp
-Document sub1=(&doc, "class=RNA-RNA") // New rapidjson document containing all interaction of 'doc' with "class": "RNA-RNA".
-Document sub2=(&doc, "class=RNA-RNA, RNA-Protein") // New rapidjson document containing all interaction of 'doc' with "class": "RNA-RNA" or "class": "RNA-Protein".
-Document sub1=(&doc, "class=RNA-RNA; partner=dsrA") // New rapidjson document containing all interaction of 'doc' with "class": "RNA-RNA" and "dsrA" as one of the partner.
+Document sub1=get_interaction(&doc, "class=RNA-RNA") // New rapidjson document containing all interaction of 'doc' with "class": "RNA-RNA".
+Document sub2=get_interaction(&doc, "class=RNA-RNA, RNA-Protein") // New rapidjson document containing all interaction of 'doc' with "class": "RNA-RNA" or "class": "RNA-Protein".
+Document sub3=get_interaction(&doc, "class=RNA-RNA; partner=dsrA") // New rapidjson document containing all interaction of 'doc' with "class": "RNA-RNA" and "dsrA" as one of the partner.
 ~~~~~~~~~~
 
 
