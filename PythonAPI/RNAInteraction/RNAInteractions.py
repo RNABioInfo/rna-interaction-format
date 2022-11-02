@@ -80,8 +80,8 @@ class InteractionFile:
 class RNAInteraction:
     rgb_map = {
         "RNA-RNA": "(0,255,0)",
-        "RNA-Protein": "(0, 0, 255)",
-        "RNA-RNA-Protein": "(255, 0, 0)"
+        "RNA-Protein": "(0,0,255)",
+        "RNA-RNA-Protein": "(255,0,0)"
     }
 
     def __init__(
@@ -151,15 +151,17 @@ class RNAInteraction:
         for first_partner in self.partners:
             to_col_three = first_partner.bed_repr()
             rgb = self.rgb_map[self.interaction_class]
-            for idx, second_partner in enumerate(self.partners):
-                lsssizes = ",".join([ls.end - ls.start for ls in first_partner.local_sites[idx]])
-                lsstarts = ",".join([ls.start for ls in first_partner.local_sites[idx]])
+            ph = first_partner.genomic_coordinates.start-1
+            for second_partner in self.partners:
+                if second_partner != first_partner and second_partner.name in first_partner.local_sites:
+                    lsssizes = ",".join([str(ls.end - ls.start + 1) for ls in first_partner.local_sites[second_partner.name]])
+                    lsstarts = ",".join([str(ls.start) for ls in first_partner.local_sites[second_partner.name]])
 
-                s = f"{to_col_three}\t{first_partner.name}-{second_partner.name}\t0\t" \
-                    f"{first_partner.genomic_coordinates.strand}\t{first_partner.genomic_coordinates.start}\t" \
-                    f"{first_partner.genomic_coordinates.end}\t{rgb}\t{len(first_partner.local_sites[idx])}\t" \
-                    f"{lsssizes}\t{lsstarts}"
-                bed_lines.append(s)
+                    s = f"{to_col_three}\t{first_partner.name}-{second_partner.name}\t0\t" \
+                        f"{first_partner.genomic_coordinates.strand}\t{ph}\t" \
+                        f"{ph}\t{rgb}\t{len(first_partner.local_sites[second_partner.name])}\t" \
+                        f"{lsssizes}\t{lsstarts}"
+                    bed_lines.append(s)
         string = "\n".join(bed_lines)
         return string
 
@@ -217,7 +219,7 @@ class Partner:
         partner_type: str,
         genomic_coordinates: GenomicCoordinates,
         organism_name: str,
-        local_sites: List[Dict[str, LocalSite]],
+        local_sites: Dict[str, List[LocalSite]],
         description: str = None,
         sequence: Seq.Seq = None,
         structure: str = None,
@@ -241,7 +243,7 @@ class Partner:
         return str(self.__dict__)
 
     def bed_repr(self):
-        string = f"{self.genomic_coordinates.chromosome}\t{self.genomic_coordinates.start}\t{self.genomic_coordinates.end}"
+        string = f"{self.genomic_coordinates.chromosome}\t{self.genomic_coordinates.start-1}\t{self.genomic_coordinates.end - 1}"
         return string
 
     def json_repr(self):

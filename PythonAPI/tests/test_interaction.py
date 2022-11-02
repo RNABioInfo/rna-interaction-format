@@ -143,3 +143,21 @@ def test_printing_interaction(test_json, capsys):
     with open(test_json) as handle:
         expected_json = json.load(handle)
     assert printed_json == expected_json
+
+
+@pytest.fixture()
+def expected_bed():
+    return os.path.join(TESTDIR, "expected_bed_export.bed")
+
+
+def test_bed_export(expected_bed, tmpdir, test_json):
+    interaction_file = InteractionFile.load(test_json)
+
+    file_path = os.path.join(tmpdir, "bed_export_test.bed")
+    interaction_file.export_bed(file_path)
+    with open(file_path, "r") as handle, open(expected_bed, "r") as expected_handle:
+        expected = expected_handle.read().split("\n")
+        result = handle.read()
+        for line in result.split(("\n")):
+            assert line in expected
+
