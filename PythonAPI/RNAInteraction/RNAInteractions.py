@@ -10,8 +10,12 @@ import jsonschema
 
 
 class InteractionFile:
-    def __init__(self, interactions: List[RNAInteraction]):
+    def __init__(self, interactions: List[RNAInteraction], validate: bool = True):
         self.interactions = interactions
+        if validate:
+            self.__json_validate(
+                json.loads(json.dumps(self, cls=CustomEncoder))
+            )
 
     @classmethod
     def parse(cls, file: Union[str, os.PathLike]) -> Generator[RNAInteraction]:
@@ -26,28 +30,35 @@ class InteractionFile:
                 json_repr = json.load(handle)
                 yield RNAInteraction.from_dict(json_repr)
 
+    @staticmethod
+    def __json_validate(json_repr):
+        with open(
+                os.path.join(
+                    os.path.dirname(__file__), "rna-interaction-schema_v1.json"
+                )
+        ) as handle:
+            schema = json.load(handle)
+        jsonschema.validate(instance=json_repr, schema=schema)
+
     @classmethod
-    def load(cls, file: Union[str, os.PathLike]) -> InteractionFile:
+    def load(cls, file: Union[str, os.PathLike], validate: bool = True) -> InteractionFile:
         interaction = []
         with open(file) as handle:
             json_repr = json.load(handle)
+        if validate:
+            cls.__json_validate(json_repr)
         if type(json_repr) == list:
             for entry in json_repr:
                 interaction.append(RNAInteraction.from_dict(entry))
         else:
             interaction.append(RNAInteraction.from_dict(json_repr))
-        return cls(interaction)
+        return cls(interaction, validate=False)
 
     def export_json(self, path: Union[str, os.PathLike]):
         with open(path, "w") as handle:
-            if len(self.interactions) > 1:
-                json.dump(
-                    self.interactions, handle, cls=CustomEncoder, indent=2
-                )
-            else:
-                json.dump(
-                    self.interactions[0], handle, cls=CustomEncoder, indent=2
-                )
+            json.dump(
+                self.interactions, handle, cls=CustomEncoder, indent=2
+            )
 
     def export_bed(self, path: Union[str, os.PathLike]):
         with open(path, "w") as handle:
@@ -55,19 +66,21 @@ class InteractionFile:
                 bed_repr = interaction.bed_repr()
                 handle.write(f"{bed_repr}\n")
 
+    def json_repr(self):
+        return self.interactions
 
     def __iter__(self):
         for interaction in self.interactions:
             yield interaction
 
-    def __repr__(self):
-        return str(self.__dict__)
+    def __str__(self):
+        return json.dumps(self, cls=CustomEncoder, indent=1)
 
 
 class RNAInteraction:
     rgb_map = {
         "RNA-RNA": "(0,255,0)",
-        "Protein-RNA": "(0, 0, 255)",
+        "RNA-Protein": "(0, 0, 255)",
         "RNA-RNA-Protein": "(255, 0, 0)"
     }
 
@@ -80,7 +93,6 @@ class RNAInteraction:
         organism_name: str = None,
         refseqid: str = None,
         partners: List[Partner] = None,
-        validated: bool = False,
     ):
         self.interaction_id = interaction_id
         self.interaction_class = interaction_class
@@ -89,11 +101,7 @@ class RNAInteraction:
         self.organism_name = organism_name
         self.refseqid = refseqid
         self.partners = partners
-        if not validated:
-            # TODO: Might produce cryptic error for user
-            self.__json_validate(
-                json.loads(json.dumps(self, cls=CustomEncoder))
-            )
+
 
     def __str__(self):
         return json.dumps(self, cls=CustomEncoder, indent=1)
@@ -114,7 +122,6 @@ class RNAInteraction:
 
     @classmethod
     def from_dict(cls, dict_repr: Dict) -> RNAInteraction:
-        cls.__json_validate(dict_repr)
         interaction_id = dict_repr["ID"]
         interaction_class = dict_repr["class"]
         interaction_type = dict_repr["type"]
@@ -135,20 +142,9 @@ class RNAInteraction:
             organism_name,
             refseqid,
             partners,
-            validated=True,
         )
 
         return rna_interaction
-
-    @staticmethod
-    def __json_validate(json_repr):
-        with open(
-            os.path.join(
-                os.path.dirname(__file__), "rna-interaction-schema_v1.json"
-            )
-        ) as handle:
-            schema = json.load(handle)
-        jsonschema.validate(instance=json_repr, schema=schema)
 
     def bed_repr(self):
         bed_lines = []
@@ -174,7 +170,7 @@ class Evidence:
         evidence_type: str,
         method: str,
         command: str = None,
-        data: Dict[str, EvidenceData] = None,
+        data: Dict = None,
     ):
         self.evidence_type = evidence_type
         self.method = method
@@ -202,7 +198,7 @@ class Evidence:
         command = dict_repr["command"] if "command" in dict_repr else None
         data = dict_repr["data"] if "data" in dict_repr else None
         data = {
-            key: EvidenceData(value["unit"], value["value"])
+            key: value
             for key, value in data.items()
         }
         return cls(
@@ -213,15 +209,6 @@ class Evidence:
         )
 
 
-@dataclass
-class EvidenceData:
-    unit: str
-    value: Union[float, int]
-
-    def json_repr(self):
-        return self.__dict__
-
-
 class Partner:
     def __init__(
         self,
@@ -230,8 +217,7 @@ class Partner:
         partner_type: str,
         genomic_coordinates: GenomicCoordinates,
         organism_name: str,
-        organism_acc: str,
-        local_sites: List[List[LocalSite]],
+        local_sites: List[Dict[str, LocalSite]],
         description: str = None,
         sequence: Seq.Seq = None,
         structure: str = None,
@@ -242,7 +228,6 @@ class Partner:
         self.partner_type = partner_type
         self.genomic_coordinates = genomic_coordinates
         self.organism_name = organism_name
-        self.organism_acc = organism_acc
         self.local_sites = local_sites
         self.description = description
         self.sequence = sequence
@@ -276,17 +261,15 @@ class Partner:
             dict_repr.pop("genomic_coordinates")
         )
         organism_name = dict_repr.pop("organism_name")
-        organism_acc = dict_repr.pop("organism_acc")
-        local_sites = [
-            LocalSite(x[0], x[1]) for x in dict_repr.pop("local_sites")
-        ]
+        local_sites = {}
+        for key, values in dict_repr.pop("local_sites").items():
+            local_sites[key] = [LocalSite(x[0], x[1]) for x in values]
         return cls(
             name=name,
             symbol=symbol,
             partner_type=partner_type,
             genomic_coordinates=genomic_coordinates,
             organism_name=organism_name,
-            organism_acc=organism_acc,
             local_sites=local_sites,
             **dict_repr,
         )

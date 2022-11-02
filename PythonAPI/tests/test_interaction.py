@@ -44,8 +44,9 @@ def test_file_load(path, request):
         for partner in interaction.partners:
             assert type(partner) == Partner
             assert type(partner.genomic_coordinates) == GenomicCoordinates
-            for site in partner.local_sites:
-                assert type(site) == LocalSite
+            for key, site_list in partner.local_sites.items():
+                for site in site_list:
+                    assert type(site) == LocalSite
 
 
 @pytest.mark.parametrize(
@@ -128,15 +129,15 @@ def test_wrong_schema_rna_interaction(
 ):
     with pytest.raises(jsonschema.ValidationError):
         evidence = request.getfixturevalue(evidence)
-        RNAInteraction(
+        interaction = RNAInteraction(
             interaction_id, interaction_class, interaction_type, evidence
         )
+        InteractionFile([interaction])
 
 
 def test_printing_interaction(test_json, capsys):
     interaction_file = InteractionFile.load(test_json)
-    interaction = interaction_file.interactions[0]
-    print(interaction)
+    print(interaction_file)
     stdout = capsys.readouterr().out
     printed_json = json.loads(stdout)
     with open(test_json) as handle:
