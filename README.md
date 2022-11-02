@@ -266,7 +266,7 @@ Document sub3=get_interaction(&doc, "class=RNA-RNA; partner=dsrA") // New rapidj
 ### JavaScript 
 
 At first, the required packages for the RIF module need to be installed.
-```javascript
+```
 cd ./js 
 npm install
 ```
@@ -276,7 +276,7 @@ The RIF module can be included in node.js using the `require` function by refere
 const rif = require('./rif.js');
 var r = new rif();
 ```
-For the basic functionality of reading and writing RIF files, the functions `readRif(RIFfile)` and `writeRif(RIFfile)` are provided. In addition, `validate(data)` validates the data against the current schema. This is also called when importing RIFfiles using `readRif`.
+For the basic functionality of reading and writing RIF files, the functions `readRIF(RIFfile)` and `writeRIF(RIFfile)` are provided. In addition, `validate()` validates the current data against the current schema. This is also called when importing RIFfiles using `readRif`.
 
 ```javascript
 r.readRif('./examples/RNA-RNA.json'); // import a RIF file 

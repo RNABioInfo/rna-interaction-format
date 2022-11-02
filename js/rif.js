@@ -23,9 +23,9 @@ function toArray(object) {
 }
 
 class RIF {
-	content = []
-	validate = {}
-	parse = {}
+	content = []; // contains the RIF JSON object
+	validate = {}; // stores ajv validate object using this.schema 
+	//parse = {}
 	schema = {}
 	maxID = 0
 
@@ -40,7 +40,6 @@ class RIF {
 		var schema = JSON.parse(schemaData);
 		this.validate = ajv.compile(schema);
 	}
-
 
 	set content(value) { this.content = value; }
 	get schema() { return this.schema; }
@@ -63,6 +62,20 @@ class RIF {
 				this.content.push(parsed[i])
 			}
 		}
+	}
+
+	writeRIF(filename) {
+		console.log(this.content);
+
+		// convert JSON object to string
+		const data = JSON.stringify(this.content, null, 4);
+
+		fs.writeFile(filename, data, err => {
+			if(err) {
+				throw err
+			}
+			console.log('RIF has been saved to' + filename);
+		});
 	}
 
 	// validate object with 
