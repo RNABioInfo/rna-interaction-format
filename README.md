@@ -76,12 +76,14 @@ It is to be noted that #9 describes the class of interaction in which RNA-RNA co
 An interaction in RIF format (see [minimal example](#minimal)) then corresponds to the following BED file
 
 ```
-NC_000913.3 4400287 4400595 Hfq-dsrA    0   +   4400287 4400287 (255,0,0)   2   19,11   60,45
-NC_000913.3 4400287 4400595 Hfq-rpoS    0   +   4400287 4400287 (255,0,0)   1   31  10
-NC_000913.3 2025222 2025312 dsrA-Hfq    0   -   2025222 2025222 (255,0,0)   2   19,11   12,80
-NC_000913.3 2025222 2025312 dsrA-rpoS   0   -   2025222 2025222 (255,0,0)   1   21  50
-NC_000913.3 2866558 2867550 rpoS-Hfq    0   -   2866558 2866558 (255,0,0)   1   31  200
-NC_000913.3 2866558 2867550 rpoS-dsrA   0   -   2866558 2866558 (255,0,0)   1   21  587
+NC_000913.3 4400287 4400596 Hfq-dsrA    0   +   4400287 4400596 (255,0,0)   2   19,11   60,45
+NC_000913.3 4400287 4400596 Hfq-rpoS    0   +   4400287 4400596 (255,0,0)   1   31  10
+NC_000913.3 2025222 2025313 dsrA-Hfq    0   -   2025222 2025313 (255,0,0)   2   19,11   12,80
+NC_000913.3 2025222 2025313 dsrA-rpoS   0   -   2025222 2025313 (255,0,0)   1   21  50
+NC_000913.3 2866558 2867551 rpoS-Hfq    0   -   2866558 2867551 (255,0,0)   1   31  200
+NC_000913.3 2866558 2867551 rpoS-dsrA   0   -   2866558 2867551 (255,0,0)   1   21  587
+NC_000913.3 2313083 2313176 micF-lrp    0   +   2313083 2313176 (0,255,0)   2   8,10    25,55
+NC_000913.3 932594  933089  lrp-micF    0   +   932594  933089  (0,255,0)   2   8,10    100,158
 ```
 
 ## Examples
@@ -186,13 +188,17 @@ NC_000913.3 2866558 2867550 rpoS-dsrA   0   -   2866558 2866558 (255,0,0)   1   
 
 ### JavaScript 
 
+At first, the required packages for RIF module need to be installed.
+```javascript
+cd ./js 
+npm install
+```
 The RIF module can be included in node.js using the `require` function by referencing to the `rif.js` file. 
 
 ```javascript
 const rif = require('./rif.js');
 var r = new rif();
 ```
-
 For the basic functionality of reading and writing RIF files, the functions `readRif(RIFfile)` and `writeRif(RIFfile)` are provided. In addition, `validate(data)` validates the data against the current schema. This is also called when importing RIFfiles using `readRif`.
 
 ```javascript

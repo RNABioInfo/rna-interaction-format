@@ -187,21 +187,13 @@ class RIF {
 	}
 
 	exportBED(filePath) {
-		console.log('ExportBED')
-		//console.log(this.content)
 		var bed = [];
 		var file = fs.createWriteStream(filePath);
-
-
-
-
 
 		for(var i=0;i<this.content.length;i++) {
 			var name = "";			
 			var object = this.content[i];
 			for(var j=0;j<object.partners.length;j++) {
-				console.log("iterate")
-				
 				for(var k=0;k<object.partners.length;k++) {
 					if(j != k) {
 						var line = ["","","","","0","","","","(0,0,0)","","",""];
@@ -211,10 +203,11 @@ class RIF {
 						// 
 						line[0] = coord[0]; // chrom
 						line[1] = chrom[0]-1; // chromStart
-						line[2] = chrom[1]-1; // chromEnd
+						line[2] = chrom[1]; // chromEnd
 						line[3] = object.partners[j].symbol + "-" + object.partners[k].symbol// name
 						line[5] = coord[1]; // strand
-						line[6] = line[7] = line[1] // thickStart & thickEnd equal chromStart
+						line[6] = line[1]
+						line[7] = line[2] // thickStart & thickEnd equal chromStart
 
 						// determine RGB codes
 						if(object.partners.length == 2) {
@@ -243,90 +236,8 @@ class RIF {
 		file.close();
 
 	}
-
-
-
-
-
-//var sites = object.partners[j].local_sites;
-
-
-/*
-					if(sites[k].length != 0) {
-						for(var l=0;l<sites[k].length;l++) {
-							var size = sites[k][l][1]+1-sites[k][l][0];
-							line[9]++; // blockCounts
-							line[10] += line[10].length == 0 ? size : "," + size; // blockSizes
-							line[11] += line[11].length == 0 ? sites[k][l][0] : "," + sites[k][l][0]; // blockStarts
-						}
-					}
-				}*/
-				//bed.push(line);
-			//}
-
-			// write name back to bed entry
-			/*
-			for(var j=0;j<bed.length;j++) {
-				bed[j][3] = name; // name
-			}*/
-			//console.log(bed); 
-			// write to file
-			
-			/*
-			bed.forEach(function(v) { 
-				file.write(v.join('\t') + '\n'); 
-			});*/
-			
-			//bed = [];
-		//}
-		//file.end();
-
 }
 
-
 module.exports = RIF;
-
-
-/*
-console.log('new RIF instance')
-var r = new RIF();
-//r.import('../examples/RNA-RNA.json')
-//r.mod(1,{"type": 123})
-//r.exportBED("output.bed12")
-r.importBED("output.bed12");
-
-console.log("asda")
-console.log(r.content)
-
-*/
-
-
-
-
-// return single element
-/*
-as = r.get({"ID": 1}) // single query
-console.log(as) 
-as = r.get([{"class": "RNA-RNA", "type": "basepairing"}]) // single query, multiple properties
-console.log(as)
-as = r.get([{"class": "RNA-RNA"}]) // single query, returns multiple values 
-console.log(as)
-as = r.get([{"ID": 1}, {"ID": 2}])
-console.log(as)*/
-
-//console.log(r.content)
-//as = r.rm({"ID":1});
-//console.log(r.content)
-
-//r.add({})
-
-
-/*
-schema = '../rna-interaction-schema_v1.json'
-f = '../examples/testJSON.json'
-s = '../examples/RNA-RNA.json'
-schematest = 'testschema.json'
-*/
-
 
 
