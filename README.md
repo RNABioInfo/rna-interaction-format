@@ -265,7 +265,7 @@ Document sub3=get_interaction(&doc, "class=RNA-RNA; partner=dsrA") // New rapidj
 
 ### JavaScript 
 
-At first, the required packages for RIF module need to be installed.
+At first, the required packages for the RIF module need to be installed.
 ```javascript
 cd ./js 
 npm install

@@ -46,7 +46,7 @@ class RIF {
 	get schema() { return this.schema; }
 	get content() { return this.content }
 
-	import(filename) {
+	readRIF(filename) {
 		var data = fs.readFileSync(filename, 'utf8');
 		const parsed = JSON.parse(data); // parse data
 		//const valid = ajv.validate(this.schema, parsed);
@@ -186,7 +186,7 @@ class RIF {
 		}
 	}
 
-	exportBED(filePath) {
+	writeBED(filePath) {
 		var bed = [];
 		var file = fs.createWriteStream(filePath);
 
@@ -206,8 +206,8 @@ class RIF {
 						line[2] = chrom[1]; // chromEnd
 						line[3] = object.partners[j].symbol + "-" + object.partners[k].symbol// name
 						line[5] = coord[1]; // strand
-						line[6] = line[1]
-						line[7] = line[2] // thickStart & thickEnd equal chromStart
+						line[6] = line[1];
+						line[7] = line[2]; // thickStart & thickEnd equal chromStart
 
 						// determine RGB codes
 						if(object.partners.length == 2) {
@@ -234,7 +234,6 @@ class RIF {
 			}
 		}
 		file.close();
-
 	}
 }
 
