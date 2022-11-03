@@ -23,9 +23,8 @@ function toArray(object) {
 }
 
 class RIF {
-	content = []; // contains the RIF JSON object
+	data = []; // contains the RIF JSON object
 	validate = {}; // stores ajv validate object using this.schema 
-	//parse = {}
 	schema = {}
 	maxID = 0
 
@@ -33,24 +32,34 @@ class RIF {
 		this.changeSchema('../rna-interaction-schema_v1.json');
 	}
 
-	// getter & setter
+	// changes the underlying schema (e.g, to older versions) and compiles it
 	changeSchema(schemaFile) { 
 		// load & parse RIF schema
 		var schemaData = fs.readFileSync(schemaFile, 'utf8');
-		var schema = JSON.parse(schemaData);
-		this.validate = ajv.compile(schema);
+		this.schema = JSON.parse(schemaData);
+		this.validate = ajv.compile(this.schema);
 	}
 
-	set content(value) { this.content = value; }
-	get schema() { return this.schema; }
-	get content() { return this.content }
+	// changes interaction data (provided that it follows the schema)
+	changeData(data) {
+		if(this.validateData(data)) {
+			this.data = data;
+		} else {
+			console.log("Provided data does not follow the RIF schema")
+		}
+	}
+	
+	// getter
+	get getData() { return this.data; }
+	get getMaxID() { return this.maxID; }
 
+	// imports any given (valid) RIF file - interactions are added to existing data
 	readRIF(filename) {
 		var data = fs.readFileSync(filename, 'utf8');
 		const parsed = JSON.parse(data); // parse data
 		//const valid = ajv.validate(this.schema, parsed);
 		
-		var valid = this.validateSchema(parsed);
+		var valid = this.validateData(parsed);
 
 		if(valid) {
 			// iterate through keys 
@@ -59,54 +68,54 @@ class RIF {
 				if(this.maxID < parsed[i].ID) {
 					this.maxID = parsed[i].ID
 				}
-				this.content.push(parsed[i])
+				this.data.push(parsed[i])
 			}
 		}
 	}
 
+	// writes the RIF to file
 	writeRIF(filename) {
-		console.log(this.content);
-
 		// convert JSON object to string
-		const data = JSON.stringify(this.content, null, 4);
+		const data = JSON.stringify(this.data, null, 4);
 
+		// write back to filename
 		fs.writeFile(filename, data, err => {
 			if(err) {
 				throw err
 			}
-			console.log('RIF has been saved to' + filename);
+			console.log("Data has been saved to: " + filename);
 		});
 	}
 
-	// validate object with 
-	validateSchema(data) {
-		//const valid = ajv.validate(this.schema, data)
-		const valid = this.validate(data)
+	// validate data object with the current schema
+	validateData(data) {
+		const valid = this.validate(data);
 		if(!valid) {
-			console.log("Invalid")
+			console.log("Data does not uphold ")
 			console.log(this.validate.errors)
 			return false
 		} 
 		return true
 	}
 
-	// return interaction 
+	// return interaction given single or multiple queries
 	get(attr) {
-		// init 
+		// bring (single or) multiple queries into same array format    
 		var [query, queryKeys, queryValues, subset] = [[],[],[],[]];
 		query = toArray(attr);
 
+		// retrieve interactions 
 		var keys, values;
-		for(var i=0;i<this.content.length;i++) { 
+		for(var i=0;i<this.data.length;i++) { 
 			for(var j=0;j<query.length;j++) {
 				queryKeys = Object.keys(query[j]);
 				queryValues = Object.values(query[j]);
 
 				var l = queryKeys.length
 				for(var k=0;k<l;k++) {
-					if(this.content[i][queryKeys[k]] == queryValues[k]) {
+					if(this.data[i][queryKeys[k]] == queryValues[k]) {
 						if(k==l-1) {
-							subset.push(this.content[i])
+							subset.push(this.data[i]); // select element
 						}
 					} else {
 						break;
@@ -117,21 +126,23 @@ class RIF {
 		return subset;
 	}
 
+	// return interactions excluding the query
 	rm(attr) {
-		// init 
+		// bring (single or) multiple queries into same array format
 		var [query, queryKeys, queryValues] = [[],[],[]];
 		query = toArray(attr);
 
-		for(var i=0;i<this.content.length;i++) {
+		// iterate through elements and match with query
+		for(var i=0;i<this.data.length;i++) {
 			for(var j=0;j<query.length;j++) {
 				queryKeys = Object.keys(query[j]);
 				queryValues = Object.values(query[j]);
 
 				var l = queryKeys.length
 				for(var k=0;k<l;k++) {
-					if(this.content[i][queryKeys[k]] == queryValues[k]) {
+					if(this.data[i][queryKeys[k]] == queryValues[k]) {
 						if(k==l-1) {
-							this.content.splice(i,1)
+							this.data.splice(i,1); // remove element
 						}
 					} else {
 						break;
@@ -139,18 +150,19 @@ class RIF {
 				}
 			}
 		}
-		return this.content;
+		return this.data;
 	}
 
+	// add interaction to the data
 	add(attr) {
-		for(var i=0;i<this.content.length;i++) {
+		for(var i=0;i<this.data.length;i++) {
 			// check if new element already exists
-			if(attr == this.content[i]) {
+			if(attr == this.data[i]) {
 				console.log('identical element already exists');
 				return -1; // cancel operation
 			}
 		}
-		// add to data
+		// empty interaction object
 		var obj = {
 			"ID": this.maxID+1,
 			"class": "",
@@ -159,10 +171,12 @@ class RIF {
 			"partners": []
 		};
 
+		// determine next ID
 		if(obj["ID"] > this.maxID) {
 			this.maxID = obj["ID"];
 		}
 
+		// substitute name/values pairs in attr
 		var keys = Object.keys(attr);
 		var values = Object.values(attr);
 		for(var j=0;j<attr.length;j++) {
@@ -173,10 +187,11 @@ class RIF {
 			}
 			obj[keys[j]] = values[j]; 
 		}
-		this.content.push(obj);
-		return this.content;
+		this.data.push(obj);
+		return this.data;
 	} 
 
+	// modify name/value pair of interaction
 	mod(id, attr) {
 		var key = Object.keys(attr);
 		var value = Object.values(attr);
@@ -184,28 +199,29 @@ class RIF {
 			console.log("ERROR: multiple key/value pairs have been specified")
 			return -1;
 		} else {
-			var tmp = JSON.parse(JSON.stringify(this.content));
+			var tmp = JSON.parse(JSON.stringify(this.data));
 			for(var i=0;i<tmp.length;i++) {
 				if(tmp[i].ID == id) {
 					tmp[i][key[0]] = value[0];
 				}
 			}
 		}
-		var valid = this.validateSchema(tmp);
+		var valid = this.validateData(tmp);
 		if(valid) {
-			this.content = JSON.parse(JSON.stringify(tmp));
+			this.data = JSON.parse(JSON.stringify(tmp));
 		} else {
 			console.log("ERROR: modification renders the data as invalid")
 		}
 	}
 
+	// export RIF to BED12 format
 	writeBED(filePath) {
 		var bed = [];
 		var file = fs.createWriteStream(filePath);
 
-		for(var i=0;i<this.content.length;i++) {
+		for(var i=0;i<this.data.length;i++) {
 			var name = "";			
-			var object = this.content[i];
+			var object = this.data[i];
 			for(var j=0;j<object.partners.length;j++) {
 				for(var k=0;k<object.partners.length;k++) {
 					if(j != k) {
@@ -219,8 +235,8 @@ class RIF {
 						line[2] = chrom[1]; // chromEnd
 						line[3] = object.partners[j].symbol + "-" + object.partners[k].symbol// name
 						line[5] = coord[1]; // strand
-						line[6] = line[1];
-						line[7] = line[2]; // thickStart & thickEnd equal chromStart
+						line[6] = line[1]; // thickStart = chromStart
+						line[7] = line[2]; // thickEnd = chromEnd
 
 						// determine RGB codes
 						if(object.partners.length == 2) {
