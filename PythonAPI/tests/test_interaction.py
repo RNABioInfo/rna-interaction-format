@@ -1,5 +1,5 @@
 import pytest
-from PythonAPI.RNAInteraction.RNAInteractions import (
+from PythonAPI.RIF.pRIF import (
     InteractionFile,
     RNAInteraction,
     Evidence,
@@ -150,8 +150,8 @@ def expected_bed():
     return os.path.join(TESTDIR, "expected_bed_export.bed")
 
 
-def test_bed_export(expected_bed, tmpdir, test_json):
-    interaction_file = InteractionFile.load(test_json)
+def test_bed_export(expected_bed, tmpdir, multi_test_json):
+    interaction_file = InteractionFile.load(multi_test_json)
 
     file_path = os.path.join(tmpdir, "bed_export_test.bed")
     interaction_file.export_bed(file_path)
@@ -159,5 +159,7 @@ def test_bed_export(expected_bed, tmpdir, test_json):
         expected = expected_handle.read().split("\n")
         result = handle.read()
         for line in result.split(("\n")):
+            if line not in expected:
+                print(line)
             assert line in expected
 

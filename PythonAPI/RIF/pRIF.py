@@ -11,6 +11,11 @@ import jsonschema
 
 class InteractionFile:
     def __init__(self, interactions: List[RNAInteraction], validate: bool = True):
+        """
+        Args:
+            interactions: list of interactions within the file
+            validate (bool): whether to use the json schema to validate the file
+        """
         self.interactions = interactions
         if validate:
             self.__json_validate(
@@ -19,6 +24,14 @@ class InteractionFile:
 
     @classmethod
     def parse(cls, file: Union[str, os.PathLike]) -> Generator[RNAInteraction]:
+        """Iterates over RIF files without loading it completetly into memory
+
+        Args:
+            file: Path to a RIF file
+
+        Yields:
+            :class:`RIF.RNAInteractions.InteractionFile`: The next Interaction within the file
+        """
         i = 0
         with open(file, "rb") as handle:
             parser = ijson.parse(handle)
@@ -42,6 +55,16 @@ class InteractionFile:
 
     @classmethod
     def load(cls, file: Union[str, os.PathLike], validate: bool = True) -> InteractionFile:
+        """
+
+        Args:
+            file: Path to a RIF file
+            validate: whether to use the json schema to validate the file
+
+        Returns:
+            :class:`RIF.RNAInteractions.InteractionFile`
+
+        """
         interaction = []
         with open(file) as handle:
             json_repr = json.load(handle)
@@ -55,18 +78,34 @@ class InteractionFile:
         return cls(interaction, validate=False)
 
     def export_json(self, path: Union[str, os.PathLike]):
+        """ Exports the Interaction File in the original format
+
+        Args:
+            path: Path where the file should be stored
+
+        """
         with open(path, "w") as handle:
             json.dump(
                 self.interactions, handle, cls=CustomEncoder, indent=2
             )
 
     def export_bed(self, path: Union[str, os.PathLike]):
+        """ Exports bed file
+
+        Args:
+            path: Path to the output bed file
+        """
         with open(path, "w") as handle:
             for interaction in self.interactions:
                 bed_repr = interaction.bed_repr()
                 handle.write(f"{bed_repr}\n")
 
     def json_repr(self):
+        """
+
+        Returns: representation used for json serialization
+
+        """
         return self.interactions
 
     def __iter__(self):
@@ -78,6 +117,11 @@ class InteractionFile:
 
 
 class RNAInteraction:
+    """ Interaction of different Molecules
+
+     Attributes:
+        rgb_map Dict[str]: Maps from the interaction class to an rgb value.
+    """
     rgb_map = {
         "RNA-RNA": "(0,255,0)",
         "RNA-Protein": "(0,0,255)",
@@ -94,6 +138,17 @@ class RNAInteraction:
         refseqid: str = None,
         partners: List[Partner] = None,
     ):
+        """
+
+        Args:
+            interaction_id (int): ID of the interaction
+            interaction_class (str): one of ['RNA-RNA', 'RNA-Protein', 'RNA-RNA-protein']
+            interaction_type (str): chemical nature of the interaction
+            evidence List[Evidence]: data supporting the interaction
+            organism_name (str): Name of the organism
+            refseqid (str): Refseqid
+            partners List[Partner]: transcript interaction
+        """
         self.interaction_id = interaction_id
         self.interaction_class = interaction_class
         self.interaction_type = interaction_type
@@ -147,19 +202,25 @@ class RNAInteraction:
         return rna_interaction
 
     def bed_repr(self):
+        """Bed string representation of all pairwise interactions in this Interaction
+
+        Returns (str): Bed string
+
+        """
         bed_lines = []
         for first_partner in self.partners:
             to_col_three = first_partner.bed_repr()
             rgb = self.rgb_map[self.interaction_class]
             ph = first_partner.genomic_coordinates.start-1
+            ph2 = first_partner.genomic_coordinates.end
             for second_partner in self.partners:
-                if second_partner != first_partner and second_partner.name in first_partner.local_sites:
-                    lsssizes = ",".join([str(ls.end - ls.start + 1) for ls in first_partner.local_sites[second_partner.name]])
-                    lsstarts = ",".join([str(ls.start) for ls in first_partner.local_sites[second_partner.name]])
+                if second_partner != first_partner and second_partner.symbol in first_partner.local_sites:
+                    lsssizes = ",".join([str(ls.end - ls.start + 1) for ls in first_partner.local_sites[second_partner.symbol]])
+                    lsstarts = ",".join([str(ls.start) for ls in first_partner.local_sites[second_partner.symbol]])
 
-                    s = f"{to_col_three}\t{first_partner.name}-{second_partner.name}\t0\t" \
+                    s = f"{to_col_three}\t{first_partner.symbol}-{second_partner.symbol}\t0\t" \
                         f"{first_partner.genomic_coordinates.strand}\t{ph}\t" \
-                        f"{ph}\t{rgb}\t{len(first_partner.local_sites[second_partner.name])}\t" \
+                        f"{ph2}\t{rgb}\t{len(first_partner.local_sites[second_partner.symbol])}\t" \
                         f"{lsssizes}\t{lsstarts}"
                     bed_lines.append(s)
         string = "\n".join(bed_lines)
@@ -243,7 +304,7 @@ class Partner:
         return str(self.__dict__)
 
     def bed_repr(self):
-        string = f"{self.genomic_coordinates.chromosome}\t{self.genomic_coordinates.start-1}\t{self.genomic_coordinates.end - 1}"
+        string = f"{self.genomic_coordinates.chromosome}\t{self.genomic_coordinates.start-1}\t{self.genomic_coordinates.end}"
         return string
 
     def json_repr(self):
