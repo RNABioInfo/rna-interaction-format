@@ -276,41 +276,80 @@ The RIF module can be included in node.js using the `require` function by refere
 const rif = require('./rif.js');
 var r = new rif();
 ```
-For the basic functionality of reading and writing RIF files, the functions `readRIF(RIFfile)` and `writeRIF(RIFfile)` are provided. In addition, `validate()` validates the current data against the current schema. This is also called when importing RIFfiles using `readRif`.
+For the basic functionality of reading and writing RIF files, the functions `readRIF(RIFfile)` and `writeRIF(RIFfile)` are provided. In addition, `validateData(data)` validates a `data` object against the schema, which is also called when importing RIF files using `readRIF`. Moreover, `changeData(data)` and `changeSchema(schemaFile)` allow to change the data and the schema, respectively. Direct access to the interaction data is provided using `getData()`. 
 
 ```javascript
 r.readRif('./examples/RNA-RNA.json'); // import a RIF file 
 r.writeRif('./RNA-RNA.json'); // write the RIF file 
-r.validate();
-```
+r.validateData(data); // validates `data` against the schema
 
-For the retrieval of specific interactions, `get` allows different queries of the data.   
+```
+For the retrieval of specific interactions, `get` allows different queries of the data. This includes queries in which single or multiple properties are defined. In doing so, this returns the interactions which match all provided properties.
 
 ```javascript
-r.get({"ID": 1}); // single query
-r.get([{"class": "RNA-RNA", "type": "basepairing"}]); // single query, multiple properties
-r.get([{"class": "RNA-RNA"}]); // single query, returns multiple values 
+r.get({"ID": 1}); // unique query, returns a single interaction that matches the ID
+r.get({"class": "RNA-RNA"}); // returns all interactions matching the class property
+r.get({"class": "RNA-RNA", "type": "basepairing"}); // returns all interactions matching the class and type property
+```
+
+In a similar manner, RIF can be queried for multiple interactions. 
+
+```javascript
 r.get([{"ID": 1}, {"ID": 2}]); // multiple queries
 ```
 
-Other data manipulation is done with `add` and `rm` which add an interaction to the data and removes it, respectively.
+Other data manipulation is done with `add` and `rm` which add an interaction to the data and removes it, respectively. In the of adding an interaction, this requires an interaction data which suffices the schema, e.g., 
 
 ```javascript
-r.add({"class": "RNA-RNA", 
-    "type": "basepairing"})
+r.add({
+    "class": "RNA-RNA",
+    "type": "basepairing",
+    "evidence": [
+        {
+            "type": "experimental",
+            "method": "gel shift assay",
+            "data": {
+                "URI": "https://journals.asm.org/doi/full/10.1128/JB.183.6.1997-2005.2001",
+                "note": "Hfq and DsrA interact in vivo"
+            }
+        }
+    ],
+    "partners": [
+        {
+            "name": "micF",
+            "symbol": "micF",
+            "type": "small_regulatory_ncRNA",
+            "local_sites": {
+                "lrp": [[25,32],[55,64]]
+            }
+        }, 
+        {
+            "name": "lrp",
+            "symbol": "lrp",
+            "type": "mRNA",
+            "local_sites": {
+                "micF": [[100,107],[158,167]]
+            }
+        }
+    ]
+})
+```
+
+It is to be noted that `ID` is determined automatically, but can also be set manually. However, this should be unique. Similarly, an interaction can be removed by querying for certain name/value pairs, e.g.,
+
+```javascript
+r.rm({"ID": 1}); // removes interaction with ID=1
+r.rm({"class": "RNA-RNA"}); // removes all interactions of class: RNA-RNA
 ```
 
 In addition, specific properties can be modified using the `mod` routine which accepts the id of the interaction and the key/value pair. 
 
 ```javascript
-r.mod(1,{"type": 123})
+r.mod(1,{"type": "Protein-RNA"}); // changes the type to "Protein-RNA" on interaction with ID=1
 ```
 
-Finally, the import and export to BED format is provided
+Finally, the interaction can exported to BED format using `writeBED(filename)`
 
-```javascript
-r.writeBED("./examples/RNA-RNA.bed12");
-```
 
 ### Python
 
