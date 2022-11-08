@@ -15,8 +15,8 @@ setup(
     long_description=open(
         "README.md"
     ).read(),
-    package_data={'RIF': ['rna-interaction-schema_v1.json']},
+    package_data={'RIF': ['rna-interaction-schema_v1.json', 'tests/*.py', 'tests/*.json', 'tests/*.bed']},
     long_description_content_type="text/markdown",
     include_package_data=True,
-    install_requires=["ijson", "jsonschema"]
+    install_requires=["ijson", "jsonschema", "biopython"]
 )

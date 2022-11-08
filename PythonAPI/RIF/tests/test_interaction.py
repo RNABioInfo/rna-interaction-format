@@ -1,5 +1,5 @@
 import pytest
-from PythonAPI.RIF.pRIF import (
+from RIF.pRIF import (
     InteractionFile,
     RNAInteraction,
     Evidence,
