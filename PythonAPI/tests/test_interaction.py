@@ -163,3 +163,96 @@ def test_bed_export(expected_bed, tmpdir, multi_test_json):
                 print(line)
             assert line in expected
 
+
+def interaction_from_scratch():
+    evidence = Evidence(
+        evidence_type="prediction",
+        method="RNAProt",
+        command="RNAProt predict --mode 2 --thr 2",
+        data={
+            "significance": {"p-value": 0.001}
+        }
+    )
+    mrna_partner = Partner(
+        name="Tumor protein P53",
+        symbol="TP53",
+        partner_type="mRNA",
+        organism_acc="9606",
+        organism_name="Homo sapiens",
+        genomic_coordinates=GenomicCoordinates(
+            chromosome="chr17",
+            strand="-",
+            start=7687490,
+            end=7668421,
+        ),
+        local_sites={
+            "ELAVL1": [
+                LocalSite(
+                    start=2125,
+                    end=2160
+                ),
+                LocalSite(
+                    start=2452,
+                    end=2472
+                )
+            ]
+        }
+    )
+    rbp_partner = Partner(
+        name="ELAV-like protein 1",
+        symbol="ELAVL1",
+        partner_type="Protein",
+        organism_acc="9606",
+        organism_name="Homo sapiens",
+        genomic_coordinates=GenomicCoordinates(
+            chromosome="chr19",
+            strand="-",
+            start=8005641,
+            end=7958573,
+        ),
+        local_sites={
+            "Tumor protein P53": [
+                LocalSite(
+                    start=2125,
+                    end=2160
+                ),
+                LocalSite(
+                    start=2452,
+                    end=2472
+                )
+            ]
+        }
+    )
+    interaction = RNAInteraction(
+        interaction_id=1,
+        evidence=[evidence],
+        interaction_class="RNA-Protein",
+        interaction_type="RNA binding",
+        partners=[mrna_partner, rbp_partner]
+    )
+    return interaction
+
+
+def test_interaction_from_scratch():
+    interaction = interaction_from_scratch()
+    assert isinstance(interaction, RNAInteraction)
+    _ = InteractionFile([interaction])
+
+
+@pytest.fixture()
+def fixt_interaction_from_scratch():
+    return interaction_from_scratch()
+
+
+def test_add_interaction(fixt_interaction_from_scratch, multi_test_json):
+    interaction_file = InteractionFile.load(multi_test_json)
+
+    interaction_file.add(fixt_interaction_from_scratch)
+    assert fixt_interaction_from_scratch in interaction_file.interactions
+
+
+def test_rm_interaction(multi_test_json):
+    interaction_file = InteractionFile.load(multi_test_json)
+    interaction_file.rm(1)
+    ids = [interaction.interaction_id for interaction in interaction_file]
+    assert 1 not in ids

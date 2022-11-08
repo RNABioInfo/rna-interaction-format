@@ -3,7 +3,7 @@ import ijson
 import json
 import os
 from dataclasses import dataclass
-from typing import List, Union, Dict, Generator
+from typing import List, Union, Dict, Generator, Iterable
 from collections import defaultdict, OrderedDict
 from Bio import Seq
 import jsonschema
@@ -18,9 +18,15 @@ class InteractionFile:
         """
         self.interactions = interactions
         if validate:
-            self.__json_validate(
-                json.loads(json.dumps(self, cls=CustomEncoder))
-            )
+            self.validate()
+
+    def validate(self):
+        """Validates itself using the provided schema
+
+        """
+        self.__json_validate(
+            json.loads(json.dumps(self, cls=CustomEncoder))
+        )
 
     @classmethod
     def parse(cls, file: Union[str, os.PathLike]) -> Generator[RNAInteraction]:
@@ -107,6 +113,39 @@ class InteractionFile:
 
         """
         return self.interactions
+
+    def add(self, other: Union[RNAInteraction, Iterable[RNAInteraction]], validate: bool = True):
+        """adds RNAInteractions to the InteractionFile
+
+        Args:
+            other Union(RNAInteraction, Iterable(RNAInteraction): The RNAInteraction elements to add
+            validate (bool): whether to validate the File after adding new Instances
+        Raises:
+            TypeError if the elements to add are not of type RNAInteraction
+
+        """
+        if isinstance(other, RNAInteraction):
+            other = [other]
+        try:
+            add_interactions = list(other)
+            for element in add_interactions:
+                if not isinstance(element, RNAInteraction):
+                    raise TypeError("Can only add Lists or single items of type RNAInteraction")
+                else:
+                    self.interactions.append(element)
+            if validate:
+                self.validate()
+        except TypeError:
+            raise TypeError("Can only add Lists or single items of type RNAInteraction")
+
+    def rm(self, item: Union[int, Iterable[int]]):
+        """Removes Interaction specified via its ID
+
+        This function does not care whether the element is actually in the File. It will not raise an error.
+        """
+        if isinstance(item, int):
+            item = [item]
+        self.interactions = [interaction for interaction in self.interactions if interaction.interaction_id not in item]
 
     def __iter__(self):
         for interaction in self.interactions:
