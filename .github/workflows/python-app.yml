@@ -19,7 +19,7 @@ jobs:
       run: |
         pip install flake8
         pip install pytest
-        pip install -r PythonAPI/requirements.txt
+        pip install PythonAPI/
     - name: Lint with flake8
       shell: bash -l {0}
       run: |
@@ -30,5 +30,5 @@ jobs:
     - name: Test with pytest
       shell: bash -l {0}
       run: |
-        pytest
+        pytest --pyargs RIF
 
