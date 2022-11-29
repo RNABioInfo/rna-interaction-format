@@ -341,7 +341,6 @@ It is to be noted that `ID` is determined automatically, but can also be set man
 r.rm({"ID": 1}); // removes interaction with ID=1
 r.rm({"class": "RNA-RNA"}); // removes all interactions of class: RNA-RNA
 ```
-
 In addition, specific properties can be modified using the `mod` routine which accepts the id of the interaction and the key/value pair. 
 
 ```javascript
@@ -557,7 +556,6 @@ validates the file after adding the entries. You can disable this behavior via s
 interaction_file.add(interaction, validate=True)
 interaction_file.rm(1)
 ```
-
 
 
 
