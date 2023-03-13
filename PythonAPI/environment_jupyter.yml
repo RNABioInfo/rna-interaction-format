@@ -1,0 +1,12 @@
+name: rif
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - biopython=1.81
+  - ijson=3.2.0.post0
+  - jupyter=1.0.0
+  - notebook=6.5.3
+  - numpy=1.24.2
+  - python=3.11.0
