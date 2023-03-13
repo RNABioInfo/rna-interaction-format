@@ -202,7 +202,7 @@ def interaction_from_scratch():
             end=7958573,
         ),
         local_sites={
-            "Tumor protein P53": [
+            "TP53": [
                 LocalSite(start=2125, end=2160),
                 LocalSite(start=2452, end=2472),
             ]

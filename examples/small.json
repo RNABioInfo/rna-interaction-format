@@ -22,9 +22,9 @@
             "genomic_coordinates": "chr1:+:2025223-2025313",
             "organism_name": "Escherichia coli K-12 MG1655",
             "organism_acc": "NC_000913",
-            "local_sites": [ 
-                [],[[25,32],[10,17]]
-            ]
+            "local_sites": {
+                "rpoS":[[],[[25,32],[10,17]]]
+            }
         },
         {
             "name": "rpoS",
@@ -33,9 +33,9 @@
             "genomic_coordinates": "chr1:-:2866559-2867551",
             "organism_name": "Escherichia coli K-12 MG1655",
             "organisms_acc": "NC_000913",
-            "local_sites": [ 
-                [[70,83],[19,32]],[]
-            ]
+            "local_sites":{
+                "dsrA":[[[70,83],[19,32]],[]]
+            }
         }
     ]
 }]
