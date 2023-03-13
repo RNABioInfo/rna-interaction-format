@@ -80,7 +80,7 @@
 							"type": "string"
 						},
 						"local_sites": {
-							"type": "object",
+							"type": "array",
 							"patternProperties": {
 								"^.*$": {
 									"type": "array",
