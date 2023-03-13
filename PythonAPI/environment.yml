@@ -1,0 +1,18 @@
+name: rif
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - r
+dependencies:
+  - biopython=1.81
+  - ijson=3.2.0.post0
+  - jsonschema=4.17.3
+  - numpy=1.24.2
+  - openssl=3.0.8
+  - pip=23.0.1
+  - python=3.11.0
+  - python_abi=3.11
+  - readline=8.2
+  - setuptools=67.6.0
+  - wheel=0.38.4
