@@ -78,7 +78,7 @@
 							"type": "string"
 						},
 						"local_sites": {
-							"type": "array",
+							"type": "object",
 							"items": {
 								"maxItems": 3,
 								"type": "array",

@@ -1,5 +1,4 @@
 global-include tests/*.py
 global-include tests/*
-global-include tests/test_data/*
 prune */__pycache__/
 prune */.pytest_cache/

@@ -1,0 +1,464 @@
+[
+  {
+    "ID": 1,
+    "class": "RNA-Protein",
+    "type": "RNA binding",
+    "evidence": [
+      {
+        "type": "experimental",
+        "method": "CLIP",
+        "data": {
+          "timepoint": {
+            "h_post_injury": 3
+          }
+        }
+      }
+    ],
+    "partners": [
+      {
+        "name": "Family with sequence similarity 168 member B",
+        "symbol": "Fam168b",
+        "type": "mRNA",
+        "genomic_coordinates": "chr1:-:34813219-34843065",
+        "organism_name": "Mus musculus",
+        "local_sites": {
+          "AGO": [
+            [
+              2020,
+              2100
+            ]
+          ],
+          "mir29": [
+            [
+              2050,
+              2070
+            ]
+          ]
+        },
+        "custom": {
+          "organism_acc": "GRCm38.p6"
+        }
+      },
+      {
+        "name": "Histone deacetylase 4",
+        "symbol": "Hdac4",
+        "type": "mRNA",
+        "genomic_coordinates": "chr1:-:91928779-92195699",
+        "organism_name": "Mus musculus",
+        "local_sites": {
+          "AGO": [
+            [
+              3936,
+              4016
+            ],
+            [
+              4026,
+              4106
+            ]
+          ],
+          "mir29": [
+            [
+              3976,
+              3996
+            ],
+            [
+              4056,
+              4076
+            ]
+          ]
+        },
+        "custom": {
+          "organism_acc": "GRCm38.p6"
+        }
+      },
+      {
+        "name": "RNA binding protein fox-1 homolog",
+        "symbol": "Rbfox2",
+        "type": "mRNA",
+        "genomic_coordinates": "chr15:-:77078990-77307004",
+        "organism_name": "Mus musculus",
+        "local_sites": {
+          "AGO": [
+            [
+              4652,
+              4732
+            ],
+            [
+              4784,
+              4864
+            ]
+          ],
+          "mir29": [
+            [
+              4682,
+              4712
+            ],
+            [
+              4685,
+              4705
+            ]
+          ]
+        },
+        "custom": {
+          "organism_acc": "GRCm38.p6"
+        }
+      },
+      {
+        "name": "argonaute RISC catalytic subunit 2",
+        "symbol": "AGO2",
+        "type": "Protein",
+        "genomic_coordinates": "chr15:-:73095844-73184935",
+        "organism_name": "Mus musculus",
+        "local_sites": {
+          "mir29": [
+            [
+              678,
+              1041
+            ]
+          ],
+          "Fam168b": [
+            [
+              1719,
+              2580
+            ]
+          ],
+          "Hdac4": [
+            [
+              1719,
+              2580
+            ]
+          ],
+          "Rbfox2": [
+            [
+              1719,
+              2580
+            ]
+          ]
+        },
+        "custom": {
+          "organism_acc": "GRCm38.p6"
+        }
+      }
+    ]
+  },
+  {
+    "ID": 2,
+    "class": "RNA-RNA",
+    "type": "RNA binding",
+    "evidence": [
+      {
+        "type": "experimental",
+        "method": "CLIP",
+        "data": {
+          "timepoint": {
+            "h_post_injury": 3
+          }
+        }
+      }
+    ],
+    "partners": [
+      {
+        "name": "Family with sequence similarity 168 member B",
+        "symbol": "Fam168b",
+        "type": "mRNA",
+        "genomic_coordinates": "chr1:-:34813219-34843065",
+        "organism_name": "Mus musculus",
+        "local_sites": {
+          "AGO": [
+            [
+              2020,
+              2100
+            ]
+          ],
+          "mir29": [
+            [
+              2050,
+              2070
+            ]
+          ]
+        },
+        "custom": {
+          "organism_acc": "GRCm38.p6"
+        }
+      },
+      {
+        "name": "Histone deacetylase 4",
+        "symbol": "Hdac4",
+        "type": "mRNA",
+        "genomic_coordinates": "chr1:-:91928779-92195699",
+        "organism_name": "Mus musculus",
+        "local_sites": {
+          "AGO": [
+            [
+              3936,
+              4016
+            ],
+            [
+              4026,
+              4106
+            ]
+          ],
+          "mir29": [
+            [
+              3976,
+              3996
+            ],
+            [
+              4056,
+              4076
+            ]
+          ]
+        },
+        "custom": {
+          "organism_acc": "GRCm38.p6"
+        }
+      },
+      {
+        "name": "RNA binding protein fox-1 homolog",
+        "symbol": "Rbfox2",
+        "type": "mRNA",
+        "genomic_coordinates": "chr15:-:77078990-77307004",
+        "organism_name": "Mus musculus",
+        "local_sites": {
+          "AGO": [
+            [
+              4652,
+              4732
+            ],
+            [
+              4784,
+              4864
+            ]
+          ],
+          "mir29": [
+            [
+              4682,
+              4712
+            ],
+            [
+              4685,
+              4705
+            ]
+          ]
+        },
+        "custom": {
+          "organism_acc": "GRCm38.p6"
+        }
+      },
+      {
+        "name": "microRNA 29",
+        "symbol": "mir29",
+        "type": "miRNA",
+        "genomic_coordinates": "chr6:-:31062660-31062747",
+        "organism_name": "Mus musculus",
+        "local_sites": {
+          "AGO": [
+            [
+              16,
+              37
+            ]
+          ],
+          "Fam168b": [
+            [
+              17,
+              25
+            ]
+          ],
+          "Hdac4": [
+            [
+              17,
+              25
+            ]
+          ],
+          "Rbfox2": [
+            [
+              17,
+              25
+            ]
+          ]
+        },
+        "custom": {
+          "organism_acc": "GRCm38.p6"
+        }
+      }
+    ]
+  },
+  {
+    "ID": 3,
+    "class": "RNA-RNA-Protein",
+    "type": "RNA binding",
+    "evidence": [
+      {
+        "type": "experimental",
+        "method": "CLIP",
+        "data": {
+          "timepoint": {
+            "h_post_injury": 3
+          }
+        }
+      }
+    ],
+    "partners": [
+      {
+        "name": "Family with sequence similarity 168 member B",
+        "symbol": "Fam168b",
+        "type": "mRNA",
+        "genomic_coordinates": "chr1:-:34813219-34843065",
+        "organism_name": "Mus musculus",
+        "local_sites": {
+          "AGO": [
+            [
+              2020,
+              2100
+            ]
+          ],
+          "mir29": [
+            [
+              2050,
+              2070
+            ]
+          ]
+        },
+        "custom": {
+          "organism_acc": "GRCm38.p6"
+        }
+      },
+      {
+        "name": "Histone deacetylase 4",
+        "symbol": "Hdac4",
+        "type": "mRNA",
+        "genomic_coordinates": "chr1:-:91928779-92195699",
+        "organism_name": "Mus musculus",
+        "local_sites": {
+          "AGO": [
+            [
+              3936,
+              4016
+            ],
+            [
+              4026,
+              4106
+            ]
+          ],
+          "mir29": [
+            [
+              3976,
+              3996
+            ],
+            [
+              4056,
+              4076
+            ]
+          ]
+        },
+        "custom": {
+          "organism_acc": "GRCm38.p6"
+        }
+      },
+      {
+        "name": "RNA binding protein fox-1 homolog",
+        "symbol": "Rbfox2",
+        "type": "mRNA",
+        "genomic_coordinates": "chr15:-:77078990-77307004",
+        "organism_name": "Mus musculus",
+        "local_sites": {
+          "AGO": [
+            [
+              4652,
+              4732
+            ],
+            [
+              4784,
+              4864
+            ]
+          ],
+          "mir29": [
+            [
+              4682,
+              4712
+            ],
+            [
+              4685,
+              4705
+            ]
+          ]
+        },
+        "custom": {
+          "organism_acc": "GRCm38.p6"
+        }
+      },
+      {
+        "name": "microRNA 29",
+        "symbol": "mir29",
+        "type": "miRNA",
+        "genomic_coordinates": "chr6:-:31062660-31062747",
+        "organism_name": "Mus musculus",
+        "local_sites": {
+          "AGO": [
+            [
+              16,
+              37
+            ]
+          ],
+          "Fam168b": [
+            [
+              17,
+              25
+            ]
+          ],
+          "Hdac4": [
+            [
+              17,
+              25
+            ]
+          ],
+          "Rbfox2": [
+            [
+              17,
+              25
+            ]
+          ]
+        },
+        "custom": {
+          "organism_acc": "GRCm38.p6"
+        }
+      },
+      {
+        "name": "argonaute RISC catalytic subunit 2",
+        "symbol": "AGO2",
+        "type": "Protein",
+        "genomic_coordinates": "chr15:-:73095844-73184935",
+        "organism_name": "Mus musculus",
+        "local_sites": {
+          "mir29": [
+            [
+              678,
+              1041
+            ]
+          ],
+          "Fam168b": [
+            [
+              1719,
+              2580
+            ]
+          ],
+          "Hdac4": [
+            [
+              1719,
+              2580
+            ]
+          ],
+          "Rbfox2": [
+            [
+              1719,
+              2580
+            ]
+          ]
+        },
+        "custom": {
+          "organism_acc": "GRCm38.p6"
+        }
+      }
+    ]
+  }
+]

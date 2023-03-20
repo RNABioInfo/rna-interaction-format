@@ -1,5 +1,5 @@
 import pytest
-from RIF.pRIF import (
+from RIF.RNAInteractionFormat import (
     InteractionFile,
     RNAInteraction,
     Evidence,
@@ -36,8 +36,8 @@ def multi_test_json():
 )
 def test_file_load(path, request):
     path = request.getfixturevalue(path)
-    file = InteractionFile.load(path)
-    for interaction in file:
+    testfile = InteractionFile.load(path)
+    for interaction in testfile:
         assert type(interaction) == RNAInteraction
         for evidence in interaction.evidence:
             assert type(evidence) == Evidence
@@ -54,18 +54,19 @@ def test_file_load(path, request):
     [
         (
             "test_json",
-            os.path.join(TMP_TEST_DIR, "single_tmp.json"),
+            "single_tmp.json",
         ),
         (
             "multi_test_json",
-            os.path.join(TMP_TEST_DIR, "multi_tmp.json"),
+            "multi_tmp.json",
         ),
     ],
 )
-def test_json_export(path: str, testfile, request):
+def test_json_export(path: str, testfile, tmpdir, request):
     path = request.getfixturevalue(path)
-    file = InteractionFile.load(path)
-    file.export_json(testfile)
+    infile = InteractionFile.load(path)
+    testfile = os.path.join(tmpdir, testfile)
+    infile.export_json(testfile)
     with open(path) as handle, open(testfile) as handle2:
         json1 = json.load(handle)
         json2 = json.load(handle2)
@@ -169,15 +170,12 @@ def interaction_from_scratch():
         evidence_type="prediction",
         method="RNAProt",
         command="RNAProt predict --mode 2 --thr 2",
-        data={
-            "significance": {"p-value": 0.001}
-        }
+        data={"significance": {"p-value": 0.001}},
     )
     mrna_partner = Partner(
         name="Tumor protein P53",
         symbol="TP53",
         partner_type="mRNA",
-        organism_acc="9606",
         organism_name="Homo sapiens",
         genomic_coordinates=GenomicCoordinates(
             chromosome="chr17",
@@ -186,23 +184,16 @@ def interaction_from_scratch():
             end=7668421,
         ),
         local_sites={
-            "ELAVL1": [
-                LocalSite(
-                    start=2125,
-                    end=2160
-                ),
-                LocalSite(
-                    start=2452,
-                    end=2472
-                )
-            ]
-        }
+            "ELAVL1": [LocalSite(start=2125, end=2160), LocalSite(start=2452, end=2472)]
+        },
+        custom={
+            "organism_acc": "9606",
+        },
     )
     rbp_partner = Partner(
         name="ELAV-like protein 1",
         symbol="ELAVL1",
         partner_type="Protein",
-        organism_acc="9606",
         organism_name="Homo sapiens",
         genomic_coordinates=GenomicCoordinates(
             chromosome="chr19",
@@ -211,24 +202,21 @@ def interaction_from_scratch():
             end=7958573,
         ),
         local_sites={
-            "Tumor protein P53": [
-                LocalSite(
-                    start=2125,
-                    end=2160
-                ),
-                LocalSite(
-                    start=2452,
-                    end=2472
-                )
+            "TP53": [
+                LocalSite(start=2125, end=2160),
+                LocalSite(start=2452, end=2472),
             ]
-        }
+        },
+        custom={
+            "organism_acc": "9606",
+        },
     )
     interaction = RNAInteraction(
         interaction_id=1,
         evidence=[evidence],
         interaction_class="RNA-Protein",
         interaction_type="RNA binding",
-        partners=[mrna_partner, rbp_partner]
+        partners=[mrna_partner, rbp_partner],
     )
     return interaction
 

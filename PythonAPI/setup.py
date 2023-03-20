@@ -5,18 +5,23 @@ DESCRIPTION = "Python API for handling RIF Format"
 
 setup(
     name=NAME,
-    version="0.0.0",
+    version="1.0.0",
     author="RNAProNet Consortium",
     author_email="rabsch@informatik.uni-freiburg.de",
-    packages=["RIF"],
+    packages=["RIF", "RIF.tests"],
     license="LICENSE",
     url="https://github.com/Ibvt/rna-interaction-specification",
     description=DESCRIPTION,
-    long_description=open(
-        "README.md"
-    ).read(),
-    package_data={'RIF': ['rna-interaction-schema_v1.json', 'tests/*.py', 'tests/*.json', 'tests/*.bed']},
+    long_description=open("README.md").read(),
+    package_data={
+        "RIF": [
+            "rna-interaction-schema_v1.json",
+            "tests/*.py",
+            "tests/*.json",
+            "tests/*.bed",
+        ]
+    },
     long_description_content_type="text/markdown",
     include_package_data=True,
-    install_requires=["ijson", "jsonschema", "biopython"]
+    install_requires=["ijson", "jsonschema", "biopython"],
 )
