@@ -64,9 +64,8 @@ First we will import all necessary classes
 
 
 ```python
-from RNAInteraction.RNAInteractions import (
+from RIF.RNAInteractionFormat import (
     Evidence,
-    EvidenceData,
     Partner,
     GenomicCoordinates,
     LocalSite,
@@ -77,7 +76,7 @@ from RNAInteraction.RNAInteractions import (
 
 Afterwards, we will construct the Evidence objects and the evidence data.
 ```python
-data = {"significance": EvidenceData(unit="p-value", value=0.001)}
+data = {"significance": {"p-value":0.001}}
 evidence = Evidence(
     evidence_type="prediction",
     method="RNAProt",
