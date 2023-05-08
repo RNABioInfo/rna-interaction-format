@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
-	"$id": "https://raw.githubusercontent.com/Ibvt/rna-interaction-specification/rna-interaction-schema_v1tmp.json",
+	"$id": "https://raw.githubusercontent.com/Ibvt/rna-interaction-specification/rna-interaction-schema_v1.json",
 	"title": "RNA-RNA/Protein Interaction Format",
 	"description": "",
 	"type": "array",
@@ -50,7 +50,6 @@
 			},
 			"partners": {
 				"type": "array",
-				"minItems": 2,
 				"items": {
 					"type": "object",
 					"properties": {
@@ -72,8 +71,7 @@
 						},
 						"genomic_coordinates": {
 							"description": "",
-							"type": "string",
-							"pattern": "^[A-Za-z0-9_.]*:[+|-]:[0-9_]*-[0-9_]*$"
+							"type": "string"
 						},
 						"organism_name": {
 							"description": "",
@@ -81,42 +79,24 @@
 						},
 						"local_sites": {
 							"type": "object",
-							"patternProperties": {
-								"^.*$": {
+							"items": {
+								"maxItems": 3,
+								"type": "array",
+								"items": {
 									"type": "array",
-									"items": {
-										"type": "array",
-										"minItems": 2,
-										"maxItems": 2,
-										"items": {
-											"type": "number"
-										}
-									}
+									"minItems": 2,
+									"maxItems": 2
 								}
 							}
 						},
 						"other": {
-							"type": "object",
-							"properties": {
-								"description": {
-									"description": "",
-									"type": "string"
-								},
-								"sequence": {
-									"type": "string",
-									"pattern": "^([ATGC]*|[ARNDCQEGHILKMFPSTWYV]*)$"
-								},
-								"structure": {
-									"type": "string"
-								}
-							},
-							"additionalProperties": {"type": "string"}
+							"type": "object"
 						},
 						"custom": {
 							"type": "object"
 						}
 					},
-					"required": ["name", "symbol", "type", "local_sites"]
+					"required": ["name", "type", "local_sites"]
 				}
 			}
 		},

@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
-	"$id": "https://raw.githubusercontent.com/Ibvt/rna-interaction-specification/rna-interaction-schema_v1tmp.json",
+	"$id": "https://raw.githubusercontent.com/Ibvt/rna-interaction-specification/rna-interaction-schema_v1.json",
 	"title": "RNA-RNA/Protein Interaction Format",
 	"description": "",
 	"type": "array",
