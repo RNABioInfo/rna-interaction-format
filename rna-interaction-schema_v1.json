@@ -9,6 +9,11 @@
 	"items": {
 		"type": "object",
 		"properties": {
+            "version": {
+                "type": "string",
+                "pattern": "^RIFv1.0$",
+                "description": "The file version of RIF. Currently only RIFv1.0 allowed"
+            },
 			"ID": {
 				"type": "integer",
 				"minimum": 0,
@@ -100,6 +105,6 @@
 				}
 			}
 		},
-		"required": ["ID", "class", "type", "evidence","partners"]
+		"required": ["version","ID", "class", "type", "evidence","partners"]
 	}
 }
