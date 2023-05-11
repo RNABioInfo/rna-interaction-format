@@ -94,6 +94,7 @@ NC_000913.3 932594  933089  lrp-micF    0   +   932594  933089  (0,255,0)   2   
 
 ```json
 [{
+    "version": "RIFv1.0",
     "ID": 1,
     "class": "RNA-RNA-Protein",
     "type": "basepairing", 
@@ -279,8 +280,8 @@ var r = new rif();
 For the basic functionality of reading and writing RIF files, the functions `readRIF(RIFfile)` and `writeRIF(RIFfile)` are provided. In addition, `validateData(data)` validates a `data` object against the schema, which is also called when importing RIF files using `readRIF`. Moreover, `changeData(data)` and `changeSchema(schemaFile)` allow to change the data and the schema, respectively. Direct access to the interaction data is provided using `getData()`. 
 
 ```javascript
-r.readRif('./examples/RNA-RNA.json'); // import a RIF file 
-r.writeRif('./RNA-RNA.json'); // write the RIF file 
+r.readRIF('./examples/RNA-RNA.json'); // import a RIF file 
+r.writeRIF('./RNA-RNA.json'); // write the RIF file 
 r.validateData(data); // validates `data` against the schema
 
 ```
