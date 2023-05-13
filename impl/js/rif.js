@@ -58,6 +58,8 @@ class RIF {
 		var data = fs.readFileSync(filename, 'utf8');
 		const parsed = JSON.parse(data); // parse data
 		//const valid = ajv.validate(this.schema, parsed);
+        //
+
 		
 		var valid = this.validateData(parsed);
 
