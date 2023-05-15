@@ -1,5 +1,6 @@
 [{
-    "ID": 1,
+    "version": "RIFv1.0",
+    "ID": "6561bahas87y",
     "class": "RNA-RNA",
     "type": "basepairing", 
     
@@ -23,7 +24,7 @@
             "organism_name": "Escherichia coli K-12 MG1655",
             "organism_acc": "NC_000913",
             "local_sites": {
-                "rpoS":[[],[[25,32],[10,17]]]
+                "rpoS":[[25,32],[10,17]]
             }
         },
         {
@@ -34,7 +35,7 @@
             "organism_name": "Escherichia coli K-12 MG1655",
             "organisms_acc": "NC_000913",
             "local_sites":{
-                "dsrA":[[[70,83],[19,32]],[]]
+                "dsrA":[[70,83],[19,32]]
             }
         }
     ]

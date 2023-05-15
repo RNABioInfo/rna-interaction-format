@@ -1,6 +1,7 @@
 [
   {
-    "ID": 1,
+    "ID": "1",
+    "version": "RIFv1.0",
     "class": "RNA-Protein",
     "type": "RNA binding",
     "evidence": [
@@ -21,6 +22,7 @@
         "type": "mRNA",
         "genomic_coordinates": "chr1:-:34813219-34843065",
         "organism_name": "Mus musculus",
+        "organism_acc": "GRCm38.p6",
         "local_sites": {
           "AGO": [
             [
@@ -36,7 +38,6 @@
           ]
         },
         "custom": {
-          "organism_acc": "GRCm38.p6"
         }
       },
       {
@@ -45,6 +46,7 @@
         "type": "mRNA",
         "genomic_coordinates": "chr1:-:91928779-92195699",
         "organism_name": "Mus musculus",
+        "organism_acc": "GRCm38.p6",
         "local_sites": {
           "AGO": [
             [
@@ -68,7 +70,6 @@
           ]
         },
         "custom": {
-          "organism_acc": "GRCm38.p6"
         }
       },
       {
@@ -77,6 +78,7 @@
         "type": "mRNA",
         "genomic_coordinates": "chr15:-:77078990-77307004",
         "organism_name": "Mus musculus",
+        "organism_acc": "GRCm38.p6",
         "local_sites": {
           "AGO": [
             [
@@ -100,7 +102,6 @@
           ]
         },
         "custom": {
-          "organism_acc": "GRCm38.p6"
         }
       },
       {
@@ -109,6 +110,7 @@
         "type": "Protein",
         "genomic_coordinates": "chr15:-:73095844-73184935",
         "organism_name": "Mus musculus",
+        "organism_acc": "GRCm38.p6",
         "local_sites": {
           "mir29": [
             [
@@ -136,13 +138,13 @@
           ]
         },
         "custom": {
-          "organism_acc": "GRCm38.p6"
         }
       }
     ]
   },
   {
-    "ID": 2,
+    "ID": "2",
+    "version": "RIFv1.0",
     "class": "RNA-RNA",
     "type": "RNA binding",
     "evidence": [
@@ -163,6 +165,7 @@
         "type": "mRNA",
         "genomic_coordinates": "chr1:-:34813219-34843065",
         "organism_name": "Mus musculus",
+        "organism_acc": "GRCm38.p6",
         "local_sites": {
           "AGO": [
             [
@@ -178,7 +181,6 @@
           ]
         },
         "custom": {
-          "organism_acc": "GRCm38.p6"
         }
       },
       {
@@ -187,6 +189,7 @@
         "type": "mRNA",
         "genomic_coordinates": "chr1:-:91928779-92195699",
         "organism_name": "Mus musculus",
+        "organism_acc": "GRCm38.p6",
         "local_sites": {
           "AGO": [
             [
@@ -210,7 +213,6 @@
           ]
         },
         "custom": {
-          "organism_acc": "GRCm38.p6"
         }
       },
       {
@@ -219,6 +221,7 @@
         "type": "mRNA",
         "genomic_coordinates": "chr15:-:77078990-77307004",
         "organism_name": "Mus musculus",
+        "organism_acc": "GRCm38.p6",
         "local_sites": {
           "AGO": [
             [
@@ -242,7 +245,6 @@
           ]
         },
         "custom": {
-          "organism_acc": "GRCm38.p6"
         }
       },
       {
@@ -251,6 +253,7 @@
         "type": "miRNA",
         "genomic_coordinates": "chr6:-:31062660-31062747",
         "organism_name": "Mus musculus",
+        "organism_acc": "GRCm38.p6",
         "local_sites": {
           "AGO": [
             [
@@ -278,13 +281,13 @@
           ]
         },
         "custom": {
-          "organism_acc": "GRCm38.p6"
         }
       }
     ]
   },
   {
-    "ID": 3,
+    "ID": "3",
+    "version": "RIFv1.0",
     "class": "RNA-RNA-Protein",
     "type": "RNA binding",
     "evidence": [
@@ -329,6 +332,7 @@
         "type": "mRNA",
         "genomic_coordinates": "chr1:-:91928779-92195699",
         "organism_name": "Mus musculus",
+        "organism_acc": "GRCm38.p6",
         "local_sites": {
           "AGO": [
             [
@@ -352,7 +356,6 @@
           ]
         },
         "custom": {
-          "organism_acc": "GRCm38.p6"
         }
       },
       {
@@ -361,6 +364,7 @@
         "type": "mRNA",
         "genomic_coordinates": "chr15:-:77078990-77307004",
         "organism_name": "Mus musculus",
+        "organism_acc": "GRCm38.p6",
         "local_sites": {
           "AGO": [
             [
@@ -384,7 +388,6 @@
           ]
         },
         "custom": {
-          "organism_acc": "GRCm38.p6"
         }
       },
       {
@@ -393,6 +396,7 @@
         "type": "miRNA",
         "genomic_coordinates": "chr6:-:31062660-31062747",
         "organism_name": "Mus musculus",
+        "organism_acc": "GRCm38.p6",
         "local_sites": {
           "AGO": [
             [
@@ -420,7 +424,6 @@
           ]
         },
         "custom": {
-          "organism_acc": "GRCm38.p6"
         }
       },
       {
@@ -429,6 +432,7 @@
         "type": "Protein",
         "genomic_coordinates": "chr15:-:73095844-73184935",
         "organism_name": "Mus musculus",
+        "organism_acc": "GRCm38.p6",
         "local_sites": {
           "mir29": [
             [
@@ -456,7 +460,6 @@
           ]
         },
         "custom": {
-          "organism_acc": "GRCm38.p6"
         }
       }
     ]

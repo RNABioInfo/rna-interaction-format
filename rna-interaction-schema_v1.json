@@ -10,8 +10,8 @@
 		"type": "object",
 		"properties": {
 			"ID": {
-				"type": "integer",
-				"minimum": 0,
+				"type": "string",
+                "pattern": "^[0-9a-zA-z-_]*$",
 				"description": "The unique identifier for an interaction"
 			},
             "version": {
@@ -42,16 +42,28 @@
 							"type": "string"
 						},
 						"command": {
-							"description": "",
+							"description": "command for computational method",
 							"type": "string"
 						},
 						"data": {
-							"type": "object"
+                            "type": "object",
+                            "additionalProperties": {
+                                "oneOf": [
+                                    {
+                                        "type": "object",
+                                        "additionalProperties": {
+                                            "not": { "type": "object" }
+                                        }
+                                    },
+                                    {
+                                        "not": { "type": "object" }
+                                    }
+                                ]
+                            }
 						}
 					},
-					"required": ["type", "method","data"]
+					"required": ["type", "method", "data"]
 				}
-
 			},
 			"partners": {
 				"type": "array",
@@ -127,6 +139,7 @@
 				}
 			}
 		},
+        "additionalProperties": false,
 		"required": ["ID", "version", "class", "type", "evidence","partners"]
 	}
 }

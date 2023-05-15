@@ -6,17 +6,18 @@ RIF uses the [JSON schema](https://json-schema.org/) draft [2020-12](https://jso
 
 ## Overview
 
-The top-level **interaction object** represents a single RNA-centric interaction object consisting of the name/value pairs **ID**, **class**, **type**, **evidence** and **partners**.
+The top-level **interaction object** represents a single RNA-centric interaction object consisting of the name/value pairs **version**, **ID**, **class**, **type**, **evidence** and **partners**.
 
 | element | value | description |
 | ------- | ----- | ----------- |
-| ID | number | unique identifier of the interaction used as reference |
+| version | string | Currently used format of the interaction (e.g., RIFv1.0)|
+| ID | string | unique identifier of the interaction used as reference |
 | class | keyword | class of the interaction: RNA-RNA, Protein-RNA or Protein-RNA-RNA |
 | type | string | chemical nature of the interaction |
-| evidence | list | data supporting the interaction | 
-| partners | list | transcript interaction |
+| evidence | list of objects | data supporting the interaction | 
+| partners | list of objects | transcript interaction |
 
-### ID, class and type
+### Version, ID, Class and Type
 
 The name/value pairs **ID**, **class** and **type** describe general information about the interaction and are mandatory. 
 
@@ -267,17 +268,25 @@ Document sub3=get_interaction(&doc, "class=RNA-RNA; partner=dsrA") // New rapidj
 ### JavaScript 
 
 At first, the required packages for the RIF module need to be installed.
+
 ```
 cd ./js 
 npm install
 ```
+
 The RIF module can be included in node.js using the `require` function by referencing to the `rif.js` file. 
 
 ```javascript
 const rif = require('./rif.js');
-var r = new rif();
+var r = new rif(); // or var r = new rif('path/to/schema.json')
 ```
-For the basic functionality of reading and writing RIF files, the functions `readRIF(RIFfile)` and `writeRIF(RIFfile)` are provided. In addition, `validateData(data)` validates a `data` object against the schema, which is also called when importing RIF files using `readRIF`. Moreover, `changeData(data)` and `changeSchema(schemaFile)` allow to change the data and the schema, respectively. Direct access to the interaction data is provided using `getData()`. 
+The RIF object can also be invoked by providing the schema file as a parameter. This is intended for validation against different schema (in future version). 
+
+For the basic functionality of reading and writing RIF files, the functions `readRIF(RIFfile)` and `writeRIF(RIFfile)` are provided. 
+
+Moreover, `changeData(data)` and `changeSchema(schemaFile)` allow changing the data and the schema, respectively. Direct access to the interaction data is provided using a `data` getter (e.g., `r.data`)
+
+In addition, `validateData(data)` validates a `data` object against the schema, which is also called when importing RIF files using `readRIF`. In other words, data can only be read/imported when it a valid RIF file. 
 
 ```javascript
 r.readRIF('./examples/RNA-RNA.json'); // import a RIF file 
@@ -296,13 +305,15 @@ r.get({"class": "RNA-RNA", "type": "basepairing"}); // returns all interactions 
 In a similar manner, RIF can be queried for multiple interactions. 
 
 ```javascript
-r.get([{"ID": 1}, {"ID": 2}]); // multiple queries
+r.get([{"ID": "someid"}, {"ID": "anotherid"}]); // multiple queries
 ```
 
 Other data manipulation is done with `add` and `rm` which add an interaction to the data and removes it, respectively. In the of adding an interaction, this requires an interaction data which suffices the schema, e.g., 
 
 ```javascript
 r.add({
+	 "ID": "someid",
+	 "version": "RIFv1.0",
     "class": "RNA-RNA",
     "type": "basepairing",
     "evidence": [
@@ -339,7 +350,7 @@ r.add({
 It is to be noted that `ID` is determined automatically, but can also be set manually. However, this should be unique. Similarly, an interaction can be removed by querying for certain name/value pairs, e.g.,
 
 ```javascript
-r.rm({"ID": 1}); // removes interaction with ID=1
+r.rm({"ID": "someid"}); // removes interaction with ID=1
 r.rm({"class": "RNA-RNA"}); // removes all interactions of class: RNA-RNA
 ```
 In addition, specific properties can be modified using the `mod` routine which accepts the id of the interaction and the key/value pair. 

@@ -1,5 +1,6 @@
 [{
-    "ID": 1,
+    "ID": "1"
+    "version": "RIFv1.0",
     "class": "RNA-RNA-Protein",
     "type": "basepairing",
 
@@ -34,10 +35,10 @@
                 "dsrA": [[60,78],[45,55]],
                 "rpoS": [[10,40]]
             },
-            "other": {
+            "info": {
                 "description": "RNA chaperone that binds small regulatory RNA (sRNAs) and mRNAs to facilitate mRNA translational regulation in response to envelope stress, environmental stress and changes in metabolite concentrations.",
                 "sequence": "MAKGQSLQDPFLNALRRERVPVSIYLVNGIKLQGQIESFDQFVILLKNTVSQMVYKHAISTVVPSRPVSHHSNNAGGGTSSNYHHGSSAQNTSAQQDSEETE",
-                "structure": "https://www.ebi.ac.uk/pdbe/entry/pdb/5I21"
+                "note": "https://www.ebi.ac.uk/pdbe/entry/pdb/5I21"
             }
         },
         {
@@ -52,7 +53,7 @@
                 "Hfq": [[12,30],[80,90]],
                 "rpoS": [[50,70]]
             },
-            "other": {
+            "info": {
                 "description": "DsrA small regulatory RNA; riboregulator of RpoS and H-NS production",
                 "sequence": "AACGCATCGGATTTCCCGGTGTAACGAATTTTCAAGTGCTTCTTGCATTAGCAAGTTTGATCCCGACTCCTGCGAGTCGGGATTT",
                 "structure": "...(((((((.....)))))))..(((((((...(((((.....)))))...)))))))((((((((((....)))))))))).."

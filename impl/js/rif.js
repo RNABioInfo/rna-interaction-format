@@ -1,5 +1,7 @@
 const fs = require('fs');
 const lr = require('line-reader')
+const pa = require('node:path')
+//const pa = require('path')
 
 //
 const Ajv2020 = require("ajv/dist/2020")
@@ -26,11 +28,20 @@ class RIF {
 	data = []; // contains the RIF JSON object
 	validate = {}; // stores ajv validate object using this.schema 
 	schema = {}
-	maxID = 0
+//	maxID = 0
 
-	constructor() {
-		this.changeSchema('../rna-interaction-schema_v1.json');
-	}
+	constructor(schema) {
+        if(schema === undefined) {
+            this.changeSchema(schema);
+        } else {
+            if(fs.existsSync(schema)) {
+                this.changeSchema(schema);
+            } else {
+                console.log('schema: ' + schema + ' does not exist!')
+                process.exit(1);
+            }
+        }
+    }
 
 	// changes the underlying schema (e.g, to older versions) and compiles it
 	changeSchema(schemaFile) { 
@@ -50,8 +61,8 @@ class RIF {
 	}
 	
 	// getter
-	get getData() { return this.data; }
-	get getMaxID() { return this.maxID; }
+	get data() { return this.data; }
+	//get getMaxID() { return this.maxID; }
 
 	// imports any given (valid) RIF file - interactions are added to existing data
 	readRIF(filename) {
@@ -60,7 +71,6 @@ class RIF {
 		//const valid = ajv.validate(this.schema, parsed);
         //
 
-		
 		var valid = this.validateData(parsed);
 
 		if(valid) {
@@ -72,7 +82,7 @@ class RIF {
 				}
 				this.data.push(parsed[i])
 			}
-		}
+		} 
 	}
 
 	// writes the RIF to file
@@ -157,40 +167,52 @@ class RIF {
 
 	// add interaction to the data
 	add(attr) {
-		for(var i=0;i<this.data.length;i++) {
-			// check if new element already exists
-			if(attr == this.data[i]) {
-				console.log('identical element already exists');
-				return -1; // cancel operation
-			}
-		}
-		// empty interaction object
-		var obj = {
-			"ID": this.maxID+1,
-			"class": "",
-			"type": "",
-			"evidence": [],
-			"partners": []
-		};
+        // check if attr is valid RIF
+        var valid = this.validateData([attr]);
+        if(valid) {
+            // check if new element already exists
+            for(var i=0;i<this.data.length;i++) {
+                if(attr == this.data[i]) {
+                    console.log('identical element already exists');
+                    return -1; // cancel operation
+                }
+            }
+            // empty interaction object
+            var obj = {
+                "ID": "",
+                "version": "",
+                "class": "",
+                "type": "",
+                "evidence": [],
+                "partners": []
+            };
+
+            // substitute name/values pairs in attr
+            var keys = Object.keys(attr);
+            var values = Object.values(attr);
+
+            for(var j=0;j<keys.length;j++) {
+    //            console.log(keys[j])
+                /*
+                if(keys[j] == "ID") {
+                    if(values[j] > this.maxID) {
+                        this.maxID = values[j];
+                    }
+                }*/
+                obj[keys[j]] = values[j]; 
+            }
+            this.data.push(obj);
+            return this.data;
+
+        }
+
 
 		// determine next ID
+        /*
 		if(obj["ID"] > this.maxID) {
 			this.maxID = obj["ID"];
-		}
+		}*/
 
-		// substitute name/values pairs in attr
-		var keys = Object.keys(attr);
-		var values = Object.values(attr);
-		for(var j=0;j<attr.length;j++) {
-			if(keys[j] == "ID") {
-				if(values[j] > this.maxID) {
-					this.maxID = values[j];
-				}
-			}
-			obj[keys[j]] = values[j]; 
-		}
-		this.data.push(obj);
-		return this.data;
 	} 
 
 	// modify name/value pair of interaction

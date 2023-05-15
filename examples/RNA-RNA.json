@@ -1,6 +1,6 @@
 [{
     "version": "RIFv1.0",
-    "ID": 1,
+    "ID": "76ahgas-8as8a",
     "class": "RNA-RNA-Protein",
     "type": "basepairing", 
     "evidence": [
@@ -84,10 +84,9 @@
 },
 {
     "version": "RIFv1.0",
-    "ID": 2,
+    "ID": "76ahad87abb",
     "class": "RNA-RNA",
     "type": "basepairing", 
-    
     "evidence": [{
             "type": "Data-driven", 
             "method": "Direct Duplex Detection",
