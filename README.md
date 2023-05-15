@@ -1,8 +1,8 @@
 # RNA Interaction Format (RIF)
 
-The **RNA Interaction Format (RIF)** is focused on capturing RNA interactions in a convenient to use format. It has been developed on the basis of [JSON](https://www.json.org) to store RNA-RNA, Protein-RNA or multi Protein/RNA complexes. 
+The **RNA Interaction Format (RIF)** is focused on capturing RNA interactions in a convenient to use format. It has been developed on the basis of [JSON](https://www.json.org) to store RNA-RNA, Protein-RNA or multi Protein/RNA complexes.
 
-RIF uses the [JSON schema](https://json-schema.org/) draft [2020-12](https://json-schema.org/draft/2020-12/release-notes.html) for validation of correctly formatted RIF files. 
+RIF uses the [JSON schema](https://json-schema.org/) draft [2020-12](https://json-schema.org/draft/2020-12/release-notes.html) for validation of correctly formatted RIF files.
 
 ## Overview
 
@@ -14,12 +14,12 @@ The top-level **interaction object** represents a single RNA-centric interaction
 | ID | string | unique identifier of the interaction used as reference |
 | class | keyword | class of the interaction: RNA-RNA, Protein-RNA or Protein-RNA-RNA |
 | type | string | chemical nature of the interaction |
-| evidence | list of objects | data supporting the interaction | 
+| evidence | list of objects | data supporting the interaction |
 | partners | list of objects | transcript interaction |
 
 ### Version, ID, Class and Type
 
-The name/value pairs **ID**, **class** and **type** describe general information about the interaction and are mandatory. 
+The name/value pairs **ID**, **class** and **type** describe general information about the interaction and are mandatory.
 
 ### evidence
 
@@ -27,7 +27,7 @@ An *interaction object* should contain at least one *evidence object*. Therefore
 
 ### partners
 
-The name/value pair partners is a list of elements that correspond to the RNAs/Proteins involved in an interaction. These contains the mandatory name/value pairs **name**, **symbol**, **type**, **local_sites**. Other pairs include **sequence_type**, **genomic_coordinates**, **organism_name** and **organism_acc** and **local_sites**. The **name** name/value pair corresponds to the principal name of the gene/transcript and the **symbol** corresponds to its scientific name. However, this may include unannotated transcript with arbitrary naming. In that regard, **type** depicts the type of the interaction partner. These are terms that are specified in the [sequence ontology](http://www.sequenceontology.org/) and may match the entries in the corresponding annotations (.gff/gtf) file. The **genomic_coordinates** name/value pair depicts the coordinates of the transcript on the genome in the format *chromosome:strand:start-end*. In the **organism_name** name/value pair, the scientific organisms name is stated with **organism_acc** being the corresponding accession number. The **local_sites** name/value pair is specified as an object with keys corresponding to the symbols of the interacting transcripts. The values are lists of 2-element lists specifying start and end of the interaction site. 
+The name/value pair partners is a list of elements that correspond to the RNAs/Proteins involved in an interaction. These contains the mandatory name/value pairs **name**, **symbol**, **type**, **local_sites**. Other pairs include **sequence_type**, **genomic_coordinates**, **organism_name** and **organism_acc** and **local_sites**. The **name** name/value pair corresponds to the principal name of the gene/transcript and the **symbol** corresponds to its scientific name. However, this may include unannotated transcript with arbitrary naming. In that regard, **type** depicts the type of the interaction partner. These are terms that are specified in the [sequence ontology](http://www.sequenceontology.org/) and may match the entries in the corresponding annotations (.gff/gtf) file. The **genomic_coordinates** name/value pair depicts the coordinates of the transcript on the genome in the format *chromosome:strand:start-end*. In the **organism_name** name/value pair, the scientific organisms name is stated with **organism_acc** being the corresponding accession number. The **local_sites** name/value pair is specified as an object with keys corresponding to the symbols of the interacting transcripts. The values are lists of 2-element lists specifying start and end of the interaction site.
 
 | name | value | mandatory | description |
 | ---  | ----  | --------  | ----------  |
@@ -39,7 +39,7 @@ The name/value pair partners is a list of elements that correspond to the RNAs/P
 | organism_acc | string | yes | Corresponding accession number of the organism (e,g., DDBJ/EMBL/GenBank, RefSeq, UniProt) |
 | local_sites | list of list | yes | Interaction sites between the partners |
 
-Moreover, **other** is a nested name/value pair that determines optional properties of the interaction partner. These include the name/value pairs **description**, **sequence** and **structure**. Arbirtrary name-value pairs can be specified as well. 
+Moreover, **info** is a nested name/value pair that determines optional properties of the interaction partner. These include the name/value pairs **description**, **sequence** and **structure**. Arbirtrary name-value pairs can be specified as well.
 
 | name | value | mandatory | description |
 | ---  | ----  | --------  | ----------  |
@@ -47,7 +47,7 @@ Moreover, **other** is a nested name/value pair that determines optional propert
 | sequence | string | no | Sequence of the gene/transcript/protein as specified in *genomic_coordinates* |
 | structure | string | no | Representation of the RNA secondary structure |
 
-In addition, the **custom** name/value pair allows to specify user-defined name/value pairs. 
+In addition, the **custom** name/value pair allows to specify user-defined name/value pairs.
 
 ## Functionality
 
@@ -63,7 +63,7 @@ Data in RIF can be exported to [BED format](https://samtools.github.io/hts-specs
 | 4 | name | symbols of the interacting elements, linked using '-' |
 | 5 | score | unused, set to 0 |
 | 6 | strand | Strand orientation of the feature |
-| 7 | thickStart | unused, set to chromStart |  
+| 7 | thickStart | unused, set to chromStart |
 | 8 | thickEnd | unused, set to chromEnd |
 | 9 | itemRgb | class of the interaction |
 | 10 | blockCount | number of interaction sites |
@@ -89,7 +89,7 @@ NC_000913.3 932594  933089  lrp-micF    0   +   932594  933089  (0,255,0)   2   
 
 ## Examples
 
-[Additional Examples](./examples/) 
+[Additional Examples](./examples/)
 
 ### <a id="minimal"></a>Minimal Example
 
@@ -98,8 +98,8 @@ NC_000913.3 932594  933089  lrp-micF    0   +   932594  933089  (0,255,0)   2   
     "version": "RIFv1.0",
     "ID": 1,
     "class": "RNA-RNA-Protein",
-    "type": "basepairing", 
-    
+    "type": "basepairing",
+
     "evidence": [
         {
             "type": "experimental",
@@ -118,7 +118,7 @@ NC_000913.3 932594  933089  lrp-micF    0   +   932594  933089  (0,255,0)   2   
         }
     ],
 
-    "partners": [ 
+    "partners": [
         {
             "name": "Hfq",
             "symbol": "Hfq",
@@ -131,7 +131,7 @@ NC_000913.3 932594  933089  lrp-micF    0   +   932594  933089  (0,255,0)   2   
                 "dsrA": [[60,78],[45,55]],
                 "rpoS": [[10,40]]
             },
-            "other": {
+            "info": {
                 "description": "RNA chaperone that binds small regulatory RNA (sRNAs) and mRNAs to facilitate mRNA translational regulation in response to envelope stress, environmental stress and changes in metabolite concentrations.",
                 "sequence": "MAKGQSLQDPFLNALRRERVPVSIYLVNGIKLQGQIESFDQFVILLKNTVSQMVYKHAISTVVPSRPVSHHSNNAGGGTSSNYHHGSSAQNTSAQQDSEETE",
                 "structure": "https://www.ebi.ac.uk/pdbe/entry/pdb/5I21"
@@ -139,8 +139,8 @@ NC_000913.3 932594  933089  lrp-micF    0   +   932594  933089  (0,255,0)   2   
         },
         {
             "name": "dsrA",
-            "symbol": "dsrA", 
-            "type": "small_regulatory_ncRNA", 
+            "symbol": "dsrA",
+            "type": "small_regulatory_ncRNA",
             "sequence_type": "rna",
             "genomic_coordinates": "NC_000913.3:-:2025223-2025313",
             "organism_name": "Escherichia coli K-12 MG1655",
@@ -149,9 +149,9 @@ NC_000913.3 932594  933089  lrp-micF    0   +   932594  933089  (0,255,0)   2   
                 "Hfq": [[12,30],[80,90]],
                 "rpoS": [[50,70]]
             },
-            "other": {                
+            "info": {
                 "description": "DsrA small regulatory RNA; riboregulator of RpoS and H-NS production",
-                "sequence": "AACGCATCGGATTTCCCGGTGTAACGAATTTTCAAGTGCTTCTTGCATTAGCAAGTTTGATCCCGACTCCTGCGAGTCGGGATTT", 
+                "sequence": "AACGCATCGGATTTCCCGGTGTAACGAATTTTCAAGTGCTTCTTGCATTAGCAAGTTTGATCCCGACTCCTGCGAGTCGGGATTT",
                 "structure": "...(((((((.....)))))))..(((((((...(((((.....)))))...)))))))((((((((((....)))))))))).."
             },
 
@@ -165,13 +165,13 @@ NC_000913.3 932594  933089  lrp-micF    0   +   932594  933089  (0,255,0)   2   
             "genomic_coordinates": "NC_000913.3:-:2866559-2867551",
             "organism_name": "Escherichia coli K-12 MG1655",
             "organism_acc": "NC_000913.3",
-            "local_sites": { 
+            "local_sites": {
                 "Hfq": [[200,230]],
                 "dsrA": [[587,607]]
             },
-            "other": {
+            "info": {
                 "description": "RNA polymerase, sigma S (sigma 38) factor",
-                "sequence": "TGAGTCAGAATACGCTGAAAGTTCATGATTTAAATGAAGATGCGGAATTTGATGAGAACGGAGTTGAGGTTTTTGACGAAAAGGCCTTAGTAGAACAGGAACCCAGTGATAACGATTTGGCCGAAGAGGAACTGTTATCGCAGGGAGCCACACAGCGTGTGTTGGACGCGACTCAGCTTTACCTTGGTGAGATTGGTTATTCACCACTGTTAACGGCCGAAGAAGAAGTTTATTTTGCGCGTCGCGCACTGCGTGGAGATGTCGCCTCTCGCCGCCGGATGATCGAGAGTAACTTGCGTCTGGTGGTAAAAATTGCCCGCCGTTATGGCAATCGTGGTCTGGCGTTGCTGGACCTTATCGAAGAGGGCAACCTGGGGCTGATCCGCGCGGTAGAGAAGTTTGACCCGGAACGTGGTTTCCGCTTCTCAACATACGCAACCTGGTGGATTCGCCAGACGATTGAACGGGCGATTATGAACCAAACCCGTACTATTCGTTTGCCGATTCACATCGTAAAGGAGCTGAACGTTTACCTGCGAACCGCACGTGAGTTGTCCCATAAGCTGGACCATGAACCAAGTGCGGAAGAGATCGCAGAGCAACTGGATAAGCCAGTTGATGACGTCAGCCGTATGCTTCGTCTTAACGAGCGCATACCTCGGTAGACACCCCGCTGGGTGGTGATTCCGAAAAAGCGTTGCTGGACATCCTGGCCGATGAAAAAGAGAACGGTCCGGAAGATACCACGCAAGATGACGATATGAAGCAGAGCATCGTCAAATGGCTGTTCGAGCTGAACGCCAAACAGCGTGAAGTGCTGGCACGTCGATTCGGTTTGCTGGGGTACGAAGCGGCAACACTGGAAGATGTAGGTCGTGAAATTGGCCTCACCCGTGAACGTGTTCGCCAGATTCAGGTTGAAGGCCTGCGCCGTTTGCGCGAAATCCTGCAAACGCAGGGGCTGAATATCGAAGCGCTGTTCCGCGAGTAA", 
+                "sequence": "TGAGTCAGAATACGCTGAAAGTTCATGATTTAAATGAAGATGCGGAATTTGATGAGAACGGAGTTGAGGTTTTTGACGAAAAGGCCTTAGTAGAACAGGAACCCAGTGATAACGATTTGGCCGAAGAGGAACTGTTATCGCAGGGAGCCACACAGCGTGTGTTGGACGCGACTCAGCTTTACCTTGGTGAGATTGGTTATTCACCACTGTTAACGGCCGAAGAAGAAGTTTATTTTGCGCGTCGCGCACTGCGTGGAGATGTCGCCTCTCGCCGCCGGATGATCGAGAGTAACTTGCGTCTGGTGGTAAAAATTGCCCGCCGTTATGGCAATCGTGGTCTGGCGTTGCTGGACCTTATCGAAGAGGGCAACCTGGGGCTGATCCGCGCGGTAGAGAAGTTTGACCCGGAACGTGGTTTCCGCTTCTCAACATACGCAACCTGGTGGATTCGCCAGACGATTGAACGGGCGATTATGAACCAAACCCGTACTATTCGTTTGCCGATTCACATCGTAAAGGAGCTGAACGTTTACCTGCGAACCGCACGTGAGTTGTCCCATAAGCTGGACCATGAACCAAGTGCGGAAGAGATCGCAGAGCAACTGGATAAGCCAGTTGATGACGTCAGCCGTATGCTTCGTCTTAACGAGCGCATACCTCGGTAGACACCCCGCTGGGTGGTGATTCCGAAAAAGCGTTGCTGGACATCCTGGCCGATGAAAAAGAGAACGGTCCGGAAGATACCACGCAAGATGACGATATGAAGCAGAGCATCGTCAAATGGCTGTTCGAGCTGAACGCCAAACAGCGTGAAGTGCTGGCACGTCGATTCGGTTTGCTGGGGTACGAAGCGGCAACACTGGAAGATGTAGGTCGTGAAATTGGCCTCACCCGTGAACGTGTTCGCCAGATTCAGGTTGAAGGCCTGCGCCGTTTGCGCGAAATCCTGCAAACGCAGGGGCTGAATATCGAAGCGCTGTTCCGCGAGTAA",
                 "structure": "(((((((((((.........)))).))))))).........(((((((..((((.((((((..(((((((((((.....))))))))))).......((..(((.(((((((((......((.....))...))))))))).)))..)).....(((((((((.((((((....((((((..((((((..(((((((.....))))..)))....))).)))..)))))).......))))))....((((((((((....(((((((..(((((((((((..((((.....))))))))))))))).....(((((((((.....)))..(((.((((((((...))))))))....)))...))))))...))))).)))))))))))).(((((((..((((((...)).))))...))))))))))))))))...((((((....))))))((((....(((((...............))))).....))))...))).))).))))........(((((.((((...((((((.((((((.((.(((((((........))))....))))).))))))......))))))..(((((((....)))))))..))))))))).(((((((((((....))))).)))))).((((....((((((....)).))))...))))...(((((((((((...(((.(((((.............))))).))).....))).)))......((((((..(((......((((((((((((.((((.....))))(((...((((.((((...((((((((((..((((((((((((..........)))))).)))))).)))))((((((......))))))(((........)))...))))).)))).))))..)))....)))))))).))))..((((((....)))))))))..))))))..))))))))))))......"
             },
 
@@ -265,32 +265,32 @@ Document sub3=get_interaction(&doc, "class=RNA-RNA; partner=dsrA") // New rapidj
 ~~~~~~~~~~
 
 
-### JavaScript 
+### JavaScript
 
 At first, the required packages for the RIF module need to be installed.
 
 ```
-cd ./js 
+cd ./js
 npm install
 ```
 
-The RIF module can be included in node.js using the `require` function by referencing to the `rif.js` file. 
+The RIF module can be included in node.js using the `require` function by referencing to the `rif.js` file.
 
 ```javascript
 const rif = require('./rif.js');
 var r = new rif(); // or var r = new rif('path/to/schema.json')
 ```
-The RIF object can also be invoked by providing the schema file as a parameter. This is intended for validation against different schema (in future version). 
+The RIF object can also be invoked by providing the schema file as a parameter. This is intended for validation against different schema (in future version).
 
-For the basic functionality of reading and writing RIF files, the functions `readRIF(RIFfile)` and `writeRIF(RIFfile)` are provided. 
+For the basic functionality of reading and writing RIF files, the functions `readRIF(RIFfile)` and `writeRIF(RIFfile)` are provided.
 
 Moreover, `changeData(data)` and `changeSchema(schemaFile)` allow changing the data and the schema, respectively. Direct access to the interaction data is provided using a `data` getter (e.g., `r.data`)
 
-In addition, `validateData(data)` validates a `data` object against the schema, which is also called when importing RIF files using `readRIF`. In other words, data can only be read/imported when it a valid RIF file. 
+In addition, `validateData(data)` validates a `data` object against the schema, which is also called when importing RIF files using `readRIF`. In other words, data can only be read/imported when it a valid RIF file.
 
 ```javascript
-r.readRIF('./examples/RNA-RNA.json'); // import a RIF file 
-r.writeRIF('./RNA-RNA.json'); // write the RIF file 
+r.readRIF('./examples/RNA-RNA.json'); // import a RIF file
+r.writeRIF('./RNA-RNA.json'); // write the RIF file
 r.validateData(data); // validates `data` against the schema
 
 ```
@@ -302,13 +302,13 @@ r.get({"class": "RNA-RNA"}); // returns all interactions matching the class prop
 r.get({"class": "RNA-RNA", "type": "basepairing"}); // returns all interactions matching the class and type property
 ```
 
-In a similar manner, RIF can be queried for multiple interactions. 
+In a similar manner, RIF can be queried for multiple interactions.
 
 ```javascript
 r.get([{"ID": "someid"}, {"ID": "anotherid"}]); // multiple queries
 ```
 
-Other data manipulation is done with `add` and `rm` which add an interaction to the data and removes it, respectively. In the of adding an interaction, this requires an interaction data which suffices the schema, e.g., 
+Other data manipulation is done with `add` and `rm` which add an interaction to the data and removes it, respectively. In the of adding an interaction, this requires an interaction data which suffices the schema, e.g.,
 
 ```javascript
 r.add({
@@ -334,7 +334,7 @@ r.add({
             "local_sites": {
                 "lrp": [[25,32],[55,64]]
             }
-        }, 
+        },
         {
             "name": "lrp",
             "symbol": "lrp",
@@ -353,7 +353,7 @@ It is to be noted that `ID` is determined automatically, but can also be set man
 r.rm({"ID": "someid"}); // removes interaction with ID=1
 r.rm({"class": "RNA-RNA"}); // removes all interactions of class: RNA-RNA
 ```
-In addition, specific properties can be modified using the `mod` routine which accepts the id of the interaction and the key/value pair. 
+In addition, specific properties can be modified using the `mod` routine which accepts the id of the interaction and the key/value pair.
 
 ```javascript
 r.mod(1,{"type": "Protein-RNA"}); // changes the type to "Protein-RNA" on interaction with ID=1
@@ -416,8 +416,8 @@ interaction_file = InteractionFile(filtered_interactions)
 
 #### Validation
 
-The validation happens automatically during actions like File creation, loading, or adding. It is possible to 
-disable this via setting the corresponding validate flags to False. 
+The validation happens automatically during actions like File creation, loading, or adding. It is possible to
+disable this via setting the corresponding validate flags to False.
 However, a user can also validate the object manually via:
 
 ```python
@@ -428,7 +428,7 @@ interaction_file.validate()
 
 ##### JSON
 
-InteractionFile objects can be exported to the RNAinteraction Format using the 
+InteractionFile objects can be exported to the RNAinteraction Format using the
 ``export_json()`` function as follows:
 
 ```python
@@ -453,13 +453,13 @@ interaction_file.export_bed("/new/file/path.bed")
 
 #### Creating a File within Python
 
-You can also create an InteractionFile object in pure python and export it to 
+You can also create an InteractionFile object in pure python and export it to
 the json format. Using this approach it is easy to include the API into your python tool
 and write an export function. Keep in mind that json object are converted to classes in the
 python api. In contrast, Lists will stay Lists (except for the local and genomic coordinates).
 
 However, lets start from the bottom and create an InteractionFile with
-a single hypothetical entry of an RNA-Protein interaction which was predicted using 
+a single hypothetical entry of an RNA-Protein interaction which was predicted using
 the tool [RNAProt](https://github.com/BackofenLab/RNAProt).
 
 First we will import all necessary classes
@@ -559,33 +559,12 @@ interaction_file = InteractionFile([interaction])
 interaction_file.export_json("testfile.json")
 ```
 
-It is also possible to add or remove interactions. Adding is done via the `add()` method and removing via `rm()`. 
-adding takes a single object of type `RNAInteraction` or an Iterable object of them as argument. Further, it always 
+It is also possible to add or remove interactions. Adding is done via the `add()` method and removing via `rm()`.
+adding takes a single object of type `RNAInteraction` or an Iterable object of them as argument. Further, it always
 validates the file after adding the entries. You can disable this behavior via setting `validate=False`. In contrast,
-`rm` takes a single Interaction ID or a List of ids and removed them from the file. 
+`rm` takes a single Interaction ID or a List of ids and removed them from the file.
 
 ```python
 interaction_file.add(interaction, validate=True)
 interaction_file.rm(1)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
