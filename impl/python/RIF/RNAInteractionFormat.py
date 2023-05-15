@@ -169,7 +169,7 @@ class RNAInteraction:
 
     def __init__(
         self,
-        interaction_id: int,
+        interaction_id: str,
         version: str,
         interaction_class: str,
         interaction_type: str,
