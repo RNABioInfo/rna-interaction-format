@@ -1,5 +1,5 @@
 [{
-    "ID": "1"
+    "ID": "1",
     "version": "RIFv1.0",
     "class": "RNA-RNA-Protein",
     "type": "basepairing",

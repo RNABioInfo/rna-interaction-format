@@ -169,7 +169,8 @@ class RNAInteraction:
 
     def __init__(
         self,
-        interaction_id: int,
+        interaction_id: str,
+        version: str,
         interaction_class: str,
         interaction_type: str,
         evidence: List[Evidence],
@@ -189,6 +190,7 @@ class RNAInteraction:
             partners List[Partner]: transcript interaction
         """
         self.interaction_id = interaction_id
+        self.version = version
         self.interaction_class = interaction_class
         self.interaction_type = interaction_type
         self.evidence = evidence
@@ -217,6 +219,7 @@ class RNAInteraction:
     @classmethod
     def from_dict(cls, dict_repr: Dict) -> RNAInteraction:
         interaction_id = dict_repr["ID"]
+        version = dict_repr["version"]
         interaction_class = dict_repr["class"]
         interaction_type = dict_repr["type"]
         evidence = [Evidence.from_dict(x) for x in dict_repr["evidence"]]
@@ -230,6 +233,7 @@ class RNAInteraction:
 
         rna_interaction = RNAInteraction(
             interaction_id,
+            version,
             interaction_class,
             interaction_type,
             evidence,

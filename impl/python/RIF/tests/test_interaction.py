@@ -105,33 +105,33 @@ def none_fixture():
 
 
 @pytest.mark.parametrize(
-    "interaction_id,interaction_class,interaction_type,evidence",
-    [(1, "RNA-RNA", "basepairing", "evidence_list")],
+    "interaction_id,version,interaction_class,interaction_type,evidence",
+    [("1", "RIFv1.0", "RNA-RNA", "basepairing", "evidence_list")],
 )
 def test_rna_interaction_init(
-    interaction_id, interaction_class, interaction_type, evidence, request
+    interaction_id, version, interaction_class, interaction_type, evidence, request
 ):
     evidence = request.getfixturevalue(evidence)
     rna_interaction = RNAInteraction(
-        interaction_id, interaction_class, interaction_type, evidence
+        interaction_id, version, interaction_class, interaction_type, evidence
     )
 
 
 @pytest.mark.parametrize(
-    "interaction_id,interaction_class,interaction_type,evidence",
+    "interaction_id,version,interaction_class,interaction_type,evidence",
     [
-        (1, "Foo", "basepairing", "evidence_list"),
-        ("foo", "RNA-RNA", "basepairing", "evidence_list"),
-        (1, "RNA-RNA", "foo", "none_fixture"),
+        ("1", "RIFv1.0", "Foo", "basepairing", "evidence_list"),
+        ("foo", "RIFv1.0", "RNA-RNA", "basepairing", "evidence_list"),
+        ("1", "RIFv1.0", "RNA-RNA", "foo", "none_fixture"),
     ],
 )
 def test_wrong_schema_rna_interaction(
-    interaction_id, interaction_class, interaction_type, evidence, request
+    interaction_id, version,  interaction_class, interaction_type, evidence, request
 ):
     with pytest.raises(jsonschema.ValidationError):
         evidence = request.getfixturevalue(evidence)
         interaction = RNAInteraction(
-            interaction_id, interaction_class, interaction_type, evidence
+            interaction_id, version, interaction_class, interaction_type, evidence
         )
         InteractionFile([interaction])
 
@@ -212,7 +212,8 @@ def interaction_from_scratch():
         },
     )
     interaction = RNAInteraction(
-        interaction_id=1,
+        interaction_id="1",
+        version="RIFv1.0",
         evidence=[evidence],
         interaction_class="RNA-Protein",
         interaction_type="RNA binding",
