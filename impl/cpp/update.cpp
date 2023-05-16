@@ -61,7 +61,7 @@ std::vector<std::vector<std::string>> read_query(std::string q)
 //to use one of the methods below, better make sure first that the json document given as input is valid with regard to the schema (with schema_validator()). Things will probably not work otherwise.
 
 
-int find_interaction(rapidjson::Document *doc, int ref)
+int find_interaction(rapidjson::Document *doc, std::string ref)
 //searches an interaction from its ID, returns its position in the list of partners (or -1 if the partner is not found).
 {
 	int s=(*doc).Size();
@@ -69,7 +69,7 @@ int find_interaction(rapidjson::Document *doc, int ref)
 	int c=0;
 	while(c==0 && i<s)
 	{
-		if(((*doc)[i]["ID"]).GetInt()==ref)
+		if(((*doc)[i]["ID"]).GetString()==ref)
 		{
 			c=1;
 		}
@@ -95,7 +95,7 @@ std::vector<int> subset_interaction(rapidjson::Document *doc, std::string q)
 	for(int j=0; j<qr.size(); j++)
 	{
 		nm=qr[j][0];
-		if (std::string(nm)=="ID")
+		/*if (std::string(nm)=="ID")
 		{
 			for(int k=1; k<(qr[j]).size(); k++)
 			{
@@ -108,8 +108,8 @@ std::vector<int> subset_interaction(rapidjson::Document *doc, std::string q)
 					}
 				}
 			}
-		}
-		else if (std::string(nm)=="class" || std::string(nm)=="type")
+		}*/
+		if (std::string(nm)=="ID" || std::string(nm)=="class" || std::string(nm)=="type")
 		{
 			for(int k=1; k<(qr[j]).size(); k++)
 			{
@@ -193,7 +193,7 @@ rapidjson::Document get_interaction(rapidjson::Document *doc, std::string q)
 void add_interaction(rapidjson::Document *doc, rapidjson::Value v)
 //adds a new interaction, but first checks that there is not already an interaction with same ID. Does not add the new interaction if this is the case. And does not check that the updated document remains valid with regards to the schema
 {
-	int ref=(v["ID"]).GetInt();
+	std::string ref=(v["ID"]).GetString();
 	int i=find_interaction(doc, ref);
 	if(i==-1)
 	{
@@ -206,7 +206,7 @@ void add_interaction(rapidjson::Document *doc, rapidjson::Value v)
 	}
 }
 
-void remove_interaction(rapidjson::Document *doc, int ref)
+void remove_interaction(rapidjson::Document *doc, std::string ref)
 //as name says
 {
 	int i=find_interaction(doc, ref);
