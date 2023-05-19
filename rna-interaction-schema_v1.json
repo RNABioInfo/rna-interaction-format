@@ -11,8 +11,7 @@
 		"properties": {
 			"ID": {
 				"type": "string",
-				"description": "The unique identifier for an interaction",
-                "pattern": "^[0-9a-zA-z-_]*$"
+				"description": "The unique identifier for an interaction"
 			},
             "version": {
                 "type": "string",
