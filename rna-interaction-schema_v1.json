@@ -10,25 +10,25 @@
 		"type": "object",
 		"properties": {
 			"ID": {
-				"type": "string",
-				"description": "The unique identifier for an interaction"
+				"description": "The unique identifier for an interaction",
+				"type": "string"
 			},
             "version": {
-                "type": "string",
                 "description": "The file version of RIF. Currently only RIFv1.0 allowed",
+                "type": "string",
                 "pattern": "^RIFv1.0$"
             },
 			"class": {
-				"enum": ["RNA-RNA", "RNA-Protein", "RNA-RNA-Protein"],
-                "description": "The class of the described interaction"
+                "description": "The class of the described interaction",
+				"enum": ["RNA-RNA", "RNA-Protein", "RNA-RNA-Protein"]
 			},
 			"type": {
-				"type": "string",
-                "description": "The type of interaction, i.e. molecular mechanism"
+                "description": "The type of interaction, i.e. molecular mechanism",
+				"type": "string"
 			},
 			"evidence": {
-				"type": "array",
 				"description": "Evidence that supports the interaction",
+				"type": "array",
 				"minItems": 1,
 				"uniqueItems": true,
 				"items": {
@@ -69,8 +69,8 @@
 				}
 			},
 			"partners": {
-				"type": "array",
                 "description": "RNA/Proteins involved in the interaction",
+				"type": "array",
 				"items": {
 					"type": "object",
 					"properties": {
@@ -121,20 +121,21 @@
                             }
 						},
 						"info": {
+                            "description": "Optional properties of the interaction partner",
 							"type": "object",
                             "properties": {
                                 "description": {
-                                    "type": "string",
-                                    "description": "Summary of the "
+                                    "description": "Details on the function of gene/transcript/protein",
+                                    "type": "string"
                                 },
                                 "sequence": {
+                                    "description": "Sequence of the gene/transcript/protein as specified in genomic coordinates",
                                     "type": "string",
-                                    "description": "The sequence of the RNA/Protein",
                                     "pattern": "^([ATGC]*|[ARNDCQEGHILKMFPSTWYV]*)$"
                                 },
                                 "structure": {
+                                    "description": "Representation of the RNA secondary structure in dot-bracket notation",
                                     "type": "string",
-                                    "description": "The structure of the RNA in dot-bracket notation",
                                     "pattern": "^[.()]*$"
                                 },
                                 "note": {
