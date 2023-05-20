@@ -10,23 +10,24 @@
 		"type": "object",
 		"properties": {
 			"ID": {
-				"type": "string",
-                "pattern": "^[0-9a-zA-z-_]*$",
-				"description": "The unique identifier for an interaction"
+				"description": "The unique identifier for an interaction",
+				"type": "string"
 			},
             "version": {
+                "description": "The file version of RIF. Currently only RIFv1.0 allowed",
                 "type": "string",
-                "pattern": "^RIFv1.0$",
-                "description": "The file version of RIF. Currently only RIFv1.0 allowed"
+                "pattern": "^RIFv1.0$"
             },
 			"class": {
+                "description": "The class of the described interaction",
 				"enum": ["RNA-RNA", "RNA-Protein", "RNA-RNA-Protein"]
 			},
 			"type": {
+                "description": "The type of interaction, i.e. molecular mechanism",
 				"type": "string"
 			},
 			"evidence": {
-				"description": "evidence that supports the interaction",
+				"description": "Evidence that supports the interaction",
 				"type": "array",
 				"minItems": 1,
 				"uniqueItems": true,
@@ -42,10 +43,11 @@
 							"type": "string"
 						},
 						"command": {
-							"description": "command for computational method",
+							"description": "Command of the computational method",
 							"type": "string"
 						},
 						"data": {
+                            "description": "Data that supports the interaction",
                             "type": "object",
                             "additionalProperties": {
                                 "oneOf": [
@@ -62,39 +64,47 @@
                             }
 						}
 					},
+                    "additionalProperties": false,
 					"required": ["type", "method", "data"]
 				}
 			},
 			"partners": {
+                "description": "RNA/Proteins involved in the interaction",
 				"type": "array",
 				"items": {
 					"type": "object",
 					"properties": {
 						"name": {
-							"description": "",
+							"description": "Description of the RNA/Protein",
 							"type": "string"
 						},
 						"symbol": {
-							"description": "",
+							"description": "Scientific naming of the RNA/protein",
 							"type": "string"
 						},
 						"type": {
-							"description": "",
+							"description": "Type of the of the RNA/Protein. Should match entry in sequence ontology",
 							"type": "string"
 						},
 						"sequence_type": {
-							"description": "",
+							"description": "Type of sequence which can be either DNA, RNA or Protein",
 							"enum": ["dna","rna","protein"]
 						},
 						"genomic_coordinates": {
-							"description": "",
-							"type": "string"
+							"description": "chromosome, strand and genomic coordinates of the RNA/Protein",
+							"type": "string",
+                            "pattern": "[a-zA-Z0-9]+:[+-]:[0-9]+-[0-9]+"
 						},
 						"organism_name": {
-							"description": "",
+							"description": "Name of the organism",
 							"type": "string"
 						},
+                        "organism_acc": {
+							"description": "Unique accession id of the organism",
+							"type": "string"
+                        },
 						"local_sites": {
+                            "description": "Interaction sites of the organism",
 							"type": "object",
                             "patternProperties": {
 								"^.*$": {
@@ -106,40 +116,44 @@
                                         "items": {
                                             "type": "number"
                                         }
-
                                     }
                                 }
                             }
 						},
 						"info": {
+                            "description": "Optional properties of the interaction partner",
 							"type": "object",
                             "properties": {
                                 "description": {
-                                    "type": "string",
-                                    "description": ""
+                                    "description": "Details on the function of gene/transcript/protein",
+                                    "type": "string"
                                 },
                                 "sequence": {
+                                    "description": "Sequence of the gene/transcript/protein as specified in genomic coordinates",
                                     "type": "string",
                                     "pattern": "^([ATGC]*|[ARNDCQEGHILKMFPSTWYV]*)$"
                                 },
                                 "structure": {
+                                    "description": "Representation of the RNA secondary structure in dot-bracket notation",
                                     "type": "string",
                                     "pattern": "^[.()]*$"
                                 },
                                 "note": {
                                     "type": "string"
                                 }
-                            }
+                            },
+                            "additionalProperties":true
 						},
 						"custom": {
 							"type": "object"
 						}
 					},
+                    "additionalProperties": false,
 					"required": ["name", "type", "local_sites"]
 				}
 			}
 		},
         "additionalProperties": false,
-		"required": ["ID", "version", "class", "type", "evidence","partners"]
+		"required": ["ID", "version", "class", "type", "evidence", "partners"]
 	}
 }

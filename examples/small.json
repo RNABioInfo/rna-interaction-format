@@ -33,7 +33,7 @@
             "type": "mRNA",
             "genomic_coordinates": "chr1:-:2866559-2867551",
             "organism_name": "Escherichia coli K-12 MG1655",
-            "organisms_acc": "NC_000913",
+            "organism_acc": "NC_000913",
             "local_sites":{
                 "dsrA":[[70,83],[19,32]]
             }
