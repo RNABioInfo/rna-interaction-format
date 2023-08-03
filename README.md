@@ -39,15 +39,16 @@ The name/value pair partners is a list of elements that correspond to the RNAs/P
 | organism_acc | string | yes | Corresponding accession number of the organism (e,g., DDBJ/EMBL/GenBank, RefSeq, UniProt) |
 | local_sites | list of list | yes | Interaction sites between the partners |
 
-Moreover, **info** is a nested name/value pair that determines optional properties of the interaction partner. These include the name/value pairs **description**, **sequence** and **structure**. Arbirtrary name-value pairs can be specified as well.
+Moreover, **info** is a nested name/value pair that determines optional properties of the interaction partner. These include the name/value pairs **description**, **sequence** and **structure**. 
 
 | name | value | mandatory | description |
 | ---  | ----  | --------  | ----------  |
 | description | string | no | Details on the function of the gene/transcript/protein |
 | sequence | string | no | Sequence of the gene/transcript/protein as specified in *genomic_coordinates* |
 | structure | string | no | Representation of the RNA secondary structure |
+| note | string | no | 
 
-In addition, the **custom** name/value pair allows to specify user-defined name/value pairs.
+In addition, the **custom** name/value pair allows to specify user-defined name/value pairs. Arbirtrary name-value pairs can be specified as well.
 
 ## Functionality
 
@@ -134,7 +135,7 @@ NC_000913.3 932594  933089  lrp-micF    0   +   932594  933089  (0,255,0)   2   
             "info": {
                 "description": "RNA chaperone that binds small regulatory RNA (sRNAs) and mRNAs to facilitate mRNA translational regulation in response to envelope stress, environmental stress and changes in metabolite concentrations.",
                 "sequence": "MAKGQSLQDPFLNALRRERVPVSIYLVNGIKLQGQIESFDQFVILLKNTVSQMVYKHAISTVVPSRPVSHHSNNAGGGTSSNYHHGSSAQNTSAQQDSEETE",
-                "structure": "https://www.ebi.ac.uk/pdbe/entry/pdb/5I21"
+                "note": "https://www.ebi.ac.uk/pdbe/entry/pdb/5I21"
             }
         },
         {
