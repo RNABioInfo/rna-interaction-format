@@ -39,17 +39,16 @@ The name/value pair partners is a list of elements that correspond to the RNAs/P
 | organism_acc | string | yes | Corresponding accession number of the organism (e,g., DDBJ/EMBL/GenBank, RefSeq, UniProt) |
 | local_sites | list of list | yes | Interaction sites between the partners |
 
-Moreover, **info** is a nested name/value pair that determines optional properties of the interaction partner. These include the name/value pairs **description**, **sequence** and **structure**. 
+Moreover, **info** is a nested name/value pair that determines optional properties of the interaction partner. These include the name/value pairs **description**, **sequence** and **structure**. Arbirtrary name-value pairs can be specified as well.
 
 | name | value | mandatory | description |
 | ---  | ----  | --------  | ----------  |
 | description | string | no | Details on the function of the gene/transcript/protein |
 | sequence | string | no | Sequence of the gene/transcript/protein as specified in *genomic_coordinates* |
 | structure | string | no | Representation of the RNA secondary structure |
-| note | string | no | 
+| note | string | no | Arbitrary information |
 
-In addition, the **custom** name/value pair allows to specify user-defined name/value pairs. Arbirtrary name-value pairs can be specified as well.
-
+In addition, the **custom** name/value pair allows to specify user-defined name/value pairs. 
 ## Functionality
 
 ### BED Export
