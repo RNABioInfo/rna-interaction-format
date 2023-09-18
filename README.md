@@ -46,9 +46,9 @@ Moreover, **info** is a nested name/value pair that determines optional properti
 | description | string | no | Details on the function of the gene/transcript/protein |
 | sequence | string | no | Sequence of the gene/transcript/protein as specified in *genomic_coordinates* |
 | structure | string | no | Representation of the RNA secondary structure |
+| note | string | no | Arbitrary information |
 
-In addition, the **custom** name/value pair allows to specify user-defined name/value pairs.
-
+In addition, the **custom** name/value pair allows to specify user-defined name/value pairs. 
 ## Functionality
 
 ### BED Export
@@ -134,7 +134,7 @@ NC_000913.3 932594  933089  lrp-micF    0   +   932594  933089  (0,255,0)   2   
             "info": {
                 "description": "RNA chaperone that binds small regulatory RNA (sRNAs) and mRNAs to facilitate mRNA translational regulation in response to envelope stress, environmental stress and changes in metabolite concentrations.",
                 "sequence": "MAKGQSLQDPFLNALRRERVPVSIYLVNGIKLQGQIESFDQFVILLKNTVSQMVYKHAISTVVPSRPVSHHSNNAGGGTSSNYHHGSSAQNTSAQQDSEETE",
-                "structure": "https://www.ebi.ac.uk/pdbe/entry/pdb/5I21"
+                "note": "https://www.ebi.ac.uk/pdbe/entry/pdb/5I21"
             }
         },
         {

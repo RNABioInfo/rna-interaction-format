@@ -139,10 +139,11 @@
                                     "pattern": "^[.()]*$"
                                 },
                                 "note": {
+                                    "description": "Arbitrary information",
                                     "type": "string"
                                 }
                             },
-                            "additionalProperties":true
+                            "additionalProperties": true
 						},
 						"custom": {
 							"type": "object"
